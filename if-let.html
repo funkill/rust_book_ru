@@ -66,6 +66,8 @@
 </li>
 <li><a href='ffi.html'><b>5.8.</b> Интерфейс внешних функций (FFI)</a>
 </li>
+<li><a href='release-channels.html'><b>5.9.</b> Каналы сборок</a>
+</li>
 </ul>
 </li>
 <li><a href='syntax-and-semantics.html'><b>6.</b> Синтаксис и семантика</a>
@@ -267,7 +269,7 @@
     loop {
         match option {
             Some(x) =&gt; println!(&quot;{}&quot;, x),
-        _ =&gt; break,
+            _ =&gt; break,
         }
     }
     
@@ -275,7 +277,7 @@
 <span class='kw'>loop</span> {
     <span class='kw'>match</span> <span class='ident'>option</span> {
         <span class='prelude-val'>Some</span>(<span class='ident'>x</span>) <span class='op'>=&gt;</span> <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>x</span>),
-    _ <span class='op'>=&gt;</span> <span class='kw'>break</span>,
+        _ <span class='op'>=&gt;</span> <span class='kw'>break</span>,
     }
 }
 </pre>

@@ -66,6 +66,8 @@
 </li>
 <li><a href='ffi.html'><b>5.8.</b> Интерфейс внешних функций (FFI)</a>
 </li>
+<li><a href='release-channels.html'><b>5.9.</b> Каналы сборок</a>
+</li>
 </ul>
 </li>
 <li><a href='syntax-and-semantics.html'><b>6.</b> Синтаксис и семантика</a>
@@ -183,16 +185,16 @@
 
 
     <h1 class="title">Владение</h1>
-    <p>Эта глава является одной из трех, описывающих систему владения ресурсами Rust.
-Эта система представляет собой наиболее уникальную и привлекательную фичу Rust,
-о которой разработчики на Rust должны иметь полное представление. Владение - это
+    <p>Эта глава является одной из трёх, описывающих систему владения ресурсами Rust.
+Эта система представляет собой наиболее уникальную и привлекательную особенность
+Rust, о которой разработчики должны иметь полное представление. Владение - это
 то, как Rust достигает своей главной цели - безопасности памяти. Система
 владения включает в себя несколько различных концепций, каждая из которых
 рассматривается в своей собственной главе:</p>
 
 <ul>
-<li>владение, ее вы сейчас читаете</li>
-<li><a href="references-and-borrowing.html">заимствование</a>, и ассоциированная с ним фича ‘ссылки’</li>
+<li>владение, её вы сейчас читаете</li>
+<li><a href="references-and-borrowing.html">заимствование</a>, и ассоциированная с ним фича &quot;ссылки&quot;</li>
 <li><a href="lifetimes.html">время жизни</a>, расширение концепции заимствования</li>
 </ul>
 
@@ -201,35 +203,35 @@
 
 <h1 id="Мета" class='section-header'><a
                            href="#Мета">Мета</a></h1>
-<p>Прежде чем перейти к деталям, отметитм два важных нюанса о системе владения.</p>
+<p>Прежде чем перейти к деталям, отметим два важных нюанса о системе владения.</p>
 
-<p>Rust сфокусирован на безопасности и скорости. Это достигается за счет
-‘абстракций с нулевой стоимостью‘ (‘zero-cost abstractions‘), что означает, что
-в Rust стоимость абстракций должна быть настолько минимальной, насколько это
+<p>Rust сфокусирован на безопасности и скорости. Это достигается за счёт
+&quot;абстракций с нулевой стоимостью&quot; (&quot;zero-cost abstractions&quot;), а значит, в Rust 
+стоимость абстракций должна быть настолько минимальной, насколько это
 возможно, без ущерба для работоспособности. Система владения ресурсами - это
 яркий пример абстракции с нулевой стоимостью. Весь анализ, о котором мы будем
 говорить в этом руководстве, выполняется <em>во время компиляции</em>. Вы не платите
-хоть сколько-нибудь времени рантайма за какую-либо из фич.</p>
+хоть сколько-нибудь времени исполнения за какую-либо из фич.</p>
 
-<p>Тем не менее, эта система все же имеет определенную стоимость: кривая обучения.
-Многие новые пользователи Rust испытыват то, что мы называем ‘борьба с проверкой
-заимствования‘, когда компилятор Rust отказывается компилировать программу,
+<p>Тем не менее, эта система всё же имеет определённую стоимость: кривая обучения.
+Многие новые пользователи Rust испытывает то, что мы называем &quot;борьба с проверкой
+заимствования&quot;, когда компилятор Rust отказывается компилировать программу,
 которая по мнению автора является абсолютно правильной. Это часто происходит
 потому, что мысленное представление программиста о том, как должно работать
 владение, не совпадает с реальными правилами, которыми оперирует Rust. Вы,
-наверное, также будете испытывать подобные трудности поначалу. Однако существует
+наверное, поначалу также будете испытывать подобные трудности. Однако существует
 и хорошая новость: более опытные разработчики на Rust сообщают, что чем больше
 они работают с правилами системы владения, тем меньше они борются с проверкой
 заимствования.</p>
 
-<p>Имея это в виду, давайте перейдем к изучению систему владения.</p>
+<p>Имея это в виду, давайте перейдём к изучению системы владения.</p>
 
 <h1 id="Владение" class='section-header'><a
                            href="#Владение">Владение</a></h1>
-<p>[<code>Связанные имена</code>][bindings] имеют одну особенность в Rust: они ‘обладают
-правом собственности‘ на то, с чем они связаны. Это означает, что, когда
+<p><a href="variable-bindings.html">Связанные имена</a> имеют одну особенность в Rust: они &quot;обладают
+правом собственности&quot; на то, с чем они связаны. Это означает, что, когда
 связывание выходит за пределы области видимости, ресурс, с которым оно связано,
-будут освобожден. Например:</p>
+будут освобождён. Например:</p>
 <span class='rusttest'>fn main() {
     fn foo() {
         let v = vec![1, 2, 3];
@@ -241,8 +243,8 @@
 }
 </pre>
 
-<p>Когда <code>v</code> входит в область видимости, создается новый <a href="../std/vec/struct.Vec.html"><code>Vec&lt;T&gt;</code></a>. В данном
-случае вектор также выделяет из <a href="the-stack-and-the-heap.html">кучи</a> пространство для трех элементов.
+<p>Когда <code>v</code> входит в область видимости, создаётся новый <a href="http://doc.rust-lang.org/std/vec/struct.Vec.html"><code>Vec&lt;T&gt;</code></a>. В данном
+случае вектор также выделяет из <a href="the-stack-and-the-heap.html">кучи</a> пространство для трёх элементов.
 Когда <code>v</code> выходит из области видимости, в конце <code>foo()</code>, Rust очищает все,
 связанное с вектором, даже динамически выделенную память. Это происходит
 детерминировано, в конце области видимости.</p>
@@ -252,7 +254,7 @@
 <p>Хотя тут есть некоторые тонкости: Rust гарантирует, что существует <em>ровно одна</em>
 привязка к какому-либо ресурсу. Например, если у нас есть вектор, то мы можем
 присвоить этот вектор другой привязке:
-Важным аспектом [владения][ownership] является ’семантика перемещения’.
+Важным аспектом [владения][ownership] является &quot;семантика перемещения&quot;.
 Семантика перемещения контролирует, как и когда право собственности перемещается
 между привязками (связываниями).</p>
 <span class='rusttest'>fn main() {
@@ -272,57 +274,57 @@
     
     let v2 = v;
     
-    println!(&quot;v[0] is: {}&quot;, v[0]);
+    println!(&quot;v[0] = {}&quot;, v[0]);
     
 }</span><pre id='rust-example-rendered' class='rust '>
 <span class='kw'>let</span> <span class='ident'>v</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>1</span>, <span class='number'>2</span>, <span class='number'>3</span>];
 
 <span class='kw'>let</span> <span class='ident'>v2</span> <span class='op'>=</span> <span class='ident'>v</span>;
 
-<span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;v[0] is: {}&quot;</span>, <span class='ident'>v</span>[<span class='number'>0</span>]);
+<span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;v[0] = {}&quot;</span>, <span class='ident'>v</span>[<span class='number'>0</span>]);
 </pre>
 
 <p>Ошибка выглядит следующим образом:</p>
 
 <pre><code class="language-text">error: use of moved value: `v`
-println!(&quot;v[0] is: {}&quot;, v[0]);
+println!(&quot;v[0] = {}&quot;, v[0]);
                         ^
 </code></pre>
 
-<p>То же самое произойдет, если мы определим функцию, которая принимает право
+<p>То же самое произойдёт, если мы определим функцию, которая принимает право
 владения, и попробуем использовать что-то после того как мы передали это что-то
 в качестве аргумента в эту функцию:</p>
 <span class='rusttest'>fn main() {
     fn take(v: Vec&lt;i32&gt;) {
-        // what happens here isn’t important.
+        // что будет здесь не очень важно
     }
     
     let v = vec![1, 2, 3];
     
     take(v);
     
-    println!(&quot;v[0] is: {}&quot;, v[0]);
+    println!(&quot;v[0] = {}&quot;, v[0]);
     
 }</span><pre id='rust-example-rendered' class='rust '>
 <span class='kw'>fn</span> <span class='ident'>take</span>(<span class='ident'>v</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>i32</span><span class='op'>&gt;</span>) {
-    <span class='comment'>// what happens here isn’t important.</span>
+    <span class='comment'>// что будет здесь не очень важно</span>
 }
 
 <span class='kw'>let</span> <span class='ident'>v</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>1</span>, <span class='number'>2</span>, <span class='number'>3</span>];
 
 <span class='ident'>take</span>(<span class='ident'>v</span>);
 
-<span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;v[0] is: {}&quot;</span>, <span class='ident'>v</span>[<span class='number'>0</span>]);
+<span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;v[0] = {}&quot;</span>, <span class='ident'>v</span>[<span class='number'>0</span>]);
 </pre>
 
-<p>Та же самая ошибка: “use of moved value“ (“используется перемещенное значение“).
-Когда мы передаем право владения куда-то еще, мы как бы говорим, что мы
-‘перемещаем‘ то, на что ссылаемся. При этом не нужно указывать какую-либо
-специальную аннотацию, Rust делает это по-умолчанию.</p>
+<p>Та же самая ошибка: &quot;use of moved value&quot; (&quot;используется перемещённое значение&quot;).
+Когда мы передаём право владения куда-то ещё, мы как бы говорим, что мы
+&quot;перемещаем&quot; то, на что ссылаемся. При этом не нужно указывать какую-либо
+специальную аннотацию, Rust делает это по умолчанию.</p>
 
-<h1 id="Детали" class='section-header'><a
-                           href="#Детали">Детали</a></h1>
-<p>Причина, по которой мы не можем использовать привязку после того как мы ее
+<h2 id="Детали" class='section-header'><a
+                           href="#Детали">Детали</a></h2>
+<p>Причина, по которой мы не можем использовать привязку после того как мы её
 переместили, трудно заметная, но очень важная. Когда мы пишем код вроде этого:</p>
 <span class='rusttest'>fn main() {
     let v = vec![1, 2, 3];
@@ -335,10 +337,10 @@ println!(&quot;v[0] is: {}&quot;, v[0]);
 <span class='kw'>let</span> <span class='ident'>v2</span> <span class='op'>=</span> <span class='ident'>v</span>;
 </pre>
 
-<p>Первая строка создает некоторые данные для вектора в <a href="the-stack-and-the-heap.html">стеке</a>, <code>v</code>. Данные
+<p>Первая строка создаёт некоторые данные для вектора в <a href="the-stack-and-the-heap.html">стеке</a>, <code>v</code>. Данные
 самого вектора, однако, сохраняются в <a href="the-stack-and-the-heap.html">куче</a>, и поэтому стековые данные
 содержат указатель на данные в куче. Когда мы перемещаем <code>v</code> в <code>v2</code>, то
-создается копия стековых данных, для <code>v2</code>. Что будет означать, что два указателя
+создаётся копия стековых данных, для <code>v2</code>. Что будет означать, что два указателя
 ссылаются на расположенный в куче вектор. Такое поведение могло бы быть
 проблемой: оно нарушало бы гарантии безопасности Rust, привнося гонки данных.
 Поэтому Rust запрещает использование <code>v</code> после того как мы выполнили его
@@ -348,12 +350,12 @@ println!(&quot;v[0] is: {}&quot;, v[0]);
 байтов, в зависимости от обстоятельств. Так что это может быть не так уж
 неэффективно, как выглядит на первый взгляд.</p>
 
-<h1 id="Типы,-реализующие-трейт-copy" class='section-header'><a
-                           href="#Типы,-реализующие-трейт-copy">Типы, реализующие трейт <code>Copy</code></a></h1>
-<p>Мы установили, что, как только право собственности передается другой привязке,
+<h2 id="Типы,-реализующие-типаж-copy" class='section-header'><a
+                           href="#Типы,-реализующие-типаж-copy">Типы, реализующие типаж <code>Copy</code></a></h2>
+<p>Мы установили, что, как только право собственности передаётся другой привязке,
 то вы больше не можете использовать оригинальную привязку. Тем не менее,
-существует <a href="traits.html">трейт</a>, который изменяет такое поведение, и он называется
-<code>Copy</code>. Мы еще не обсуждали трейты, но пока вы можете думать о них как об
+существует <a href="traits.html">типаж</a>, который изменяет такое поведение, и он называется
+<code>Copy</code>. Мы ещё не обсуждали типажи, но пока вы можете думать о них как об
 аннотациях к конкретному типу, которые придают дополнительное поведение.
 Например:</p>
 <span class='rusttest'>fn main() {
@@ -361,24 +363,25 @@ println!(&quot;v[0] is: {}&quot;, v[0]);
     
     let v2 = v;
     
-    println!(&quot;v is: {}&quot;, v);
+    println!(&quot;v = {}&quot;, v);
     
 }</span><pre id='rust-example-rendered' class='rust '>
 <span class='kw'>let</span> <span class='ident'>v</span> <span class='op'>=</span> <span class='number'>1</span>;
 
 <span class='kw'>let</span> <span class='ident'>v2</span> <span class='op'>=</span> <span class='ident'>v</span>;
 
-<span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;v is: {}&quot;</span>, <span class='ident'>v</span>);
+<span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;v = {}&quot;</span>, <span class='ident'>v</span>);
 </pre>
 
-<p>В этом примере <code>v</code> является<code>i32</code>, который реализует трейт <code>Copy</code>. Это означает,
-что, как и при перемещении, когда мы присваиваем привязку <code>v</code> привязке <code>v2</code>,
-будет создана копия данных. Но, в отличие от перемещения, мы можем использовать
-<code>v</code> в дальнейшем. Это потому, что в <code>i32</code> не имеет указателей на данные в каком-
-либо другом месте, поэтому копирование - это полная копия.</p>
+<p>В этом примере <code>v</code> связан с типом <code>i32</code>. Этот тип реализует типаж <code>Copy</code>.
+Это означает, что когда мы присваиваем привязку <code>v</code> привязке <code>v2</code>, будет создана
+копия данных, как и при перемещении. Но, в отличие от перемещения, мы 
+можем использовать <code>v</code> в дальнейшем. Это происходит потому, что в <code>i32</code> нет 
+указателей на данные в каком-либо другом месте. При таком копировании 
+создаётся полная копия.</p>
 
-<p>Мы будем обсуждать, как сделать свои собственные типы, реализующие трейт <code>Copy</code>
-в разделе <a href="traits.html">Трейты</a>.</p>
+<p>Мы будем обсуждать, как сделать свои собственные типы, реализующие типаж <code>Copy</code>
+в разделе <a href="traits.html">Типажи</a>.</p>
 
 <h1 id="Больше,-чем-владение" class='section-header'><a
                            href="#Больше,-чем-владение">Больше, чем владение</a></h1>
@@ -386,17 +389,17 @@ println!(&quot;v[0] is: {}&quot;, v[0]);
 бы написали:</p>
 <span class='rusttest'>fn main() {
     fn foo(v: Vec&lt;i32&gt;) -&gt; Vec&lt;i32&gt; {
-        // do stuff with v
+        // делаем что-либо с v
     
-        // hand back ownership
+        // возвращаем право владения
         v
     }
     
 }</span><pre id='rust-example-rendered' class='rust '>
 <span class='kw'>fn</span> <span class='ident'>foo</span>(<span class='ident'>v</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>i32</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>i32</span><span class='op'>&gt;</span> {
-    <span class='comment'>// do stuff with v</span>
+    <span class='comment'>// делаем что-либо с v</span>
 
-    <span class='comment'>// hand back ownership</span>
+    <span class='comment'>// возвращаем право владения</span>
     <span class='ident'>v</span>
 }
 </pre>
@@ -405,9 +408,9 @@ println!(&quot;v[0] is: {}&quot;, v[0]);
 хочет забрать себе:</p>
 <span class='rusttest'>fn main() {
     fn foo(v1: Vec&lt;i32&gt;, v2: Vec&lt;i32&gt;) -&gt; (Vec&lt;i32&gt;, Vec&lt;i32&gt;, i32) {
-        // do stuff with v1 and v2
+        // делаем что-нибудь с v1 и v2
     
-        // hand back ownership, and the result of our function
+        // возвращаем право владения и результат нашей функции
         (v1, v2, 42)
     }
     
@@ -418,9 +421,9 @@ println!(&quot;v[0] is: {}&quot;, v[0]);
     
 }</span><pre id='rust-example-rendered' class='rust '>
 <span class='kw'>fn</span> <span class='ident'>foo</span>(<span class='ident'>v1</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>i32</span><span class='op'>&gt;</span>, <span class='ident'>v2</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>i32</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> (<span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>i32</span><span class='op'>&gt;</span>, <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>i32</span><span class='op'>&gt;</span>, <span class='ident'>i32</span>) {
-    <span class='comment'>// do stuff with v1 and v2</span>
+    <span class='comment'>// делаем что-нибудь с v1 и v2</span>
 
-    <span class='comment'>// hand back ownership, and the result of our function</span>
+    <span class='comment'>// возвращаем право владения и результат нашей функции</span>
     (<span class='ident'>v1</span>, <span class='ident'>v2</span>, <span class='number'>42</span>)
 }
 
@@ -430,11 +433,11 @@ println!(&quot;v[0] is: {}&quot;, v[0]);
 <span class='kw'>let</span> (<span class='ident'>v1</span>, <span class='ident'>v2</span>, <span class='ident'>answer</span>) <span class='op'>=</span> <span class='ident'>foo</span>(<span class='ident'>v1</span>, <span class='ident'>v2</span>);
 </pre>
 
-<p>Брр! Возвращаемый тип, строка, возвращая значение, и вызов функции получается
-намного более сложный.</p>
+<p>Брр! Возвращаемый тип, возвращающая строка, и вызов функции получается намного 
+более сложным.</p>
 
-<p>К счастью, Rust предлагает фичу, заимствование, которая помогает нам решить эту
-проблему. Это тема следующего раздела!</p>
+<p>К счастью, Rust предлагает такую фичу, как заимствование, которая помогает нам 
+решить эту проблему. Это тема следующего раздела!</p>
 
     <script type="text/javascript">
         window.playgroundUrl = "http://play.rust-lang.org";

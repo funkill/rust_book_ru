@@ -66,6 +66,8 @@
 </li>
 <li><a href='ffi.html'><b>5.8.</b> Интерфейс внешних функций (FFI)</a>
 </li>
+<li><a href='release-channels.html'><b>5.9.</b> Каналы сборок</a>
+</li>
 </ul>
 </li>
 <li><a href='syntax-and-semantics.html'><b>6.</b> Синтаксис и семантика</a>
@@ -279,13 +281,13 @@ Unicode. Мы можем выбрать как рассматиравать ст
     let hachiko = &quot;忠犬ハチ公&quot;;
     
     for b in hachiko.as_bytes() {
-    print!(&quot;{}, &quot;, b);
+        print!(&quot;{}, &quot;, b);
     }
     
     println!(&quot;&quot;);
     
     for c in hachiko.chars() {
-    print!(&quot;{}, &quot;, c);
+        print!(&quot;{}, &quot;, c);
     }
     
     println!(&quot;&quot;);
@@ -294,13 +296,13 @@ Unicode. Мы можем выбрать как рассматиравать ст
 <span class='kw'>let</span> <span class='ident'>hachiko</span> <span class='op'>=</span> <span class='string'>&quot;忠犬ハチ公&quot;</span>;
 
 <span class='kw'>for</span> <span class='ident'>b</span> <span class='kw'>in</span> <span class='ident'>hachiko</span>.<span class='ident'>as_bytes</span>() {
-<span class='macro'>print</span><span class='macro'>!</span>(<span class='string'>&quot;{}, &quot;</span>, <span class='ident'>b</span>);
+    <span class='macro'>print</span><span class='macro'>!</span>(<span class='string'>&quot;{}, &quot;</span>, <span class='ident'>b</span>);
 }
 
 <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>);
 
 <span class='kw'>for</span> <span class='ident'>c</span> <span class='kw'>in</span> <span class='ident'>hachiko</span>.<span class='ident'>chars</span>() {
-<span class='macro'>print</span><span class='macro'>!</span>(<span class='string'>&quot;{}, &quot;</span>, <span class='ident'>c</span>);
+    <span class='macro'>print</span><span class='macro'>!</span>(<span class='string'>&quot;{}, &quot;</span>, <span class='ident'>c</span>);
 }
 
 <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>);

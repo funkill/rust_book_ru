@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <title>Трейт `Drop`</title>
+    <title>Типаж Drop (сброс)</title>
 
     <link rel="stylesheet" type="text/css" href="rust-book.css">
 
@@ -65,6 +65,8 @@
 <li><a href='error-handling.html'><b>5.7.</b> Обработка ошибок</a>
 </li>
 <li><a href='ffi.html'><b>5.8.</b> Интерфейс внешних функций (FFI)</a>
+</li>
+<li><a href='release-channels.html'><b>5.9.</b> Каналы сборок</a>
 </li>
 </ul>
 </li>
@@ -182,8 +184,94 @@
 <div id='page'>
 
 
-    <h1 class="title">Трейт `Drop`</h1>
-    <p>Скоро!</p>
+    <h1 class="title">Типаж Drop (сброс)</h1>
+    <p>Мы обсудили типажи. Теперь давайте поговорим о конкретном типаже,
+предоставляемом стандартной библиотекой Rust. Этот типаж - <a href="http://doc.rust-lang.org/stable/std/ops/trait.Drop.html"><code>Drop</code></a>
+(сброс) - позволяет выполнить некоторый код, когда значение выходит из области
+видимости. Например:</p>
+<span class='rusttest'>struct HasDrop;
+
+impl Drop for HasDrop {
+    fn drop(&amp;mut self) {
+        println!(&quot;Сбрасываем!&quot;);
+    }
+}
+
+fn main() {
+    let x = HasDrop;
+
+    // сделаем что-то
+
+} // тут x выходит из области видимости
+</span><pre id='rust-example-rendered' class='rust '>
+<span class='kw'>struct</span> <span class='ident'>HasDrop</span>;
+
+<span class='kw'>impl</span> <span class='ident'>Drop</span> <span class='kw'>for</span> <span class='ident'>HasDrop</span> {
+    <span class='kw'>fn</span> <span class='ident'>drop</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
+        <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;Сбрасываем!&quot;</span>);
+    }
+}
+
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+    <span class='kw'>let</span> <span class='ident'>x</span> <span class='op'>=</span> <span class='ident'>HasDrop</span>;
+
+    <span class='comment'>// сделаем что-то</span>
+
+} <span class='comment'>// тут x выходит из области видимости</span>
+</pre>
+
+<p>Когда <code>x</code> выходит из области видимости в конце <code>main()</code>, исполнится код
+реализации типажа <code>Drop</code>. У него один метод, который тоже называется <code>drop()</code>.
+Он принимает изменяемую ссылку на себя (<code>self</code>).</p>
+
+<p>Вот и всё! Работа <code>Drop</code> достаточно проста, но есть несколько
+тонкостей. Например, значения сбрасываются в порядке, обратном порядку их
+объявления. Вот ещё пример:</p>
+<span class='rusttest'>struct Firework {
+    strength: i32,
+}
+
+impl Drop for Firework {
+    fn drop(&amp;mut self) {
+        println!(&quot;БАБАХ силой {}!!!&quot;, self.strength);
+    }
+}
+
+fn main() {
+    let firecracker = Firework { strength: 1 };
+    let tnt = Firework { strength: 100 };
+}
+</span><pre id='rust-example-rendered' class='rust '>
+<span class='kw'>struct</span> <span class='ident'>Firework</span> {
+    <span class='ident'>strength</span>: <span class='ident'>i32</span>,
+}
+
+<span class='kw'>impl</span> <span class='ident'>Drop</span> <span class='kw'>for</span> <span class='ident'>Firework</span> {
+    <span class='kw'>fn</span> <span class='ident'>drop</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
+        <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;БАБАХ силой {}!!!&quot;</span>, <span class='self'>self</span>.<span class='ident'>strength</span>);
+    }
+}
+
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+    <span class='kw'>let</span> <span class='ident'>firecracker</span> <span class='op'>=</span> <span class='ident'>Firework</span> { <span class='ident'>strength</span>: <span class='number'>1</span> };
+    <span class='kw'>let</span> <span class='ident'>tnt</span> <span class='op'>=</span> <span class='ident'>Firework</span> { <span class='ident'>strength</span>: <span class='number'>100</span> };
+}
+</pre>
+
+<p>Этот код выведет следующее:</p>
+
+<pre><code class="language-text">БАБАХ силой 100!!!
+БАБАХ силой 1!!!
+</code></pre>
+
+<p>Сначала взрывается тринитротолуоловая бомба (<code>tnt</code>), потому что она была
+объявлена последней. За ней взрывается шутиха (<code>firecracker</code>). Первым вошёл,
+последним вышел.</p>
+
+<p>Так зачем нужен <code>Drop</code>? Часто <code>Drop</code> используют, чтобы освободить ресурсы,
+представленные структурой (<code>struct</code>). Например, счётчик ссылок <a href="http://doc.rust-lang.org/stable/std/sync/struct.Arc.html"><code>Arc&lt;T&gt;</code></a>
+уменьшает число активных ссылок в <code>drop()</code>, и когда оно достигает нуля,
+освобождает хранимое значение.</p>
 
     <script type="text/javascript">
         window.playgroundUrl = "http://play.rust-lang.org";
