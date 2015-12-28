@@ -6,19 +6,20 @@ env:
     - secure: "VYGOokUvoh/2oDnWUzJvq+qw5/nYa8b2AVl6smBsILv3jdxgA/nZWrmmUxvXmOVDP1aNqN0jNhWGZQUruvfCdYg97e+eoRPtWxCrirND0SWPgsc7+JKHCt/I28goMYNwO3G9DNGAliNNKaJHfPZt0guFHCKmcKsIeenq45t7UdpYCaD7rvKuPHt2sLDRobXYrPyWBRkNP7wvOKwdjg9Kj4xV7Lho8HOoLQFT7LVBorl06I1fWZz/KHLBE0vxR149Mv7VWqiA45EoLQSkWpZxj/ICmCk3MwP3Zsh/37XYDY9ahR3D0M3dlRIcPE+6vL0DXHv7o9GZ8tJDtZ3wJu8lnVs2pYwpgiCdaX+VVk1mogpDI3fesFbleG9MRDv02Zk/IZuXg+pBNuoaAqTCLLtIdXscW1VnT9fMO2is/3SP0O8FPGfsCTXPO71gxKngyI0rFM09w3skqHXMrOzP2/+Eq730RrCFx8+I8ln+lAJ0jb8uw8LkWpm1/2xaiB+ZaKGcJMC8LyAZ4pXpc+Fob8FgDSfmqUwMzJx1GS7pchQdLB2E9nHalxeOQVA9tRlDlrOYJlc/6X7dJ6rr0jBNMuYZMr9GRoPalRV1xg24oLQ5n3McuR6Y+15dMO2lxFFRAQBojv2SMrtOOz3HnsFAFo2Yx43IilUmEgDfmgV96hsx1/k="
 
 install:
-  - source ./script/install_rustbook.sh
+  - source ./script/install_mdbook.sh
   - if [ $TRAVIS_PULL_REQUEST == "false" ] && [ $TRAVIS_BRANCH == "master" ]; then
       source ./script/install_calibre.sh;
     fi
 
 before_script:
   - python --version
-  - rustbook --version
+  - mdBook --version
   - if [ $TRAVIS_PULL_REQUEST == "false" ] && [ $TRAVIS_BRANCH == "master" ]; then
       ebook-convert --version;
     fi
   - ./script/fix.py
   - ./script/check.py
+  - ./script/test.sh
 
 script:
   - ./script/build.sh
