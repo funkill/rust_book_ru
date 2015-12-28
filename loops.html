@@ -1,0 +1,266 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="{% block description %}{% endblock %}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <base href="">
+
+        <link rel="stylesheet" href="book.css">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+
+        <!-- MathJax -->
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- Fetch JQuery from CDN but have a local fallback -->
+        <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script>
+            if (typeof jQuery == 'undefined') {
+                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
+            }
+        </script>
+    </head>
+    <body>
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme = localStorage.getItem('theme');
+            if (theme == null) { theme = 'light'; }
+            $('body').removeClass().addClass(theme);
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var sidebar = localStorage.getItem('sidebar');
+            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
+            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
+        </script>
+
+        <div id="sidebar" class="sidebar">
+            <ul class="chapter"><li><a href="INTRODUCTION.html"><strong>1.</strong> Введение</a></li><li><a href="getting-started.html"><strong>2.</strong> C чего начать</a></li><li><ul class="section"><li><a href="installing-rust.html"><strong>2.1.</strong> Установка Rust</a></li><li><a href="hello-world.html"><strong>2.2.</strong> Привет, мир!</a></li><li><a href="hello-cargo.html"><strong>2.3.</strong> Hello, Cargo!</a></li></ul></li><li><a href="learn-rust.html"><strong>3.</strong> Изучение Rust</a></li><li><ul class="section"><li><a href="guessing-game.html"><strong>3.1.</strong> Угадайка</a></li><li><a href="dining-philosophers.html"><strong>3.2.</strong> Обедающие философы</a></li><li><a href="rust-inside-other-languages.html"><strong>3.3.</strong> Вызов кода на Rust из других языков</a></li></ul></li><li><a href="effective-rust.html"><strong>4.</strong> Эффективное использование Rust</a></li><li><ul class="section"><li><a href="the-stack-and-the-heap.html"><strong>4.1.</strong> Стек и куча</a></li><li><a href="testing.html"><strong>4.2.</strong> Тестирование</a></li><li><a href="conditional-compilation.html"><strong>4.3.</strong> Условная компиляция</a></li><li><a href="documentation.html"><strong>4.4.</strong> Документация</a></li><li><a href="iterators.html"><strong>4.5.</strong> Итераторы</a></li><li><a href="concurrency.html"><strong>4.6.</strong> Многозадачность</a></li><li><a href="error-handling.html"><strong>4.7.</strong> Обработка ошибок</a></li><li><a href="choosing-your-guarantees.html"><strong>4.8.</strong> Выбор гарантий</a></li><li><a href="ffi.html"><strong>4.9.</strong> Интерфейс внешних функций (FFI)</a></li><li><a href="borrow-and-asref.html"><strong>4.10.</strong> Типажи `Borrow` и `AsRef`</a></li><li><a href="release-channels.html"><strong>4.11.</strong> Каналы сборок</a></li></ul></li><li><a href="syntax-and-semantics.html"><strong>5.</strong> Синтаксис и семантика</a></li><li><ul class="section"><li><a href="variable-bindings.html"><strong>5.1.</strong> Связывание имён</a></li><li><a href="functions.html"><strong>5.2.</strong> Функции</a></li><li><a href="primitive-types.html"><strong>5.3.</strong> Простые типы</a></li><li><a href="comments.html"><strong>5.4.</strong> Комментарии</a></li><li><a href="if.html"><strong>5.5.</strong> Конструкция `if`</a></li><li><a href="loops.html" class="active"><strong>5.6.</strong> Циклы</a></li><li><a href="ownership.html"><strong>5.7.</strong> Владение</a></li><li><a href="references-and-borrowing.html"><strong>5.8.</strong> Ссылки и заимствование</a></li><li><a href="lifetimes.html"><strong>5.9.</strong> Время жизни</a></li><li><a href="mutability.html"><strong>5.10.</strong> Изменяемость (mutability)</a></li><li><a href="structs.html"><strong>5.11.</strong> Структуры</a></li><li><a href="enums.html"><strong>5.12.</strong> Перечисления</a></li><li><a href="match.html"><strong>5.13.</strong> Конструкция `match`</a></li><li><a href="patterns.html"><strong>5.14.</strong> Шаблоны сопоставления `match`</a></li><li><a href="method-syntax.html"><strong>5.15.</strong> Синтаксис методов</a></li><li><a href="vectors.html"><strong>5.16.</strong> Вектора</a></li><li><a href="strings.html"><strong>5.17.</strong> Строки</a></li><li><a href="generics.html"><strong>5.18.</strong> Обобщённое программирование</a></li><li><a href="traits.html"><strong>5.19.</strong> Типажи</a></li><li><a href="drop.html"><strong>5.20.</strong> Типаж `Drop` (сброс)</a></li><li><a href="if-let.html"><strong>5.21.</strong> Конструкция `if let`</a></li><li><a href="trait-objects.html"><strong>5.22.</strong> Типажи-объекты</a></li><li><a href="closures.html"><strong>5.23.</strong> Замыкания</a></li><li><a href="ufcs.html"><strong>5.24.</strong> Универсальный синтаксис вызова функций (UFCS)</a></li><li><a href="crates-and-modules.html"><strong>5.25.</strong> Контейнеры (crates) и модули (modules)</a></li><li><a href="const-and-static.html"><strong>5.26.</strong> `const` и `static`</a></li><li><a href="attributes.html"><strong>5.27.</strong> Атрибуты</a></li><li><a href="type-aliases.html"><strong>5.28.</strong> Псевдонимы типов</a></li><li><a href="casting-between-types.html"><strong>5.29.</strong> Приведение типов</a></li><li><a href="associated-types.html"><strong>5.30.</strong> Ассоциированные типы</a></li><li><a href="unsized-types.html"><strong>5.31.</strong> Безразмерные типы</a></li><li><a href="operators-and-overloading.html"><strong>5.32.</strong> Перегрузка операций</a></li><li><a href="deref-coercions.html"><strong>5.33.</strong> Преобразования при разыменовании (deref coercions)</a></li><li><a href="macros.html"><strong>5.34.</strong> Макросы</a></li><li><a href="raw-pointers.html"><strong>5.35.</strong> Сырые указатели</a></li><li><a href="unsafe.html"><strong>5.36.</strong> Небезопасный код</a></li></ul></li><li><a href="nightly-rust.html"><strong>6.</strong> Нестабильные возможности Rust</a></li><li><ul class="section"><li><a href="compiler-plugins.html"><strong>6.1.</strong> Плагины к компилятору</a></li><li><a href="inline-assembly.html"><strong>6.2.</strong> Встроенный ассемблерный код</a></li><li><a href="no-stdlib.html"><strong>6.3.</strong> Без stdlib</a></li><li><a href="intrinsics.html"><strong>6.4.</strong> Внутренние средства (intrinsics)</a></li><li><a href="lang-items.html"><strong>6.5.</strong> Элементы языка (lang items)</a></li><li><a href="advanced-linking.html"><strong>6.6.</strong> Продвинутое руководство по компоновке (advanced linking)</a></li><li><a href="benchmark-tests.html"><strong>6.7.</strong> Тесты производительности</a></li><li><a href="box-syntax-and-patterns.html"><strong>6.8.</strong> Синтаксис упаковки и шаблоны `match`</a></li><li><a href="slice-patterns.html"><strong>6.9.</strong> Шаблоны `match` для срезов</a></li><li><a href="associated-constants.html"><strong>6.10.</strong> Ассоциированные константы</a></li><li><a href="custom-allocators.html"><strong>6.11.</strong> Пользовательские менеджеры памяти</a></li></ul></li><li><a href="glossary.html"><strong>7.</strong> Глоссарий</a></li><li><a href="academic-research.html"><strong>8.</strong> Академические исследования</a></li></ul>
+        </div>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar" class="menu-bar">
+                    <div class="left-buttons">
+                        <i id="sidebar-toggle" class="fa fa-bars"></i>
+                        <i id="theme-toggle" class="fa fa-paint-brush"></i>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <i id="print-button" class="fa fa-print" title="Print this book"></i>
+                    </div>
+                </div>
+
+                <div id="content" class="content">
+                    <p>% Циклы</p>
+<p>На данный момент в Rust есть три способа организовать циклическое исполнение
+кода. Это <code>loop</code>, <code>while</code> и <code>for</code>. У каждого подхода своё применения.</p>
+<h2>Циклы <code>loop</code></h2>
+<p>Бесконечный цикл (<code>loop</code>) — простейшая форма цикла в Rust. С помощью этого
+ключевого слова можно организовать цикл, который продолжается, пока не
+выполнится какой-либо оператор, прерывающий его. Бесконечный цикл в Rust
+выглядит так:</p>
+<pre><code class="language-rust,ignore">loop {
+    println!(&quot;Зациклились!&quot;);
+}
+</code></pre>
+<h2>Циклы <code>while</code></h2>
+<p>Цикл <code>while</code> — это ещё один вид конструкции цикла в Rust. Выглядит он так:</p>
+<pre><code class="language-rust">let mut x = 5; // mut x: i32
+let mut done = false; // mut done: bool
+
+while !done {
+    x += x - 3;
+
+    println!(&quot;{}&quot;, x);
+
+    if x % 5 == 0 {
+        done = true;
+    }
+}
+</code></pre>
+<p>Он применяется, если неизвестно, сколько раз нужно выполнить тело цикла, чтобы
+получить результат. При каждой итерации цикла проверяется условие, и если оно
+истинно, то запускается следующая итерация. Иначе цикл <code>while</code> завершается.</p>
+<p>Если вам нужен бесконечный цикл, то можете сделать условие всегда истинным:</p>
+<pre><code class="language-rust,ignore">while true {
+</code></pre>
+<p>Однако, для такого случая в Rust имеется ключевое слово <code>loop</code>:</p>
+<pre><code class="language-rust,ignore">loop {
+</code></pre>
+<p>В Rust анализатор потока управления обрабатывает конструкцию <code>loop</code> иначе, чем
+<code>while true</code>, хотя для нас это одно и тоже. На данном этапе изучения Rust нам не
+важно знать в чем именно различие между этими конструкциями, но если вы хотите
+сделать бесконечный цикл, то используйте конструкцию <code>loop</code>. Компилятор
+сможет транслировать ваш код в более эффективный и безопасный машинный код.</p>
+<p><a name="for"></a></p>
+<h2>Циклы <code>for</code></h2>
+<p>Цикл <code>for</code> нужен для повторения блока кода определённое количество раз. Циклы
+<code>for</code> в Rust работают немного иначе, чем в других языках программирования.
+Например в Си-подобном языке цикл <code>for</code> выглядит так:</p>
+<pre><code class="language-c">for (x = 0; x &lt; 10; x++) {
+    printf( &quot;%d\n&quot;, x );
+}
+</code></pre>
+<p>Однако, этот код в Rust будет выглядеть следующим образом:</p>
+<pre><code class="language-rust">for x in 0..10 {
+    println!(&quot;{}&quot;, x); // x: i32
+}
+</code></pre>
+<p>Можно представить цикл более абстрактно:</p>
+<pre><code class="language-ignore">for переменная in выражение {
+    тело_цикла
+}
+</code></pre>
+<p>Выражение — это <a href="iterators.html">итератор</a>. Их мы будем рассматривать позже в этом
+руководстве. Итератор возвращает серию элементов, где каждый элемент будет
+являться одной итерацией цикла. Значение этого элемента затем присваивается
+<code>переменной</code>, которая будет доступна в теле цикла. После окончания тела цикла,
+берётся следующее значение итератора и снова выполняется тело цикла. Когда в
+итераторе закончатся значения, цикл <code>for</code> завершается.</p>
+<p>В нашем примере, <code>0..10</code> — это выражение, которое задаёт начальное и конечное
+значение, и возвращает итератор. Обратите внимание, что конечное значение не
+включается в него. В нашем примере будут напечатаны числа от <code>0</code> до <code>9</code>, но не
+будет напечатано <code>10</code>.</p>
+<p>В Rust намеренно нет цикла <code>for</code> в стиле C. Управлять каждым элементом цикла
+вручную сложно, и это может приводить к ошибкам даже у опытных программистов на
+C.</p>
+<h3>Перечисление</h3>
+<p>Если вы хотите отслеживать число прошедших итераций, используйте функцию
+<code>.enumerate()</code>.</p>
+<h4>С интервалами</h4>
+<pre><code class="language-rust">for (i,j) in (5..10).enumerate() {
+    println!(&quot;i = {} и j = {}&quot;, i, j);
+}
+</code></pre>
+<p>Выводит:</p>
+<pre><code class="language-text">i = 0 и j = 5
+i = 1 и j = 6
+i = 2 и j = 7
+i = 3 и j = 8
+i = 4 и j = 9
+</code></pre>
+<p>Не забудьте написать скобки вокруг интервала.</p>
+<h4>С итераторами</h4>
+<pre><code class="language-rust"># let lines = &quot;привет\nмир\nhello\nworld&quot;.lines();
+for (linenumber, line) in lines.enumerate() {
+    println!(&quot;{}: {}&quot;, linenumber, line);
+}
+</code></pre>
+<p>Outputs:</p>
+<pre><code class="language-text">0: привет
+1: мир
+2: hello
+3: world
+</code></pre>
+<h2>Раннее прерывание цикла</h2>
+<p>Давайте ещё раз посмотрим на цикл <code>while</code>:</p>
+<pre><code class="language-rust">let mut x = 5;
+let mut done = false;
+
+while !done {
+    x += x - 3;
+
+    println!(&quot;{}&quot;, x);
+
+    if x % 5 == 0 {
+        done = true;
+    }
+}
+</code></pre>
+<p>В этом примере в условии для выхода из цикла используется изменяемое имя <code>done</code>
+логического типа. В Rust имеются два ключевых слова, которые помогают работать с
+итерациями цикла: <code>break</code> и <code>continue</code>.</p>
+<p>Мы можем переписать цикл с помощью <code>break</code>, чтобы избавиться от переменной
+<code>done</code>:</p>
+<pre><code class="language-rust">let mut x = 5;
+
+loop {
+    x += x - 3;
+
+    println!(&quot;{}&quot;, x);
+
+    if x % 5 == 0 { break; }
+}
+</code></pre>
+<p>Теперь мы используем бесконечный цикл <code>loop</code> и <code>break</code> для выхода из цикла.
+Использование явного <code>return</code> также остановит выполнение цикла.</p>
+<p><code>continue</code> похож на <code>break</code>, но вместо выхода из цикла переходит к следующей
+итерации. Следующий пример отобразит только нечётные числа:</p>
+<pre><code class="language-rust">for x in 0..10 {
+    if x % 2 == 0 { continue; }
+
+    println!(&quot;{}&quot;, x);
+}
+</code></pre>
+<h2>Метки циклов</h2>
+<p>Когда у вас много вложенных циклов, вы можете захотеть указать, к какому именно
+циклу относится <code>break</code> или <code>continue</code>. Как и во многих других языках, по
+умолчанию эти операторы будут относиться к самому внутреннему циклу. Если вы
+хотите прервать внешний цикл, вы можете использовать метку. Так, этот код будет
+печатать на экране только когда и <code>x</code>, и <code>y</code> нечётны:</p>
+<pre><code class="language-rust">'outer: for x in 0..10 {
+    'inner: for y in 0..10 {
+        if x % 2 == 0 { continue 'outer; } // продолжает цикл по x
+        if y % 2 == 0 { continue 'inner; } // продолжает цикл по y
+        println!(&quot;x: {}, y: {}&quot;, x, y);
+    }
+}
+</code></pre>
+
+                </div>
+
+                <!-- Mobile navigation buttons -->
+                
+                    <a href="if.html" class="mobile-nav-chapters previous">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="ownership.html" class="mobile-nav-chapters next">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+
+            </div>
+
+            
+                <a href="if.html" class="nav-chapters previous">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            
+
+            
+                <a href="ownership.html" class="nav-chapters next">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            
+
+        </div>
+
+
+        <!-- Local fallback for Font Awesome -->
+        <script>
+            if ($(".fa").css("font-family") !== "FontAwesome") {
+                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
+            }
+        </script>
+
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+    </body>
+</html>

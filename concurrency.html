@@ -1,277 +1,133 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="rustdoc">
-    <title>Многозадачность</title>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="{% block description %}{% endblock %}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" type="text/css" href="rust-book.css">
+        <base href="">
 
-    
-</head>
-<body class="rustdoc">
-    <!--[if lte IE 8]>
-    <div class="warning">
-        This old browser is unsupported and will most likely display funky
-        things.
-    </div>
-    <![endif]-->
+        <link rel="stylesheet" href="book.css">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 
-    <div id="nav">
-                <button id="toggle-nav">
-                  <span class="sr-only">Toggle navigation</span>
-                  <span class="bar"></span>
-                  <span class="bar"></span>
-                  <span class="bar"></span>
-                </button>
-              </div>
-<div id='toc' class='mobile-hidden'>
-<ul class='chapter'>
-<li><a href='README.html'><b>1.</b> Introduction</a>
-</li>
-<li><a href='INTRODUCTION.html'><b>2.</b> Введение</a>
-</li>
-<li><a href='getting-started.html'><b>3.</b> C чего начать</a>
-<ul class='section'>
-<li><a href='installing-rust.html'><b>3.1.</b> Установка Rust</a>
-</li>
-<li><a href='hello-world.html'><b>3.2.</b> Hello, world!</a>
-</li>
-<li><a href='hello-cargo.html'><b>3.3.</b> Hello, Cargo!</a>
-</li>
-</ul>
-</li>
-<li><a href='learn-rust.html'><b>4.</b> Изучение Rust</a>
-<ul class='section'>
-<li><a href='guessing-game.html'><b>4.1.</b> Угадайка</a>
-</li>
-</ul>
-</li>
-<li><a href='effective-rust.html'><b>5.</b> Эффективное использование Rust</a>
-<ul class='section'>
-<li><a href='the-stack-and-the-heap.html'><b>5.1.</b> Стек и Куча</a>
-</li>
-<li><a href='testing.html'><b>5.2.</b> Тестирование</a>
-</li>
-<li><a href='conditional-compilation.html'><b>5.3.</b> Условная компиляция</a>
-</li>
-<li><a href='documentation.html'><b>5.4.</b> Документация</a>
-</li>
-<li><a href='iterators.html'><b>5.5.</b> Итераторы</a>
-</li>
-<li><a href='concurrency.html'><b>5.6.</b> Многозадачность</a>
-</li>
-<li><a href='error-handling.html'><b>5.7.</b> Обработка ошибок</a>
-</li>
-<li><a href='ffi.html'><b>5.8.</b> Интерфейс внешних функций (FFI)</a>
-</li>
-<li><a href='release-channels.html'><b>5.9.</b> Каналы сборок</a>
-</li>
-</ul>
-</li>
-<li><a href='syntax-and-semantics.html'><b>6.</b> Синтаксис и семантика</a>
-<ul class='section'>
-<li><a href='variable-bindings.html'><b>6.1.</b> Связывание переменных</a>
-</li>
-<li><a href='functions.html'><b>6.2.</b> Функции</a>
-</li>
-<li><a href='primitive-types.html'><b>6.3.</b> Простые типы</a>
-</li>
-<li><a href='comments.html'><b>6.4.</b> Комментарии</a>
-</li>
-<li><a href='if.html'><b>6.5.</b> Конструкция `if`</a>
-</li>
-<li><a href='for-loops.html'><b>6.6.</b> Циклы `for`</a>
-</li>
-<li><a href='while-loops.html'><b>6.7.</b> Циклы `while`</a>
-</li>
-<li><a href='ownership.html'><b>6.8.</b> Владение</a>
-</li>
-<li><a href='references-and-borrowing.html'><b>6.9.</b> Ссылки и Заимствование</a>
-</li>
-<li><a href='lifetimes.html'><b>6.10.</b> Время жизни</a>
-</li>
-<li><a href='mutability.html'><b>6.11.</b> Изменяемость (Мутабельность)</a>
-</li>
-<li><a href='enums.html'><b>6.12.</b> Перечисления</a>
-</li>
-<li><a href='match.html'><b>6.13.</b> Конструкция `match`</a>
-</li>
-<li><a href='structs.html'><b>6.14.</b> Структуры</a>
-</li>
-<li><a href='patterns.html'><b>6.15.</b> Шаблоны `match`</a>
-</li>
-<li><a href='method-syntax.html'><b>6.16.</b> Синтаксис методов</a>
-</li>
-<li><a href='vectors.html'><b>6.17.</b> Вектора</a>
-</li>
-<li><a href='strings.html'><b>6.18.</b> Строки</a>
-</li>
-<li><a href='generics.html'><b>6.19.</b> Дженерики</a>
-</li>
-<li><a href='traits.html'><b>6.20.</b> Трейты</a>
-</li>
-<li><a href='drop.html'><b>6.21.</b> Трейт `Drop`</a>
-</li>
-<li><a href='if-let.html'><b>6.22.</b> Конструкция `if let`</a>
-</li>
-<li><a href='trait-objects.html'><b>6.23.</b> Трейт объекты</a>
-</li>
-<li><a href='closures.html'><b>6.24.</b> Замыкания</a>
-</li>
-<li><a href='ufcs.html'><b>6.25.</b> Универсальный синтаксис вызова функций (UFCS)</a>
-</li>
-<li><a href='crates-and-modules.html'><b>6.26.</b> Контейнеры и Модули</a>
-</li>
-<li><a href='const-and-static.html'><b>6.27.</b> `const` и `static`</a>
-</li>
-<li><a href='tuple-structs.html'><b>6.28.</b> Кортежные структуры</a>
-</li>
-<li><a href='attributes.html'><b>6.29.</b> Атрибуты</a>
-</li>
-<li><a href='type-aliases.html'><b>6.30.</b> Псевдонимы типов</a>
-</li>
-<li><a href='casting-between-types.html'><b>6.31.</b> Преобразование типов</a>
-</li>
-<li><a href='associated-types.html'><b>6.32.</b> Ассоциированные типы</a>
-</li>
-<li><a href='unsized-types.html'><b>6.33.</b> Безразмерные типы</a>
-</li>
-<li><a href='operators-and-overloading.html'><b>6.34.</b> Operators and Overloading</a>
-</li>
-<li><a href='deref-coercions.html'><b>6.35.</b> Трейт `Deref`</a>
-</li>
-<li><a href='macros.html'><b>6.36.</b> Макросы</a>
-</li>
-<li><a href='raw-pointers.html'><b>6.37.</b> Сырые указатели</a>
-</li>
-<li><a href='unsafe.html'><b>6.38.</b> `unsafe` код</a>
-</li>
-</ul>
-</li>
-<li><a href='nightly-rust.html'><b>7.</b> Нестабильные фичи Rust</a>
-<ul class='section'>
-<li><a href='compiler-plugins.html'><b>7.1.</b> Плагины компилятора</a>
-</li>
-<li><a href='inline-assembly.html'><b>7.2.</b> Встроенный ассемблерный код</a>
-</li>
-<li><a href='no-stdlib.html'><b>7.3.</b> Без stdlib</a>
-</li>
-<li><a href='intrinsics.html'><b>7.4.</b> Внутренние средства</a>
-</li>
-<li><a href='lang-items.html'><b>7.5.</b> Lang items</a>
-</li>
-<li><a href='link-args.html'><b>7.6.</b> Аргументы линковки</a>
-</li>
-<li><a href='benchmark-tests.html'><b>7.7.</b> Тесты производительности</a>
-</li>
-<li><a href='box-syntax-and-patterns.html'><b>7.8.</b> Синтаксис упаковки и шаблоны `match`</a>
-</li>
-<li><a href='slice-patterns.html'><b>7.9.</b> Шаблоны `match` для срезов</a>
-</li>
-<li><a href='associated-constants.html'><b>7.10.</b> Ассоциированные константы</a>
-</li>
-</ul>
-</li>
-<li><a href='glossary.html'><b>8.</b> Глоссарий</a>
-</li>
-<li><a href='academic-research.html'><b>9.</b> Академические исследования</a>
-</li>
-</ul>
-</div>
-<div id='page-wrapper'>
-<div id='page'>
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
 
-    <h1 class="title">Многозадачность</h1>
-    <p>Многозадачность и параллелизм являются невероятно важными проблемами в области
-компьютерной науки. А также это актуальная тема для современной индустрии.
-Компьютеры приобретают все больше и больше ядер, но многие программисты не
-готовы в полной мере использовать это.</p>
+        <!-- MathJax -->
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
+        <!-- Fetch JQuery from CDN but have a local fallback -->
+        <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script>
+            if (typeof jQuery == 'undefined') {
+                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
+            }
+        </script>
+    </head>
+    <body>
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme = localStorage.getItem('theme');
+            if (theme == null) { theme = 'light'; }
+            $('body').removeClass().addClass(theme);
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var sidebar = localStorage.getItem('sidebar');
+            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
+            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
+        </script>
+
+        <div id="sidebar" class="sidebar">
+            <ul class="chapter"><li><a href="INTRODUCTION.html"><strong>1.</strong> Введение</a></li><li><a href="getting-started.html"><strong>2.</strong> C чего начать</a></li><li><ul class="section"><li><a href="installing-rust.html"><strong>2.1.</strong> Установка Rust</a></li><li><a href="hello-world.html"><strong>2.2.</strong> Привет, мир!</a></li><li><a href="hello-cargo.html"><strong>2.3.</strong> Hello, Cargo!</a></li></ul></li><li><a href="learn-rust.html"><strong>3.</strong> Изучение Rust</a></li><li><ul class="section"><li><a href="guessing-game.html"><strong>3.1.</strong> Угадайка</a></li><li><a href="dining-philosophers.html"><strong>3.2.</strong> Обедающие философы</a></li><li><a href="rust-inside-other-languages.html"><strong>3.3.</strong> Вызов кода на Rust из других языков</a></li></ul></li><li><a href="effective-rust.html"><strong>4.</strong> Эффективное использование Rust</a></li><li><ul class="section"><li><a href="the-stack-and-the-heap.html"><strong>4.1.</strong> Стек и куча</a></li><li><a href="testing.html"><strong>4.2.</strong> Тестирование</a></li><li><a href="conditional-compilation.html"><strong>4.3.</strong> Условная компиляция</a></li><li><a href="documentation.html"><strong>4.4.</strong> Документация</a></li><li><a href="iterators.html"><strong>4.5.</strong> Итераторы</a></li><li><a href="concurrency.html" class="active"><strong>4.6.</strong> Многозадачность</a></li><li><a href="error-handling.html"><strong>4.7.</strong> Обработка ошибок</a></li><li><a href="choosing-your-guarantees.html"><strong>4.8.</strong> Выбор гарантий</a></li><li><a href="ffi.html"><strong>4.9.</strong> Интерфейс внешних функций (FFI)</a></li><li><a href="borrow-and-asref.html"><strong>4.10.</strong> Типажи `Borrow` и `AsRef`</a></li><li><a href="release-channels.html"><strong>4.11.</strong> Каналы сборок</a></li></ul></li><li><a href="syntax-and-semantics.html"><strong>5.</strong> Синтаксис и семантика</a></li><li><ul class="section"><li><a href="variable-bindings.html"><strong>5.1.</strong> Связывание имён</a></li><li><a href="functions.html"><strong>5.2.</strong> Функции</a></li><li><a href="primitive-types.html"><strong>5.3.</strong> Простые типы</a></li><li><a href="comments.html"><strong>5.4.</strong> Комментарии</a></li><li><a href="if.html"><strong>5.5.</strong> Конструкция `if`</a></li><li><a href="loops.html"><strong>5.6.</strong> Циклы</a></li><li><a href="ownership.html"><strong>5.7.</strong> Владение</a></li><li><a href="references-and-borrowing.html"><strong>5.8.</strong> Ссылки и заимствование</a></li><li><a href="lifetimes.html"><strong>5.9.</strong> Время жизни</a></li><li><a href="mutability.html"><strong>5.10.</strong> Изменяемость (mutability)</a></li><li><a href="structs.html"><strong>5.11.</strong> Структуры</a></li><li><a href="enums.html"><strong>5.12.</strong> Перечисления</a></li><li><a href="match.html"><strong>5.13.</strong> Конструкция `match`</a></li><li><a href="patterns.html"><strong>5.14.</strong> Шаблоны сопоставления `match`</a></li><li><a href="method-syntax.html"><strong>5.15.</strong> Синтаксис методов</a></li><li><a href="vectors.html"><strong>5.16.</strong> Вектора</a></li><li><a href="strings.html"><strong>5.17.</strong> Строки</a></li><li><a href="generics.html"><strong>5.18.</strong> Обобщённое программирование</a></li><li><a href="traits.html"><strong>5.19.</strong> Типажи</a></li><li><a href="drop.html"><strong>5.20.</strong> Типаж `Drop` (сброс)</a></li><li><a href="if-let.html"><strong>5.21.</strong> Конструкция `if let`</a></li><li><a href="trait-objects.html"><strong>5.22.</strong> Типажи-объекты</a></li><li><a href="closures.html"><strong>5.23.</strong> Замыкания</a></li><li><a href="ufcs.html"><strong>5.24.</strong> Универсальный синтаксис вызова функций (UFCS)</a></li><li><a href="crates-and-modules.html"><strong>5.25.</strong> Контейнеры (crates) и модули (modules)</a></li><li><a href="const-and-static.html"><strong>5.26.</strong> `const` и `static`</a></li><li><a href="attributes.html"><strong>5.27.</strong> Атрибуты</a></li><li><a href="type-aliases.html"><strong>5.28.</strong> Псевдонимы типов</a></li><li><a href="casting-between-types.html"><strong>5.29.</strong> Приведение типов</a></li><li><a href="associated-types.html"><strong>5.30.</strong> Ассоциированные типы</a></li><li><a href="unsized-types.html"><strong>5.31.</strong> Безразмерные типы</a></li><li><a href="operators-and-overloading.html"><strong>5.32.</strong> Перегрузка операций</a></li><li><a href="deref-coercions.html"><strong>5.33.</strong> Преобразования при разыменовании (deref coercions)</a></li><li><a href="macros.html"><strong>5.34.</strong> Макросы</a></li><li><a href="raw-pointers.html"><strong>5.35.</strong> Сырые указатели</a></li><li><a href="unsafe.html"><strong>5.36.</strong> Небезопасный код</a></li></ul></li><li><a href="nightly-rust.html"><strong>6.</strong> Нестабильные возможности Rust</a></li><li><ul class="section"><li><a href="compiler-plugins.html"><strong>6.1.</strong> Плагины к компилятору</a></li><li><a href="inline-assembly.html"><strong>6.2.</strong> Встроенный ассемблерный код</a></li><li><a href="no-stdlib.html"><strong>6.3.</strong> Без stdlib</a></li><li><a href="intrinsics.html"><strong>6.4.</strong> Внутренние средства (intrinsics)</a></li><li><a href="lang-items.html"><strong>6.5.</strong> Элементы языка (lang items)</a></li><li><a href="advanced-linking.html"><strong>6.6.</strong> Продвинутое руководство по компоновке (advanced linking)</a></li><li><a href="benchmark-tests.html"><strong>6.7.</strong> Тесты производительности</a></li><li><a href="box-syntax-and-patterns.html"><strong>6.8.</strong> Синтаксис упаковки и шаблоны `match`</a></li><li><a href="slice-patterns.html"><strong>6.9.</strong> Шаблоны `match` для срезов</a></li><li><a href="associated-constants.html"><strong>6.10.</strong> Ассоциированные константы</a></li><li><a href="custom-allocators.html"><strong>6.11.</strong> Пользовательские менеджеры памяти</a></li></ul></li><li><a href="glossary.html"><strong>7.</strong> Глоссарий</a></li><li><a href="academic-research.html"><strong>8.</strong> Академические исследования</a></li></ul>
+        </div>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar" class="menu-bar">
+                    <div class="left-buttons">
+                        <i id="sidebar-toggle" class="fa fa-bars"></i>
+                        <i id="theme-toggle" class="fa fa-paint-brush"></i>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <i id="print-button" class="fa fa-print" title="Print this book"></i>
+                    </div>
+                </div>
+
+                <div id="content" class="content">
+                    <p>% Многозадачность</p>
+<p>Многозадачность и параллелизм являются невероятно важными проблемами в
+информатике. Это актуальная тема для современной индустрии. У компьютеров все
+больше и больше ядер, но многие программисты не готовы в полной мере
+использовать их.</p>
 <p>Средства Rust для безопасной работы с памятью в полной мере применимы и при
-работе в многозадачной среде. Поэтому многозадачные программы на Rust должны
-безопасно работать с памятью, и не создавать состояния гонки данных. Система
-типов Rust способна справиться с этими задачами еще на этапе компиляции,
-благодаря мощным средствам, которые она предоставляет.</p>
-
-<p>Прежде чем мы поговорим об особенностях многозадачности, которые идут с Rust,
-важно понять вот что: Rust является достаточно низкоуровневым, поэтому все это
-предусмотрено в стандартной библиотеке, а не в самом языке. Это означает, что
-если вам не нравится какой-то аспект в способе обработки многозадачности,
-который использует Rust, вы всегда можете реализовать альтернативный способ.
-<a href="https://github.com/carllerche/mio">mio</a> представляет реальный пример этого
-принципа в действии.</p>
-
-<h2 id="Справочная-информация:-send-и-sync" class='section-header'><a
-                           href="#Справочная-информация:-send-и-sync">Справочная информация: <code>Send</code> и <code>Sync</code></a></h2>
-<p>О многозадачности рассуждать довольно трудно. В Rust, у нас есть система
-строгой, статической типизации, чтобы помочь нам делать выводы о нашем коде. В
-связи с этим Rust дает нам два трейта, помогающих нам разбираться в коде,
-который, по всей вероятности, является многозадачным.</p>
-
-<h3 id="send" class='section-header'><a
-                           href="#send"><code>Send</code></a></h3>
-<p>Первый трейт, о котором мы будем говорить, называется
-<a href="../std/marker/trait.Send.html"><code>Send</code></a>. Когда тип <code>T</code> реализует <code>Send</code>, это
-указывает компилятору, что право владения переменными этого типа можно безопасно
-перемещать между потоками.</p>
-
-<p>Это важно для соблюдения некоторых ограничений. Например, если у нас есть канал,
-соединяющий два потока, и мы хотели бы иметь возможность отправлять некоторые
+работе в многозадачной среде. Даже многозадачные программы на Rust должны
+безопасно работать с памятью, и не создавать состояний гонок по данным. Система
+типов Rust достаточно мощна, чтобы справиться с этими задачами на этапе
+компиляции.</p>
+<p>Прежде чем мы поговорим об особенностях многозадачности в Rust, важно понять вот
+что: Rust — достаточно низкоуровневый язык, поэтому вся поддержка
+многозадачности реализована в стандартной библиотеке, а не в самом языке. Это
+означает, что если вам не нравится какой-то аспект реализации многозадачности в
+Rust, вы всегда можете создать альтернативную библиотеку.
+<a href="https://github.com/carllerche/mio">mio</a> — реально существующий пример такого
+подхода.</p>
+<h2>Справочная информация: <code>Send</code> и <code>Sync</code></h2>
+<p>Рассуждать о многозадачности довольно трудно. Rust строго статически
+типизирован, и это помогает нам делать выводы о коде. В связи с этим Rust
+предоставляет два типажа, помогающих нам разбираться в любом коде, который
+вообще может быть многозадачным.</p>
+<h3><code>Send</code></h3>
+<p>Первый типаж, о котором мы будем говорить, называется
+[<code>Send</code>](http://doc.rust-lang.org/std/marker/trait.Send.html). Когда тип <code>T</code>
+реализует <code>Send</code>, это указывает компилятору, что владение переменными этого типа
+можно безопасно перемещать между потоками.</p>
+<p>Это важно для соблюдения некоторых ограничений. Например, это имеет значение,
+когда у нас есть канал, соединяющий два потока, и мы хотим отправлять некоторые
 данные по каналу из одного потока в другой. Следовательно, мы должны
-гарантировать, что для отправляемого типа данных реализован трейт <code>Send</code>.</p>
-
-<p>И наоборот, если бы у нас была библиотека, упакованная с помощью FFI, который не
-является потокобезопасным, то нам не следовало бы реализовывать трейт <code>Send</code>,
-благодаря чему компилятор поможет нам добиться невозможности покинуть текущий
-поток.</p>
-
-<h3 id="sync" class='section-header'><a
-                           href="#sync"><code>Sync</code></a></h3>
-<p>Второй из этих трейтов называется <a href="../std/marker/trait.Sync.html"><code>Sync</code></a>. Когда
-тип <code>T</code> реализует <code>Sync</code>, это указывает компилятору, что переменные этого типа
-не имеют возможности использовать небезопасную память, когда они используются из
-нескольких потоков одновременно.</p>
-
+гарантировать, что для отправляемого типа данных реализован типаж <code>Send</code>.</p>
+<p>И наоборот, если мы оборачиваем библиотеку чужого кода (FFI), и она не является
+потокобезопасной, то нам не следует реализовывать типаж <code>Send</code>, и компилятор
+поможет нам убедиться в невозможности покинуть текущий поток.</p>
+<h3><code>Sync</code></h3>
+<p>Второй из этих типажей называется
+[<code>Sync</code>](http://doc.rust-lang.org/std/marker/trait.Sync.html). Когда тип <code>T</code>
+реализует <code>Sync</code>, это указывает компилятору, что использование переменных этого
+типа не приводит к небезопасной работе с памятью в многопоточной среде.</p>
 <p>Например, совместное использование неизменяемых данных с помощью атомарного
 счетчика ссылок является потокобезопасным. Rust обеспечивает такой тип,
 <code>Arc&lt;T&gt;</code>, и он реализует <code>Sync</code>, так что при помощи этого типа можно безопасно
 обмениваться данными между потоками.</p>
-
-<p>Эти два трейта позволяют использовать систему типов, чтобы обеспечить надежные
+<p>Эти два типажа позволяют использовать систему типов, чтобы получить надежные
 гарантии о свойствах вашего кода в условиях многозадачности. Прежде чем мы
-продемонстрируем как, сначала мы должны узнать, как создать многозадачную
-программу в Rust!</p>
-
-<h2 id="Потоки" class='section-header'><a
-                           href="#Потоки">Потоки</a></h2>
-<p>Стандартная библиотека Rust предоставляет библиотеку для потоков, которая
-позволяет запускать Rust код параллельно. Вот простой пример использования
+покажем, как этого достигнуть, сначала мы должны узнать, как вообще написать
+многозадачную программу в Rust!</p>
+<h2>Потоки</h2>
+<p>Стандартная библиотека Rust предоставляет библиотеку многопоточности, которая
+позволяет запускать код на Rust параллельно. Вот простой пример использования
 <code>std::thread</code>:</p>
-<span class='rusttest'>use std::thread;
+<pre><code class="language-rust">use std::thread;
 
 fn main() {
     thread::spawn(|| {
         println!(&quot;Hello from a thread!&quot;);
     });
 }
-</span><pre id='rust-example-rendered' class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>thread</span>;
-
-<span class='kw'>fn</span> <span class='ident'>main</span>() {
-    <span class='ident'>thread</span>::<span class='ident'>spawn</span>(<span class='op'>||</span> {
-        <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;Hello from a thread!&quot;</span>);
-    });
-}
-</pre>
-
+</code></pre>
 <p>Метод <code>thread::spawn()</code> в качестве единственного аргумента принимает замыкание,
 которое выполняется в новом потоке. Он возвращает дескриптор потока, который
-может быть использован для ожидания завершения этого потока и извлечения его
-результата:</p>
-<span class='rusttest'>use std::thread;
+используется для ожидания завершения этого потока и извлечения его результата:</p>
+<pre><code class="language-rust">use std::thread;
 
 fn main() {
     let handle = thread::spawn(|| {
@@ -280,47 +136,32 @@ fn main() {
 
     println!(&quot;{}&quot;, handle.join().unwrap());
 }
-</span><pre id='rust-example-rendered' class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>thread</span>;
-
-<span class='kw'>fn</span> <span class='ident'>main</span>() {
-    <span class='kw'>let</span> <span class='ident'>handle</span> <span class='op'>=</span> <span class='ident'>thread</span>::<span class='ident'>spawn</span>(<span class='op'>||</span> {
-        <span class='string'>&quot;Hello from a thread!&quot;</span>
-    });
-
-    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>handle</span>.<span class='ident'>join</span>().<span class='ident'>unwrap</span>());
-}
-</pre>
-
+</code></pre>
 <p>Многие языки имеют возможность выполнять потоки, но это дико опасно. Есть целые
 книги о том, как избежать ошибок, которые происходят от совместного
 использования изменяемого состояния. В Rust снова помогает система типов,
 которая предотвращает гонки данных на этапе компиляции. Давайте поговорим о том,
 как же на самом деле обеспечивается совместное использование чего-либо в
 условиях нескольких потоков.</p>
-
-<h2 id="Безопасное-совместное-использование-изменяемого-состояния" class='section-header'><a
-                           href="#Безопасное-совместное-использование-изменяемого-состояния">Безопасное совместное использование изменяемого состояния</a></h2>
-<p>Благодаря системе типов Rust, у нас есть понятие, которое звучит как ложь:
-&quot;безопасное совместное использование изменяемого состояния.&quot; Многие программисты
-считают, что совместное использование изменяемого состояния - это очень, очень
-плохо.</p>
-
+<h2>Безопасное совместное использование изменяемого состояния</h2>
+<p>Вчитайтесь: «безопасное совместное использование изменяемого состояния». Похоже
+на ложь, не так ли? Многие программисты считают, что организовать многопоточную
+работу с изменяемым состоянием очень сложно и почти невозможно. Но благодаря
+системе типов Rust, это всё же правда — безопасно работать с изменяемыми данными
+можно.</p>
 <p>Кто-то однажды сказал это:</p>
-
 <blockquote>
 <p>Совместно используемое изменяемое состояние является корнем всех зол.
-Большинство языков пытаются решить эту проблему через &#39;изменяемое&#39; часть, но
-Rust решает ее через &#39;совместно используемое&#39; часть.</p>
+Большинство языков пытаются решить эту проблему через часть, отвечающую за
+«изменяемое», но Rust решает ее через часть, отвечающую за «совместно
+используемое».</p>
 </blockquote>
-
 <p>Та же самая <a href="ownership.html">система владения</a>, которая помогает предотвратить
-неправильное использование указателей, также помогает исключить гонки данных,
+неправильное использование указателей, также помогает исключить гонки по данным,
 один из худших видов ошибок многозадачности.</p>
-
 <p>В качестве примера приведем программу на Rust, которая входила бы в состояние
-гонки данных на многих языках. На Rust она не будет компилироваться:</p>
-<span class='rusttest'>use std::thread;
+гонки по данным на многих языках. На Rust она не скомпилируется:</p>
+<pre><code class="language-ignore">use std::thread;
 
 fn main() {
     let mut data = vec![1u32, 2, 3];
@@ -333,44 +174,27 @@ fn main() {
 
     thread::sleep_ms(50);
 }
-</span><pre id='rust-example-rendered' class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>thread</span>;
-
-<span class='kw'>fn</span> <span class='ident'>main</span>() {
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>data</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>1u32</span>, <span class='number'>2</span>, <span class='number'>3</span>];
-
-    <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='number'>0</span>..<span class='number'>3</span> {
-        <span class='ident'>thread</span>::<span class='ident'>spawn</span>(<span class='kw'>move</span> <span class='op'>||</span> {
-            <span class='ident'>data</span>[<span class='ident'>i</span>] <span class='op'>+=</span> <span class='number'>1</span>;
-        });
-    }
-
-    <span class='ident'>thread</span>::<span class='ident'>sleep_ms</span>(<span class='number'>50</span>);
-}
-</pre>
-
+</code></pre>
 <p>Она выдает ошибку:</p>
-
 <pre><code class="language-text">8:17 error: capture of moved value: `data`
         data[i] += 1;
         ^~~~
 </code></pre>
-
 <p>В данном случае мы знаем, что наш код <em>должен</em> быть безопасным, но Rust в этом
-не уверен. И, на самом деле, он не является безопасным: так как у нас есть
-ссылка на <code>data</code> в каждом потоке, а поток становится владельцем ссылки, то у нас
-есть три владельца! Это плохо. Мы можем исправить это с помощью типа <code>Arc&lt;T&gt;</code>,
-который является атомарным указателем со счетчиком ссылок. &#39;атомарный&#39; означает,
-что им безопасно можно обмениваться между потоками.</p>
-
-<p><code>Arc&lt;T&gt;</code> предполагает наличие еще одного свойства у своего содержимого, чтобы
-гарантировать, что его можно безопасно использовать из нескольких потоков: он
-предполагает, что его содержимое реализует трейт <code>Sync</code>. В нашем случае мы также
-хотим, чтобы была возможность изменять значение содержимого. Нам нужен тип,
-который может обеспечить возможность изменения своего содержимого лишь одиним
-пользователем единовременно. Для этого мы можем использовать тип <code>Mutex&lt;T&gt;</code>. Вот
-вторая версия нашего кода. Она по-прежнему не работает, но по другой причине:</p>
-<span class='rusttest'>use std::thread;
+не уверен. И, на самом деле, он не является безопасным: мы работаем с <code>data</code> в
+каждом потоке. При этом, поток становится владельцем того, что он получает как
+часть окружения замыкания. А это значит, что у нас есть три владельца! Это
+плохо. Мы можем исправить это с помощью типа <code>Arc&lt;T&gt;</code>, который является
+атомарным указателем со счетчиком ссылок. «Атомарный» означает, что им безопасно
+обмениваться между потоками.</p>
+<p>Чтобы гарантировать, что его можно безопасно использовать из нескольких потоков,
+<code>Arc&lt;T&gt;</code> предполагает наличие еще одного свойства у вложенного типа. Он
+предполагает, что <code>T</code> реализует типаж <code>Sync</code>. В нашем случае мы также хотим,
+чтобы была возможность изменять вложенное значение. Нам нужен тип, который может
+обеспечить изменение своего содержимого лишь одним пользователем одновременно.
+Для этого мы можем использовать тип <code>Mutex&lt;T&gt;</code>. Вот вторая версия нашего кода.
+Она по-прежнему не работает, но по другой причине:</p>
+<pre><code class="language-ignore">use std::thread;
 use std::sync::Mutex;
 
 fn main() {
@@ -385,49 +209,25 @@ fn main() {
 
     thread::sleep_ms(50);
 }
-</span><pre id='rust-example-rendered' class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>thread</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>Mutex</span>;
-
-<span class='kw'>fn</span> <span class='ident'>main</span>() {
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>data</span> <span class='op'>=</span> <span class='ident'>Mutex</span>::<span class='ident'>new</span>(<span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>1u32</span>, <span class='number'>2</span>, <span class='number'>3</span>]);
-
-    <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='number'>0</span>..<span class='number'>3</span> {
-        <span class='kw'>let</span> <span class='ident'>data</span> <span class='op'>=</span> <span class='ident'>data</span>.<span class='ident'>lock</span>().<span class='ident'>unwrap</span>();
-        <span class='ident'>thread</span>::<span class='ident'>spawn</span>(<span class='kw'>move</span> <span class='op'>||</span> {
-            <span class='ident'>data</span>[<span class='ident'>i</span>] <span class='op'>+=</span> <span class='number'>1</span>;
-        });
-    }
-
-    <span class='ident'>thread</span>::<span class='ident'>sleep_ms</span>(<span class='number'>50</span>);
-}
-</pre>
-
+</code></pre>
 <p>Вот ошибка:</p>
-
-<pre><code class="language-text">&lt;anon&gt;:9:9: 9:22 error: the trait `core::marker::Send` is not implemented for the type `std::sync::mutex::MutexGuard&lt;&#39;_, collections::vec::Vec&lt;u32&gt;&gt;` [E0277]
+<pre><code class="language-text">&lt;anon&gt;:9:9: 9:22 error: the trait `core::marker::Send` is not implemented for the type `std::sync::mutex::MutexGuard&lt;'_, collections::vec::Vec&lt;u32&gt;&gt;` [E0277]
 &lt;anon&gt;:11         thread::spawn(move || {
                   ^~~~~~~~~~~~~
-&lt;anon&gt;:9:9: 9:22 note: `std::sync::mutex::MutexGuard&lt;&#39;_, collections::vec::Vec&lt;u32&gt;&gt;` cannot be sent between threads safely
+&lt;anon&gt;:9:9: 9:22 note: `std::sync::mutex::MutexGuard&lt;'_, collections::vec::Vec&lt;u32&gt;&gt;` cannot be sent between threads safely
 &lt;anon&gt;:11         thread::spawn(move || {
                   ^~~~~~~~~~~~~
 </code></pre>
-
-<p>Вы можете видеть, что <a href="../std/sync/struct.Mutex.html"><code>Mutex</code></a> содержит метод
-<a href="../std/sync/struct.Mutex.html#method.lock"><code>lock</code></a>, который имеет следующую
+<p>Вы можете видеть, что [<code>Mutex</code>](http://doc.rust-lang.org/std/sync/struct.Mutex.html) содержит метод
+[<code>lock</code>](http://doc.rust-lang.org/std/sync/struct.Mutex.html#method.lock), который имеет следующую
 сигнатуру:</p>
-<span class='rusttest'>fn main() {
-    fn lock(&amp;self) -&gt; LockResult&lt;MutexGuard&lt;T&gt;&gt;
-    
-}</span><pre id='rust-example-rendered' class='rust '>
-<span class='kw'>fn</span> <span class='ident'>lock</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>LockResult</span><span class='op'>&lt;</span><span class='ident'>MutexGuard</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span>
-</pre>
-
-<p>Так как трейт <code>Send</code> не был реализован для <code>MutexGuard&lt;T&gt;</code>, мы не можем
-перемещать гварда через границы потоков, что и сказано в сообщении об ошибке.</p>
-
+<pre><code class="language-ignore">fn lock(&amp;self) -&gt; LockResult&lt;MutexGuard&lt;T&gt;&gt;
+</code></pre>
+<p>Так как типаж <code>Send</code> не был реализован для <code>MutexGuard&lt;T&gt;</code>, мы не можем
+перемещать охранное значение мьютекса через границы потоков, что и сказано в
+сообщении об ошибке.</p>
 <p>Мы можем использовать <code>Arc&lt;T&gt;</code>, чтобы исправить это. Вот рабочая версия:</p>
-<span class='rusttest'>use std::sync::{Arc, Mutex};
+<pre><code class="language-rust">use std::sync::{Arc, Mutex};
 use std::thread;
 
 fn main() {
@@ -443,70 +243,40 @@ fn main() {
 
     thread::sleep_ms(50);
 }
-</span><pre id='rust-example-rendered' class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::{<span class='ident'>Arc</span>, <span class='ident'>Mutex</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>thread</span>;
-
-<span class='kw'>fn</span> <span class='ident'>main</span>() {
-    <span class='kw'>let</span> <span class='ident'>data</span> <span class='op'>=</span> <span class='ident'>Arc</span>::<span class='ident'>new</span>(<span class='ident'>Mutex</span>::<span class='ident'>new</span>(<span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>1u32</span>, <span class='number'>2</span>, <span class='number'>3</span>]));
-
-    <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='number'>0</span>..<span class='number'>3</span> {
-        <span class='kw'>let</span> <span class='ident'>data</span> <span class='op'>=</span> <span class='ident'>data</span>.<span class='ident'>clone</span>();
-        <span class='ident'>thread</span>::<span class='ident'>spawn</span>(<span class='kw'>move</span> <span class='op'>||</span> {
-            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>data</span> <span class='op'>=</span> <span class='ident'>data</span>.<span class='ident'>lock</span>().<span class='ident'>unwrap</span>();
-            <span class='ident'>data</span>[<span class='ident'>i</span>] <span class='op'>+=</span> <span class='number'>1</span>;
-        });
-    }
-
-    <span class='ident'>thread</span>::<span class='ident'>sleep_ms</span>(<span class='number'>50</span>);
-}
-</pre>
-
+</code></pre>
 <p>Теперь мы вызываем <code>clone()</code> для нашего <code>Arc</code>, что увеличивает внутренний
-счетчик. Затем эта ручка перемещается в новый поток. Давайте более подробно
-рассмотрим тело потока:</p>
-<span class='rusttest'>use std::sync::{Arc, Mutex};
-use std::thread;
-fn main() {
-    let data = Arc::new(Mutex::new(vec![1u32, 2, 3]));
-    for i in 0..3 {
-        let data = data.clone();
+счетчик. Затем полученная ссылка перемещается в новый поток. Давайте более
+подробно рассмотрим тело потока:</p>
+<pre><code class="language-rust"># use std::sync::{Arc, Mutex};
+# use std::thread;
+# fn main() {
+#     let data = Arc::new(Mutex::new(vec![1u32, 2, 3]));
+#     for i in 0..3 {
+#         let data = data.clone();
 thread::spawn(move || {
     let mut data = data.lock().unwrap();
     data[i] += 1;
 });
-    }
-    thread::sleep_ms(50);
-}
-</span><pre id='rust-example-rendered' class='rust '>
-<span class='ident'>thread</span>::<span class='ident'>spawn</span>(<span class='kw'>move</span> <span class='op'>||</span> {
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>data</span> <span class='op'>=</span> <span class='ident'>data</span>.<span class='ident'>lock</span>().<span class='ident'>unwrap</span>();
-    <span class='ident'>data</span>[<span class='ident'>i</span>] <span class='op'>+=</span> <span class='number'>1</span>;
-});
-</pre>
-
+#     }
+#     thread::sleep_ms(50);
+# }
+</code></pre>
 <p>Во-первых, мы вызываем метод <code>lock()</code>, который захватывает блокировку мьютекса.
-Так как вызов данного метода может потерпеть неудачу, то он возвращает
-<code>Result&lt;T, E&gt;</code>, но, поскольку это просто пример, мы используем <code>unwrap()</code>, чтобы
-получить ссылку на данные. Реальный код должен иметь более надежную обработку
-ошибок в такой ситуации. После этого мы свободно изменяем данные, так как у нас
-есть блокировка.</p>
-
-<p>Под конец мы запускаем короткий таймер, ожидающий некоторое время, отведенное
-для выполнения потоков. Но такой вариант не является идеальным: возможно, мы
-выбрали разумное время ожидания но, скорее всего, мы будем ждать либо больше чем
-нужно, либо меньше чем необходимо, в зависимости от того, сколько на самом деле
-времени потребуется потокам, чтобы закончить вычисления.</p>
-
-<p>Более точной альтернативой использованию таймера было бы использование одного из
-механизмов, предусмотренных стандартной библиотекой Rust для синхронизации
-потоков друг с другом. Давайте поговорим об одном из них: каналах.</p>
-
-<h2 id="Каналы" class='section-header'><a
-                           href="#Каналы">Каналы</a></h2>
-<p>Вот версия нашего кода, которая использует каналы для синхронизации, вместо того
-чтобы ждать в течение определенного времени:</p>
-<span class='rusttest'>use std::sync::{Arc, Mutex};
+Так как вызов данного метода может потерпеть неудачу, он возвращает <code>Result&lt;T, E&gt;</code>, но, поскольку это просто пример, мы используем <code>unwrap()</code>, чтобы получить
+ссылку на данные. Реальный код должен иметь более надежную обработку ошибок в
+такой ситуации. После этого мы свободно изменяем данные, так как у нас есть
+блокировка.</p>
+<p>Под конец мы ждём какое-то время, пока потоки отработают. Это не идеальный
+способ дождаться окончания их работы: возможно, мы выбрали разумное время
+ожидания но, скорее всего, мы будем ждать либо больше чем нужно, либо меньше чем
+нужно, в зависимости от того, сколько на самом деле времени потребуется
+потокам, чтобы закончить вычисления.</p>
+<p>Есть более точные способы синхронизации потоков, и несколько из них реализовано
+в стандартной библиотеке Rust. Давайте поговорим об одном из них: каналах.</p>
+<h2>Каналы</h2>
+<p>Вот версия нашего кода, которая использует для синхронизации каналы, вместо
+того, чтобы ждать в течение определенного времени:</p>
+<pre><code class="language-rust">use std::sync::{Arc, Mutex};
 use std::thread;
 use std::sync::mpsc;
 
@@ -530,41 +300,15 @@ fn main() {
         rx.recv();
     }
 }
-</span><pre id='rust-example-rendered' class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::{<span class='ident'>Arc</span>, <span class='ident'>Mutex</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>thread</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>mpsc</span>;
-
-<span class='kw'>fn</span> <span class='ident'>main</span>() {
-    <span class='kw'>let</span> <span class='ident'>data</span> <span class='op'>=</span> <span class='ident'>Arc</span>::<span class='ident'>new</span>(<span class='ident'>Mutex</span>::<span class='ident'>new</span>(<span class='number'>0u32</span>));
-
-    <span class='kw'>let</span> (<span class='ident'>tx</span>, <span class='ident'>rx</span>) <span class='op'>=</span> <span class='ident'>mpsc</span>::<span class='ident'>channel</span>();
-
-    <span class='kw'>for</span> _ <span class='kw'>in</span> <span class='number'>0</span>..<span class='number'>10</span> {
-        <span class='kw'>let</span> (<span class='ident'>data</span>, <span class='ident'>tx</span>) <span class='op'>=</span> (<span class='ident'>data</span>.<span class='ident'>clone</span>(), <span class='ident'>tx</span>.<span class='ident'>clone</span>());
-
-        <span class='ident'>thread</span>::<span class='ident'>spawn</span>(<span class='kw'>move</span> <span class='op'>||</span> {
-            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>data</span> <span class='op'>=</span> <span class='ident'>data</span>.<span class='ident'>lock</span>().<span class='ident'>unwrap</span>();
-            <span class='op'>*</span><span class='ident'>data</span> <span class='op'>+=</span> <span class='number'>1</span>;
-
-            <span class='ident'>tx</span>.<span class='ident'>send</span>(());
-        });
-    }
-
-    <span class='kw'>for</span> _ <span class='kw'>in</span> <span class='number'>0</span>..<span class='number'>10</span> {
-        <span class='ident'>rx</span>.<span class='ident'>recv</span>();
-    }
-}
-</pre>
-
-<p>Мы используем метод <code>mpsc::channel()</code>, чтобы построить новый канал. В этом
-примере мы в каждом из десяти потоков вызываем метод <code>send</code>, который передает по
-каналу простое значение <code>()</code>, а затем в главном потоке ждем, пока не будут
-приняты все десять значений.</p>
-
-<p>В то время как по этому каналу послается просто общий сигнал, в общем случае мы
-можем отправить по каналу любые данные, которые реализуют трейт <code>Send</code>!</p>
-<span class='rusttest'>use std::thread;
+</code></pre>
+<p>Мы используем метод <code>mpsc::channel()</code>, чтобы создать новый канал. В этом примере
+мы в каждом из десяти потоков вызываем метод <code>send</code>, который передает по каналу
+пустой кортеж <code>()</code>, а затем в главном потоке ждем, пока не будут приняты все
+десять значений.</p>
+<p>Хотя по этому каналу посылается просто сигнал (пустой кортеж <code>()</code> не несёт
+никаких данных), в общем случае мы можем отправить по каналу любое значение,
+которое реализует типаж <code>Send</code>!</p>
+<pre><code class="language-rust">use std::thread;
 use std::sync::mpsc;
 
 fn main() {
@@ -582,125 +326,64 @@ fn main() {
 
    rx.recv().ok().expect(&quot;Could not receive answer&quot;);
 }
-</span><pre id='rust-example-rendered' class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>thread</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>mpsc</span>;
-
-<span class='kw'>fn</span> <span class='ident'>main</span>() {
-    <span class='kw'>let</span> (<span class='ident'>tx</span>, <span class='ident'>rx</span>) <span class='op'>=</span> <span class='ident'>mpsc</span>::<span class='ident'>channel</span>();
-
-    <span class='kw'>for</span> _ <span class='kw'>in</span> <span class='number'>0</span>..<span class='number'>10</span> {
-        <span class='kw'>let</span> <span class='ident'>tx</span> <span class='op'>=</span> <span class='ident'>tx</span>.<span class='ident'>clone</span>();
-
-        <span class='ident'>thread</span>::<span class='ident'>spawn</span>(<span class='kw'>move</span> <span class='op'>||</span> {
-            <span class='kw'>let</span> <span class='ident'>answer</span> <span class='op'>=</span> <span class='number'>42u32</span>;
-
-            <span class='ident'>tx</span>.<span class='ident'>send</span>(<span class='ident'>answer</span>);
-        });
-    }
-
-   <span class='ident'>rx</span>.<span class='ident'>recv</span>().<span class='ident'>ok</span>().<span class='ident'>expect</span>(<span class='string'>&quot;Could not receive answer&quot;</span>);
-}
-</pre>
-
-<p><code>u32</code> реализует <code>Send</code> потому что мы можем сделать копию. Итак, создается поток,
-в котором вычисляется ответ, а затем этот ответ с помощью метода <code>send()</code>
-передается обратно по каналу.</p>
-
-<h2 id="Паника" class='section-header'><a
-                           href="#Паника">Паника</a></h2>
+</code></pre>
+<p><code>u32</code> реализует <code>Send</code>, потому что мы можем сделать копию. Итак, создаётся
+поток, в котором вычисляется ответ, а затем этот ответ с помощью метода <code>send()</code>
+передаётся обратно по каналу.</p>
+<h2>Паника</h2>
 <p><code>panic!</code> аварийно завершает выполняемый в данный момент поток. Вы можете
-использовать потоки Rust, как простой механизм изоляции:</p>
-<span class='rusttest'>fn main() {
-    use std::thread;
-    
-    let result = thread::spawn(move || {
-        panic!(&quot;oops!&quot;);
-    }).join();
-    
-    assert!(result.is_err());
-    
-}</span><pre id='rust-example-rendered' class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>thread</span>;
+использовать потоки Rust как простой механизм изоляции:</p>
+<pre><code class="language-rust">use std::thread;
 
-<span class='kw'>let</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>thread</span>::<span class='ident'>spawn</span>(<span class='kw'>move</span> <span class='op'>||</span> {
-    <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;oops!&quot;</span>);
-}).<span class='ident'>join</span>();
+let result = thread::spawn(move || {
+    panic!(&quot;oops!&quot;);
+}).join();
 
-<span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>result</span>.<span class='ident'>is_err</span>());
-</pre>
+assert!(result.is_err());
+</code></pre>
+<p>Используемый в коде выше метод <code>join()</code> структуры <code>Thread</code> возвращает <code>Result</code>,
+что позволяет нам проверить, паниковал ли поток, или он завершился нормально.</p>
 
-<p>Представленный в коде выше <code>Thread</code> возвращает <code>Result</code>, что позволяет нам
-проверить, произошло ли завершение потока в результате паники или нет.</p>
+                </div>
 
-    <script type="text/javascript">
-        window.playgroundUrl = "http://play.rust-lang.org";
-    </script>
-    
-<script type="text/javascript">
-document.addEventListener("DOMContentLoaded", function(event) {
-  document.getElementById("toggle-nav").onclick = toggleNav;
-  function toggleNav() {
-    var toc = document.getElementById("toc");
-    var pagewrapper = document.getElementById("page-wrapper");
-    toggleClass(toc, "mobile-hidden");
-    toggleClass(pagewrapper, "mobile-hidden");
-  };
+                <!-- Mobile navigation buttons -->
+                
+                    <a href="iterators.html" class="mobile-nav-chapters previous">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
 
-  function toggleClass(el, className) {
-     // from http://youmightnotneedjquery.com/
-     if (el.classList) {
-       el.classList.toggle(className);
-     } else {
-       var classes = el.className.split(' ');
-       var existingIndex = classes.indexOf(className);
+                
+                    <a href="error-handling.html" class="mobile-nav-chapters next">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
 
-       if (existingIndex >= 0) {
-         classes.splice(existingIndex, 1);
-       } else {
-         classes.push(className);
-       }
+            </div>
 
-       el.className = classes.join(' ');
-     }
-  }
+            
+                <a href="iterators.html" class="nav-chapters previous">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            
 
-  // The below code is used to add prev and next navigation links to the bottom
-  // of each of the sections.
-  // It works by extracting the current page based on the url and iterates over
-  // the menu links until it finds the menu item for the current page. We then
-  // create a copy of the preceding and following menu links and add the
-  // correct css class and insert them into the bottom of the page.
-  var toc = document.getElementById('toc').getElementsByTagName('a');
-  var href = document.location.pathname.split('/').pop();
-  if (href === 'index.html' || href === '') {
-    href = 'README.html';
-  }
+            
+                <a href="error-handling.html" class="nav-chapters next">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            
 
-  for (var i = 0; i < toc.length; i++) {
-    if (toc[i].attributes['href'].value.split('/').pop() === href) {
-      var nav = document.createElement('p');
-      if (i > 0) {
-        var prevNode = toc[i-1].cloneNode(true);
-        prevNode.className = 'left';
-        nav.appendChild(prevNode);
-      }
-      if (i < toc.length - 1) {
-        var nextNode = toc[i+1].cloneNode(true);
-        nextNode.className = 'right';
-        nav.appendChild(nextNode);
-      }
-      document.getElementById('page').appendChild(nav);
-      break;
-    }
-  }
-
-});
-</script>
-<script type="text/javascript" src="jquery.js"></script>
-<script type="text/javascript" src="playpen.js"></script>
-</div></div>
+        </div>
 
 
-</body>
+        <!-- Local fallback for Font Awesome -->
+        <script>
+            if ($(".fa").css("font-family") !== "FontAwesome") {
+                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
+            }
+        </script>
+
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+    </body>
 </html>

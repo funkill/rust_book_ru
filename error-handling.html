@@ -1,720 +1,1439 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="rustdoc">
-    <title>Обработка ошибок</title>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="{% block description %}{% endblock %}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" type="text/css" href="rust-book.css">
+        <base href="">
 
-    
-</head>
-<body class="rustdoc">
-    <!--[if lte IE 8]>
-    <div class="warning">
-        This old browser is unsupported and will most likely display funky
-        things.
-    </div>
-    <![endif]-->
+        <link rel="stylesheet" href="book.css">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 
-    <div id="nav">
-                <button id="toggle-nav">
-                  <span class="sr-only">Toggle navigation</span>
-                  <span class="bar"></span>
-                  <span class="bar"></span>
-                  <span class="bar"></span>
-                </button>
-              </div>
-<div id='toc' class='mobile-hidden'>
-<ul class='chapter'>
-<li><a href='README.html'><b>1.</b> Introduction</a>
-</li>
-<li><a href='INTRODUCTION.html'><b>2.</b> Введение</a>
-</li>
-<li><a href='getting-started.html'><b>3.</b> C чего начать</a>
-<ul class='section'>
-<li><a href='installing-rust.html'><b>3.1.</b> Установка Rust</a>
-</li>
-<li><a href='hello-world.html'><b>3.2.</b> Hello, world!</a>
-</li>
-<li><a href='hello-cargo.html'><b>3.3.</b> Hello, Cargo!</a>
-</li>
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+
+        <!-- MathJax -->
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- Fetch JQuery from CDN but have a local fallback -->
+        <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script>
+            if (typeof jQuery == 'undefined') {
+                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
+            }
+        </script>
+    </head>
+    <body>
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme = localStorage.getItem('theme');
+            if (theme == null) { theme = 'light'; }
+            $('body').removeClass().addClass(theme);
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var sidebar = localStorage.getItem('sidebar');
+            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
+            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
+        </script>
+
+        <div id="sidebar" class="sidebar">
+            <ul class="chapter"><li><a href="INTRODUCTION.html"><strong>1.</strong> Введение</a></li><li><a href="getting-started.html"><strong>2.</strong> C чего начать</a></li><li><ul class="section"><li><a href="installing-rust.html"><strong>2.1.</strong> Установка Rust</a></li><li><a href="hello-world.html"><strong>2.2.</strong> Привет, мир!</a></li><li><a href="hello-cargo.html"><strong>2.3.</strong> Hello, Cargo!</a></li></ul></li><li><a href="learn-rust.html"><strong>3.</strong> Изучение Rust</a></li><li><ul class="section"><li><a href="guessing-game.html"><strong>3.1.</strong> Угадайка</a></li><li><a href="dining-philosophers.html"><strong>3.2.</strong> Обедающие философы</a></li><li><a href="rust-inside-other-languages.html"><strong>3.3.</strong> Вызов кода на Rust из других языков</a></li></ul></li><li><a href="effective-rust.html"><strong>4.</strong> Эффективное использование Rust</a></li><li><ul class="section"><li><a href="the-stack-and-the-heap.html"><strong>4.1.</strong> Стек и куча</a></li><li><a href="testing.html"><strong>4.2.</strong> Тестирование</a></li><li><a href="conditional-compilation.html"><strong>4.3.</strong> Условная компиляция</a></li><li><a href="documentation.html"><strong>4.4.</strong> Документация</a></li><li><a href="iterators.html"><strong>4.5.</strong> Итераторы</a></li><li><a href="concurrency.html"><strong>4.6.</strong> Многозадачность</a></li><li><a href="error-handling.html" class="active"><strong>4.7.</strong> Обработка ошибок</a></li><li><a href="choosing-your-guarantees.html"><strong>4.8.</strong> Выбор гарантий</a></li><li><a href="ffi.html"><strong>4.9.</strong> Интерфейс внешних функций (FFI)</a></li><li><a href="borrow-and-asref.html"><strong>4.10.</strong> Типажи `Borrow` и `AsRef`</a></li><li><a href="release-channels.html"><strong>4.11.</strong> Каналы сборок</a></li></ul></li><li><a href="syntax-and-semantics.html"><strong>5.</strong> Синтаксис и семантика</a></li><li><ul class="section"><li><a href="variable-bindings.html"><strong>5.1.</strong> Связывание имён</a></li><li><a href="functions.html"><strong>5.2.</strong> Функции</a></li><li><a href="primitive-types.html"><strong>5.3.</strong> Простые типы</a></li><li><a href="comments.html"><strong>5.4.</strong> Комментарии</a></li><li><a href="if.html"><strong>5.5.</strong> Конструкция `if`</a></li><li><a href="loops.html"><strong>5.6.</strong> Циклы</a></li><li><a href="ownership.html"><strong>5.7.</strong> Владение</a></li><li><a href="references-and-borrowing.html"><strong>5.8.</strong> Ссылки и заимствование</a></li><li><a href="lifetimes.html"><strong>5.9.</strong> Время жизни</a></li><li><a href="mutability.html"><strong>5.10.</strong> Изменяемость (mutability)</a></li><li><a href="structs.html"><strong>5.11.</strong> Структуры</a></li><li><a href="enums.html"><strong>5.12.</strong> Перечисления</a></li><li><a href="match.html"><strong>5.13.</strong> Конструкция `match`</a></li><li><a href="patterns.html"><strong>5.14.</strong> Шаблоны сопоставления `match`</a></li><li><a href="method-syntax.html"><strong>5.15.</strong> Синтаксис методов</a></li><li><a href="vectors.html"><strong>5.16.</strong> Вектора</a></li><li><a href="strings.html"><strong>5.17.</strong> Строки</a></li><li><a href="generics.html"><strong>5.18.</strong> Обобщённое программирование</a></li><li><a href="traits.html"><strong>5.19.</strong> Типажи</a></li><li><a href="drop.html"><strong>5.20.</strong> Типаж `Drop` (сброс)</a></li><li><a href="if-let.html"><strong>5.21.</strong> Конструкция `if let`</a></li><li><a href="trait-objects.html"><strong>5.22.</strong> Типажи-объекты</a></li><li><a href="closures.html"><strong>5.23.</strong> Замыкания</a></li><li><a href="ufcs.html"><strong>5.24.</strong> Универсальный синтаксис вызова функций (UFCS)</a></li><li><a href="crates-and-modules.html"><strong>5.25.</strong> Контейнеры (crates) и модули (modules)</a></li><li><a href="const-and-static.html"><strong>5.26.</strong> `const` и `static`</a></li><li><a href="attributes.html"><strong>5.27.</strong> Атрибуты</a></li><li><a href="type-aliases.html"><strong>5.28.</strong> Псевдонимы типов</a></li><li><a href="casting-between-types.html"><strong>5.29.</strong> Приведение типов</a></li><li><a href="associated-types.html"><strong>5.30.</strong> Ассоциированные типы</a></li><li><a href="unsized-types.html"><strong>5.31.</strong> Безразмерные типы</a></li><li><a href="operators-and-overloading.html"><strong>5.32.</strong> Перегрузка операций</a></li><li><a href="deref-coercions.html"><strong>5.33.</strong> Преобразования при разыменовании (deref coercions)</a></li><li><a href="macros.html"><strong>5.34.</strong> Макросы</a></li><li><a href="raw-pointers.html"><strong>5.35.</strong> Сырые указатели</a></li><li><a href="unsafe.html"><strong>5.36.</strong> Небезопасный код</a></li></ul></li><li><a href="nightly-rust.html"><strong>6.</strong> Нестабильные возможности Rust</a></li><li><ul class="section"><li><a href="compiler-plugins.html"><strong>6.1.</strong> Плагины к компилятору</a></li><li><a href="inline-assembly.html"><strong>6.2.</strong> Встроенный ассемблерный код</a></li><li><a href="no-stdlib.html"><strong>6.3.</strong> Без stdlib</a></li><li><a href="intrinsics.html"><strong>6.4.</strong> Внутренние средства (intrinsics)</a></li><li><a href="lang-items.html"><strong>6.5.</strong> Элементы языка (lang items)</a></li><li><a href="advanced-linking.html"><strong>6.6.</strong> Продвинутое руководство по компоновке (advanced linking)</a></li><li><a href="benchmark-tests.html"><strong>6.7.</strong> Тесты производительности</a></li><li><a href="box-syntax-and-patterns.html"><strong>6.8.</strong> Синтаксис упаковки и шаблоны `match`</a></li><li><a href="slice-patterns.html"><strong>6.9.</strong> Шаблоны `match` для срезов</a></li><li><a href="associated-constants.html"><strong>6.10.</strong> Ассоциированные константы</a></li><li><a href="custom-allocators.html"><strong>6.11.</strong> Пользовательские менеджеры памяти</a></li></ul></li><li><a href="glossary.html"><strong>7.</strong> Глоссарий</a></li><li><a href="academic-research.html"><strong>8.</strong> Академические исследования</a></li></ul>
+        </div>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar" class="menu-bar">
+                    <div class="left-buttons">
+                        <i id="sidebar-toggle" class="fa fa-bars"></i>
+                        <i id="theme-toggle" class="fa fa-paint-brush"></i>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <i id="print-button" class="fa fa-print" title="Print this book"></i>
+                    </div>
+                </div>
+
+                <div id="content" class="content">
+                    <p>% Обработка ошибок</p>
+<p>Как и многие языки программирования, Rust призывает разработчика определенным
+способом обрабатывать ошибки. Вообще, существует два общих подхода
+обработки ошибок: с помощью исключений и через возвращаемые значения. И Rust
+предпочитает возвращаемые значения.</p>
+<p>В этой главе мы намерены подробно изложить работу с ошибками в Rust. Более того,
+мы попробуем раз за разом погружаться в обработку ошибок с различных сторон, так
+что под конец у вас будет уверенное практическое представление о том, как все
+это сходится воедино.</p>
+<p>В наивной реализации обработка ошибок в Rust может выглядеть многословной и
+раздражающей. Мы рассмотрим основные камни преткновения, а также
+продемонстрируем, как сделать обработку ошибок лаконичной и удобной, пользуясь
+стандартной библиотекой.</p>
+<h1>Содержание</h1>
+<p>Эта глава очень длинная, в основном потому, что мы начнем с самого начала
+— рассмотрения типов-сумм (sum type) и комбинаторов, и далее попытаемся
+последовательно объяснить подход Rust к обработке ошибок. Так что разработчики,
+которые имеют опыт работы с другими выразительными системами типов, могут
+свободно перескакивать от раздела к разделу.</p>
+<ul>
+<li><a href="#the-basics">Основы</a>
+<ul>
+<li>[Объяснение <code>unwrap</code>](#unwrapping-explained)</li>
+<li>[Тип <code>Option</code>](#the-option-type)
+<ul>
+<li>[Совмещение значений <code>Option&lt;T&gt;</code>](#composing-optiont-values)</li>
 </ul>
 </li>
-<li><a href='learn-rust.html'><b>4.</b> Изучение Rust</a>
-<ul class='section'>
-<li><a href='guessing-game.html'><b>4.1.</b> Угадайка</a>
-</li>
+<li>[Тип <code>Result</code>](#the-result-type)
+<ul>
+<li><a href="#parsing-integers">Преобразование строки в число</a></li>
+<li>[Создание псевдонима типа <code>Result</code>](#the-result-type-alias-idiom)</li>
 </ul>
 </li>
-<li><a href='effective-rust.html'><b>5.</b> Эффективное использование Rust</a>
-<ul class='section'>
-<li><a href='the-stack-and-the-heap.html'><b>5.1.</b> Стек и Куча</a>
-</li>
-<li><a href='testing.html'><b>5.2.</b> Тестирование</a>
-</li>
-<li><a href='conditional-compilation.html'><b>5.3.</b> Условная компиляция</a>
-</li>
-<li><a href='documentation.html'><b>5.4.</b> Документация</a>
-</li>
-<li><a href='iterators.html'><b>5.5.</b> Итераторы</a>
-</li>
-<li><a href='concurrency.html'><b>5.6.</b> Многозадачность</a>
-</li>
-<li><a href='error-handling.html'><b>5.7.</b> Обработка ошибок</a>
-</li>
-<li><a href='ffi.html'><b>5.8.</b> Интерфейс внешних функций (FFI)</a>
-</li>
-<li><a href='release-channels.html'><b>5.9.</b> Каналы сборок</a>
-</li>
+<li><a href="#a-brief-interlude-unwrapping-isnt-evil">Короткое отступление: <code>unwrap</code> — не обязательно зло</a></li>
 </ul>
 </li>
-<li><a href='syntax-and-semantics.html'><b>6.</b> Синтаксис и семантика</a>
-<ul class='section'>
-<li><a href='variable-bindings.html'><b>6.1.</b> Связывание переменных</a>
-</li>
-<li><a href='functions.html'><b>6.2.</b> Функции</a>
-</li>
-<li><a href='primitive-types.html'><b>6.3.</b> Простые типы</a>
-</li>
-<li><a href='comments.html'><b>6.4.</b> Комментарии</a>
-</li>
-<li><a href='if.html'><b>6.5.</b> Конструкция `if`</a>
-</li>
-<li><a href='for-loops.html'><b>6.6.</b> Циклы `for`</a>
-</li>
-<li><a href='while-loops.html'><b>6.7.</b> Циклы `while`</a>
-</li>
-<li><a href='ownership.html'><b>6.8.</b> Владение</a>
-</li>
-<li><a href='references-and-borrowing.html'><b>6.9.</b> Ссылки и Заимствование</a>
-</li>
-<li><a href='lifetimes.html'><b>6.10.</b> Время жизни</a>
-</li>
-<li><a href='mutability.html'><b>6.11.</b> Изменяемость (Мутабельность)</a>
-</li>
-<li><a href='enums.html'><b>6.12.</b> Перечисления</a>
-</li>
-<li><a href='match.html'><b>6.13.</b> Конструкция `match`</a>
-</li>
-<li><a href='structs.html'><b>6.14.</b> Структуры</a>
-</li>
-<li><a href='patterns.html'><b>6.15.</b> Шаблоны `match`</a>
-</li>
-<li><a href='method-syntax.html'><b>6.16.</b> Синтаксис методов</a>
-</li>
-<li><a href='vectors.html'><b>6.17.</b> Вектора</a>
-</li>
-<li><a href='strings.html'><b>6.18.</b> Строки</a>
-</li>
-<li><a href='generics.html'><b>6.19.</b> Дженерики</a>
-</li>
-<li><a href='traits.html'><b>6.20.</b> Трейты</a>
-</li>
-<li><a href='drop.html'><b>6.21.</b> Трейт `Drop`</a>
-</li>
-<li><a href='if-let.html'><b>6.22.</b> Конструкция `if let`</a>
-</li>
-<li><a href='trait-objects.html'><b>6.23.</b> Трейт объекты</a>
-</li>
-<li><a href='closures.html'><b>6.24.</b> Замыкания</a>
-</li>
-<li><a href='ufcs.html'><b>6.25.</b> Универсальный синтаксис вызова функций (UFCS)</a>
-</li>
-<li><a href='crates-and-modules.html'><b>6.26.</b> Контейнеры и Модули</a>
-</li>
-<li><a href='const-and-static.html'><b>6.27.</b> `const` и `static`</a>
-</li>
-<li><a href='tuple-structs.html'><b>6.28.</b> Кортежные структуры</a>
-</li>
-<li><a href='attributes.html'><b>6.29.</b> Атрибуты</a>
-</li>
-<li><a href='type-aliases.html'><b>6.30.</b> Псевдонимы типов</a>
-</li>
-<li><a href='casting-between-types.html'><b>6.31.</b> Преобразование типов</a>
-</li>
-<li><a href='associated-types.html'><b>6.32.</b> Ассоциированные типы</a>
-</li>
-<li><a href='unsized-types.html'><b>6.33.</b> Безразмерные типы</a>
-</li>
-<li><a href='operators-and-overloading.html'><b>6.34.</b> Operators and Overloading</a>
-</li>
-<li><a href='deref-coercions.html'><b>6.35.</b> Трейт `Deref`</a>
-</li>
-<li><a href='macros.html'><b>6.36.</b> Макросы</a>
-</li>
-<li><a href='raw-pointers.html'><b>6.37.</b> Сырые указатели</a>
-</li>
-<li><a href='unsafe.html'><b>6.38.</b> `unsafe` код</a>
-</li>
+<li><a href="#working-with-multiple-error-types">Работа с несколькими типами ошибок</a>
+<ul>
+<li>[Совмещение <code>Option</code> и <code>Result</code>](#composing-option-and-result)</li>
+<li><a href="#the-limits-of-combinators">Ограничения комбинаторов</a></li>
+<li>[Преждевременный <code>return</code>](#early-returns)</li>
+<li>[Макрос <code>try!</code>](#the-try-macro)</li>
+<li><a href="#defining-your-own-error-type">Объявление собственного типа ошибки</a></li>
 </ul>
 </li>
-<li><a href='nightly-rust.html'><b>7.</b> Нестабильные фичи Rust</a>
-<ul class='section'>
-<li><a href='compiler-plugins.html'><b>7.1.</b> Плагины компилятора</a>
-</li>
-<li><a href='inline-assembly.html'><b>7.2.</b> Встроенный ассемблерный код</a>
-</li>
-<li><a href='no-stdlib.html'><b>7.3.</b> Без stdlib</a>
-</li>
-<li><a href='intrinsics.html'><b>7.4.</b> Внутренние средства</a>
-</li>
-<li><a href='lang-items.html'><b>7.5.</b> Lang items</a>
-</li>
-<li><a href='link-args.html'><b>7.6.</b> Аргументы линковки</a>
-</li>
-<li><a href='benchmark-tests.html'><b>7.7.</b> Тесты производительности</a>
-</li>
-<li><a href='box-syntax-and-patterns.html'><b>7.8.</b> Синтаксис упаковки и шаблоны `match`</a>
-</li>
-<li><a href='slice-patterns.html'><b>7.9.</b> Шаблоны `match` для срезов</a>
-</li>
-<li><a href='associated-constants.html'><b>7.10.</b> Ассоциированные константы</a>
-</li>
+<li><a href="#standard-library-traits-used-for-error-handling">Типажи из стандартной библиотеки, используемые для обработки ошибок</a>
+<ul>
+<li>[Типаж <code>Error</code>](#the-error-trait)</li>
+<li>[Типаж <code>From</code>](#the-from-trait)</li>
+<li>[Настоящий макрос <code>try!</code>](#the-real-try-macro)</li>
+<li><a href="#composing-custom-error-types">Совмещение собственных типов ошибок</a></li>
+<li><a href="#advice-for-library-writers">Рекомендации для авторов библиотек</a></li>
 </ul>
 </li>
-<li><a href='glossary.html'><b>8.</b> Глоссарий</a>
-</li>
-<li><a href='academic-research.html'><b>9.</b> Академические исследования</a>
-</li>
+<li>Практический пример: Программа для чтения демографических данных</li>
+<li><a href="#the-short-story">Заключение</a></li>
 </ul>
-</div>
-<div id='page-wrapper'>
-<div id='page'>
-
-
-    <h1 class="title">Обработка ошибок</h1>
-    <blockquote>
-<p>Лучшие планы мышей и людей
-Часто идут вкривь и вкось</p>
-
-<p>&quot;К полевой мыши&quot;, Роберт Бернс</p>
-</blockquote>
-
-<p>Иногда что-то может пойти не так. Очень важно иметь план действий на тот случай,
-когда это неизбежно произойдет. Rust имеет богатую поддержку для обработки
-ошибок, которые могут (давайте будем честны: будут) происходить в ваших
-программах.</p>
-
-<p>Есть два основных типа ошибок, которые могут возникнуть в ваших программах:
-неудачи (failures), и паники (panics). Давайте поговорим о разнице между ними, а
-затем обсудим, как справиться с каждой из них. Затем мы обсудим преобразование
-неудачи в панику.</p>
-
-<h1 id="Неудача-и-Паника" class='section-header'><a
-                           href="#Неудача-и-Паника">Неудача и Паника</a></h1>
-<p>Rust использует два понятия, чтобы различать два типа ошибок: неудачи и паники.
-<em>Неудача</em> - это ошибка, после которой, в некоторых случаях, может быть
-восстановлена работоспособность программы. <em>Паника</em> - это ошибка, после которой
-работоспособность программы не может быть восстановлена.</p>
-
-<p>Что мы подразумеваем под понятием &quot;восстановить&quot;? В большинстве случаев,
-возможность возникновения ошибок ожидаема. Например, рассмотрим функцию <code>parse</code>:</p>
-<span class='rusttest'>fn main() {
-    &quot;5&quot;.parse();
-    
-}</span><pre id='rust-example-rendered' class='rust '>
-<span class='string'>&quot;5&quot;</span>.<span class='ident'>parse</span>();
-</pre>
-
-<p>Этот метод преобразует строку в другой тип. Но, так как это строка, вы не можете
-быть уверены, что преобразование пройдет успешно. Например, во что должно быть
-преобразовано следующее?</p>
-<span class='rusttest'>fn main() {
-    &quot;hello5world&quot;.parse();
-    
-}</span><pre id='rust-example-rendered' class='rust '>
-<span class='string'>&quot;hello5world&quot;</span>.<span class='ident'>parse</span>();
-</pre>
-
-<p>Это не будет работать. Итак, мы знаем, что эта функция будет работать только при
-некоторых входных данных. Это ожидаемое поведение. Мы называем такой тип ошибок
-<em>неудача</em>.</p>
-
-<p>С другой стороны, иногда есть ошибки, которые являются неожиданными, или после
-которых мы не можем восстановить работоспособность программы. Классическим
-примером является <code>assert!</code>:</p>
-<span class='rusttest'>fn main() {
-    let x = 5;
-    assert!(x == 5);
-    
-}</span><pre id='rust-example-rendered' class='rust '>
-<span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>x</span> <span class='op'>==</span> <span class='number'>5</span>);
-</pre>
-
-<p>Мы используем <code>assert!</code>, чтобы заявить, что что-то не верно. Если это не верно,
-то что-то очень неправильно. Настолько неправильно, что мы не можем продолжать
-работу программы в текущем состоянии. Другой пример - использование макроса
-<code>unreachable!()</code>:</p>
-<span class='rusttest'>enum Event {
-    NewRelease,
+<p><a name="the-basics"></a></p>
+<h1>Основы</h1>
+<p>Обработку ошибок можно рассматривать как <em>вариативный анализ</em> того, было ли
+некоторое вычисление выполнено успешно или нет. Как будет показано далее,
+ключом к удобству обработки ошибок является сокращение количества явного
+вариативного анализа, который должен выполнять разработчик, сохраняя при этом
+код легко сочетаемым с другим кодом (composability).</p>
+<p><em>(Примечание переводчика: Вариативный анализ – это один из наиболее
+общеприменимых методов аналитического  мышления, который заключается в
+рассмотрении проблемы, вопроса или некоторой ситуации с точки зрения каждого
+возможного конкретного случая. При этом рассмотрение по отдельности каждого
+такого случая является достаточным для того, чтобы решить первоначальный
+вопрос.</em></p>
+<p><em>Важным аспектом такого подхода к решению проблем является то, что такой анализ
+должен быть исчерпывающим (exhaustive). Другими словами, при использовании
+вариативного анализа должны быть рассмотрены все возможные случаи.</em></p>
+<p><em>В Rust вариативный анализ реализуется с помощью синтаксической конструкции
+[<code>match</code>](match.html). При этом компилятор гарантирует, что такой анализ будет
+исчерпывающим: если разработчик не рассмотрит все возможные варианты заданного
+значения, программа не будет скомпилирована.)</em></p>
+<p>Сохранять сочетаемость кода важно, потому что без этого требования
+мы могли бы просто получать [<code>panic</code>](http://doc.rust-lang.org/std/macro.panic!.html) всякий раз,
+когда мы сталкивались бы с чем-то неожиданным. (<code>panic</code> вызывает прерывание
+текущего потока и, в большинстве случаев, приводит к завершению всей программы.)
+Вот пример:</p>
+<pre><code class="language-rust,should_panic">// Попробуйте угадать число от 1 до 10.
+// Если заданное число соответствует тому, что мы загадали, возвращается true.
+// В противном случае возвращается false.
+fn guess(n: i32) -&gt; bool {
+    if n &lt; 1 || n &gt; 10 {
+        panic!(&quot;Неверное число: {}&quot;, n);
+    }
+    n == 5
 }
 
-fn probability(_: &amp;Event) -&gt; f64 {
-    // real implementation would be more complex, of course
-    0.95
+fn main() {
+    guess(11);
+}
+</code></pre>
+<p>Если попробовать запустить этот код, то программа аварийно завершится с
+сообщением вроде этого:</p>
+<pre><code class="language-text">thread '&lt;main&gt;' panicked at 'Неверное число: 11', src/bin/panic-simple.rs:6
+</code></pre>
+<p>Вот другой, менее надуманный пример. Программа, которая принимает число в
+качестве аргумента, удваивает его значение и печатает на экране.</p>
+<p><a name="code-unwrap-double"></a></p>
+<pre><code class="language-rust,should_panic">use std::env;
+
+fn main() {
+    let mut argv = env::args();
+    let arg: String = argv.nth(1).unwrap(); // ошибка 1
+    let n: i32 = arg.parse().unwrap();      // ошибка 2
+    println!(&quot;{}&quot;, 2 * n);
+}
+</code></pre>
+<p>Если вы запустите эту программу без параметров (ошибка 1) или если первый
+параметр будет не целым числом (ошибка 2), программа завершится паникой, так же,
+как и в первом примере.</p>
+<p>Обработка ошибок в подобном стиле подобна слону в посудной лавке. Слон будет
+нестись в направлении, в котором ему вздумается, и крушить все на своем пути.</p>
+<p><a name="unwrapping-explained"></a></p>
+<h2>Объяснение <code>unwrap</code></h2>
+<p>В предыдущем примере мы утверждали, что программа будет просто паниковать,
+если будет выполнено одно из двух условий для возникновения ошибки, хотя,
+в отличии от первого примера, в коде программы нет явного вызова <code>panic</code>.
+Тем не менее, вызов <code>panic</code> встроен в вызов <code>unwrap</code>.</p>
+<p>Вызывать <code>unwrap</code> в Rust подобно тому, что сказать: &quot;Верни мне результат
+вычислений, а если произошла ошибка, просто паникуй и останавливай программу&quot;.
+Мы могли бы просто показать исходный код функции <code>unwrap</code>, ведь это довольно
+просто, но перед этим мы должны разобратся с типами <code>Option</code> и <code>Result</code>. Оба
+этих типа имеют определенный для них метод <code>unwrap</code>.</p>
+<p><a name="the-option-type"></a></p>
+<h3>Тип <code>Option</code></h3>
+<p>Тип <code>Option</code> <a href="http://doc.rust-lang.org/std/option/enum.Option.html">объявлен в стандартной библиотеке</a>:</p>
+<pre><code class="language-rust">enum Option&lt;T&gt; {
+    None,
+    Some(T),
+}
+</code></pre>
+<p>Тип <code>Option</code> — это способ выразить <em>возможность отсутствия</em> чего бы то ни было,
+используя систему типов Rust. Выражение <em>возможности отсутствия</em> через систему
+типов является важной концепцией, поскольку такой подход позволяет компилятору
+требовать от разработчика обрабатывать такое отсутствие. Давайте взглянем на
+пример, который пытается найти символ в строке:</p>
+<p><a name="code-option-ex-string-find"></a></p>
+<pre><code class="language-rust">// Поиск Unicode-символа `needle` в `haystack`. Когда первый символ найден,
+// возвращается побайтовое смещение для этого символа. Иначе возвращается `None`.
+fn find(haystack: &amp;str, needle: char) -&gt; Option&lt;usize&gt; {
+    for (offset, c) in haystack.char_indices() {
+        if c == needle {
+            return Some(offset);
+        }
+    }
+    None
+}
+</code></pre>
+<p>Обратите внимание, что когда эта функция находит соответствующий символ, она
+возвращает не просто <code>offset</code>. Вместо этого она возвращает <code>Some(offset)</code>.
+<code>Some</code> — это вариант или <em>конструктор значения</em> для типа <code>Option</code>.
+Его можно интерпретировать как функцию типа <code>fn&lt;T&gt;(value: T) -&gt; Option&lt;T&gt;</code>.
+Соответственно, <code>None</code> — это также конструктор значения, только у него нет
+параметров. Его можно интерпретировать как функцию типа <code>fn&lt;T&gt;() -&gt; Option&lt;T&gt;</code>.</p>
+<p>Может показаться, что мы подняли много шума из ничего, но это только половина
+истории. Вторая половина — это <em>использование</em> функции <code>find</code>, которую мы
+написали. Давайте попробуем использовать ее, чтобы найти расширение
+в имени файла.</p>
+<pre><code class="language-rust"># fn find(_: &amp;str, _: char) -&gt; Option&lt;usize&gt; { None }
+fn main() {
+    let file_name = &quot;foobar.rs&quot;;
+    match find(file_name, '.') {
+        None =&gt; println!(&quot;Расширение файла не найдено.&quot;),
+        Some(i) =&gt; println!(&quot;Расширение файла: {}&quot;, &amp;file_name[i+1..]),
+    }
+}
+</code></pre>
+<p>Этот код использует <a href="patterns.html">сопоставление с образцом</a> чтобы выполнить <em>вариативный
+анализ</em> для возвращаемого функцией <code>find</code> значения <code>Option&lt;usize&gt;</code>. На самом
+деле, вариативный анализ является единственным способом добраться до значения,
+сохраненного внутри <code>Option&lt;T&gt;</code>. Это означает, что вы, как разработчик, обязаны
+обработать случай, когда значение <code>Option&lt;T&gt;</code> равно <code>None</code>, а не <code>Some(t)</code>.</p>
+<p>Но подождите, как насчет <code>unwrap</code>, который мы [<code>до этого</code>](#code-unwrap-double)
+использовали? Там не было никакого вариативного анализа! Вместо этого,
+вариативный анализ был перемещен внутрь метода <code>unwrap</code>. Вы можете сделать это
+самостоятельно, если захотите:</p>
+<p><a name="code-option-def-unwrap"></a></p>
+<pre><code class="language-rust">enum Option&lt;T&gt; {
+    None,
+    Some(T),
 }
 
-fn descriptive_probability(event: Event) -&gt; &amp;&#39;static str {
-    match probability(&amp;event) {
-        1.00 =&gt; &quot;certain&quot;,
-        0.00 =&gt; &quot;impossible&quot;,
-        0.00 ... 0.25 =&gt; &quot;very unlikely&quot;,
-        0.25 ... 0.50 =&gt; &quot;unlikely&quot;,
-        0.50 ... 0.75 =&gt; &quot;likely&quot;,
-        0.75 ... 1.00 =&gt; &quot;very likely&quot;,
+impl&lt;T&gt; Option&lt;T&gt; {
+    fn unwrap(self) -&gt; T {
+        match self {
+            Option::Some(val) =&gt; val,
+            Option::None =&gt;
+              panic!(&quot;called `Option::unwrap()` on a `None` value&quot;),
+        }
+    }
+}
+</code></pre>
+<p>Метод <code>unwrap</code> <em>абстрагирует вариативный анализ</em>. Это именно то, что делает
+<code>unwrap</code> удобным в использовании. К сожалению, <code>panic!</code> означает, что <code>unwrap</code>
+неудобно сочетать с другим кодом: это слон в посудной лавке.</p>
+<p><a name="composing-optiont-values"></a></p>
+<h3>Совмещение значений <code>Option&lt;T&gt;</code></h3>
+<p>В <a href="#code-option-ex-string-find">предыдущем примере</a> мы рассмотрели, как
+можно воспользоватся <code>find</code> для того, чтобы получить расширение имени файла.
+Конечно, не во всех именах файлов можно найти <code>.</code>, так что существует
+вероятность, что имя некоторого файла не имеет расширения. Эта <em>возможность
+отсутствия</em> интерпретируется на уровне типов через использование <code>Option&lt;T&gt;</code>.
+Другими словами, компилятор заставит нас рассмотреть возможность того, что
+расширение не существует. В нашем случае мы просто печатаем сообщение об этом.</p>
+<p>Получение расширения имени файла — довольно распространенная операция,
+так что имеет смысл вынести код в отдельную функцию:</p>
+<pre><code class="language-rust"># fn find(_: &amp;str, _: char) -&gt; Option&lt;usize&gt; { None }
+// Возвращает расширение заданного имени файла, а именно все символы,
+// идущие за первым вхождением `.` в имя файла.
+// Если в `file_name` нет ни одного вхождения `.`, возвращается `None`.
+fn extension_explicit(file_name: &amp;str) -&gt; Option&lt;&amp;str&gt; {
+    match find(file_name, '.') {
+        None =&gt; None,
+        Some(i) =&gt; Some(&amp;file_name[i+1..]),
+    }
+}
+</code></pre>
+<p>(Подсказка: не используйте этот код. Вместо этого используйте метод
+[<code>extension</code>](http://doc.rust-lang.org/std/path/struct.Path.html#method.extension) из стандартной
+библиотеки.)</p>
+<p>Код выглядит простым, но его важный аспект заключается в том, что функция <code>find</code>
+заставляет нас рассмотреть вероятность отсутствия значения. Это хорошо,
+поскольку это означает, что компилятор не позволит нам случайно забыть о том
+варианте, когда в имени файла отсутствует расширение. С другой стороны, каждый
+раз выполнять явный вариативный анализ, подобно тому, как мы делали это в
+<code>extension_explicit</code>, может стать немного утомительным.</p>
+<p>На самом деле, вариативный анализ в <code>extension_explicit</code> является очень
+распространенным паттерном: если <code>Option&lt;T&gt;</code> владеет определенным значением <code>T</code>,
+то выполнить его преобразование с помощью функции, а если нет — то просто
+вернуть <code>None</code>.</p>
+<p>Rust поддерживает параметрический полиморфизм, так что можно очень легко
+объявить комбинатор, который абстрагирует это поведение:</p>
+<p><a name="code-option-map"></a></p>
+<pre><code class="language-rust">fn map&lt;F, T, A&gt;(option: Option&lt;T&gt;, f: F) -&gt; Option&lt;A&gt; where F: FnOnce(T) -&gt; A {
+    match option {
+        None =&gt; None,
+        Some(value) =&gt; Some(f(value)),
+    }
+}
+</code></pre>
+<p>В действительности, <code>map</code> <a href="http://doc.rust-lang.org/std/option/enum.Option.html#method.map">определен в стандартной библиотеке</a> как метод <code>Option&lt;T&gt;</code>.</p>
+<p>Вооружившись нашим новым комбинатором, мы можем переписать наш метод
+<code>extension_explicit</code> так, чтобы избавиться от вариативного анализа:</p>
+<pre><code class="language-rust"># fn find(_: &amp;str, _: char) -&gt; Option&lt;usize&gt; { None }
+// Возвращает расширение заданного имени файла, а именно все символы,
+// идущие за первым вхождением `.` в имя файла.
+// Если в `file_name` нет ни одного вхождения `.`, возвращается `None`.
+fn extension(file_name: &amp;str) -&gt; Option&lt;&amp;str&gt; {
+    find(file_name, '.').map(|i| &amp;file_name[i+1..])
+}
+</code></pre>
+<p>Есть еще одно поведение, которое можно часто встретить — это использование
+значения по-умолчанию в случае, когда значение <code>Option</code> равно <code>None</code>.
+К примеру, ваша программа может считать, что расширение файла равно <code>rs</code>
+в случае, если на самом деле оно отсутствует.</p>
+<p>Легко представить, что этот случай вариативного анализа не специфичен
+только для расширений файлов — такой подход может работать с любым <code>Option&lt;T&gt;</code>:</p>
+<pre><code class="language-rust">fn unwrap_or&lt;T&gt;(option: Option&lt;T&gt;, default: T) -&gt; T {
+    match option {
+        None =&gt; default,
+        Some(value) =&gt; value,
+    }
+}
+</code></pre>
+<p>Хитрость только в том, что значение по-умолчанию должно иметь тот же тип, что и
+значение, которое может находится внутри  <code>Option&lt;T&gt;</code>. Использование этого
+метода элементарно:</p>
+<pre><code class="language-rust"># fn find(haystack: &amp;str, needle: char) -&gt; Option&lt;usize&gt; {
+#     for (offset, c) in haystack.char_indices() {
+#         if c == needle {
+#             return Some(offset);
+#         }
+#     }
+#     None
+# }
+#
+# fn extension(file_name: &amp;str) -&gt; Option&lt;&amp;str&gt; {
+#     find(file_name, '.').map(|i| &amp;file_name[i+1..])
+# }
+fn main() {
+    assert_eq!(extension(&quot;foobar.csv&quot;).unwrap_or(&quot;rs&quot;), &quot;csv&quot;);
+    assert_eq!(extension(&quot;foobar&quot;).unwrap_or(&quot;rs&quot;), &quot;rs&quot;);
+}
+</code></pre>
+<p>(Обратите внимание, что <code>unwrap_or</code> <a href="http://doc.rust-lang.org/std/option/enum.Option.html#method.unwrap_or">объявлен как метод</a> <code>Option&lt;T&gt;</code> в
+стандартной библиотеке, так что мы воспользовались им вместо функции, которую
+мы объявили ранее. Не забудьте также изучить более общий метод
+[<code>unwrap_or_else</code>]<a href="http://doc.rust-lang.org/std/option/enum.Option.html#method.unwrap_or_else">4</a>).</p>
+<p>Существует еще один комбинатор, на который, как мы думаем, стоит обратить
+особое внимание: <code>and_then</code>. Он позволяет легко сочетать различные вычисления,
+которые допускают <em>возможность отсутствия</em>. Пример — большая часть кода в
+этом разделе, который связан с определением расширения заданного имени файла.
+Чтобы делать это, нам для начала необходимо узнать имя файла, которое как правило
+извлекается из <em>файлового пути</em>. Хотя большинство файловых путей содержат имя
+файла, подобное нельзя сказать обо <em>всех</em> файловых путях. Примером могут
+послужить пути <code>.</code>, <code>..</code> или <code>/</code>.</p>
+<p>Таким образом, мы определили задачу нахождения расширения заданного <em>файлового
+пути</em>. Начнем с явного вариативного анализа:</p>
+<pre><code class="language-rust"># fn extension(file_name: &amp;str) -&gt; Option&lt;&amp;str&gt; { None }
+fn file_path_ext_explicit(file_path: &amp;str) -&gt; Option&lt;&amp;str&gt; {
+    match file_name(file_path) {
+        None =&gt; None,
+        Some(name) =&gt; match extension(name) {
+            None =&gt; None,
+            Some(ext) =&gt; Some(ext),
+        }
+    }
+}
+
+fn file_name(file_path: &amp;str) -&gt; Option&lt;&amp;str&gt; {
+  unimplemented!() // опустим реализацию
+}
+</code></pre>
+<p>Можно подумать, мы могли бы просто использовать комбинатор <code>map</code>, чтобы
+уменьшить вариативный анализ, но его тип не совсем подходит. Дело в том, что
+<code>map</code> принимает функцию, которая делает что-то только с внутренним значением.
+Результат такой функции <em>всегда</em> [оборачивается в <code>Some</code>](#code-option-map).
+Вместо этого, нам нужен метод, похожий <code>map</code>, но который позволяет вызывающему
+передать еще один <code>Option</code>. Его общая реализация даже проще, чем <code>map</code>:</p>
+<pre><code class="language-rust">fn and_then&lt;F, T, A&gt;(option: Option&lt;T&gt;, f: F) -&gt; Option&lt;A&gt;
+        where F: FnOnce(T) -&gt; Option&lt;A&gt; {
+    match option {
+        None =&gt; None,
+        Some(value) =&gt; f(value),
+    }
+}
+</code></pre>
+<p>Теперь мы можем переписать нашу функцию <code>file_path_ext</code> без явного вариативного
+анализа:</p>
+<pre><code class="language-rust"># fn extension(file_name: &amp;str) -&gt; Option&lt;&amp;str&gt; { None }
+# fn file_name(file_path: &amp;str) -&gt; Option&lt;&amp;str&gt; { None }
+fn file_path_ext(file_path: &amp;str) -&gt; Option&lt;&amp;str&gt; {
+    file_name(file_path).and_then(extension)
+}
+</code></pre>
+<p>Тип <code>Option</code> имеет много других комбинаторов <a href="http://doc.rust-lang.org/std/option/enum.Option.html">определенных в стандартной
+библиотеке</a>. Очень полезно просмотреть этот список и ознакомиться с
+доступными методами — они не раз помогут вам сократить количество вариативного
+анализа. Ознакомление с этими комбинаторами окупится еще и потому, что многие
+из них определены с аналогичной семантикой и для типа <code>Result</code>, о котором мы
+поговорим далее.</p>
+<p>Комбинаторы упрощают использование типов вроде <code>Option</code>, ведь
+они сокращают явный вариативный анализ. Они также соответствуют требованиям
+сочетаемости, поскольку они позволяют вызывающему обрабатывать возможность
+отсутствия результата собственным способом. Такие методы, как <code>unwrap</code>,
+лишают этой возможности, ведь они будут паниковать в случае, когда <code>Option&lt;T&gt;</code>
+равен <code>None</code>.</p>
+<p><a name="the-result-type"></a></p>
+<h2>Тип <code>Result</code></h2>
+<p>Тип <code>Result</code> также <a href="http://doc.rust-lang.org/std/result/">определен в стандартной библиотеке</a>:</p>
+<p><a name="code-result-def"></a></p>
+<pre><code class="language-rust">enum Result&lt;T, E&gt; {
+    Ok(T),
+    Err(E),
+}
+</code></pre>
+<p>Тип <code>Result</code> — это продвинутая версия <code>Option</code>. Вместо того, чтобы выражать
+возможность <em>отсутствия</em>, как это делает <code>Option</code>, <code>Result</code> выражает возможность
+<em>ошибки</em>. Как правило, <em>ошибки</em> необходимы для объяснения того, почему
+результат определенного вычисления не был получен. Строго говоря, это более
+общая форма <code>Option</code>. Рассмотрим следующий псевдоним типа, который во всех
+смыслах семантически эквивалентен реальному <code>Option&lt;T&gt;</code>:</p>
+<pre><code class="language-rust">type Option&lt;T&gt; = Result&lt;T, ()&gt;;
+</code></pre>
+<p>Здесь второй параметр типа <code>Result</code> фиксируется и определяется через <code>()</code>
+(произносится как &quot;unit&quot; или &quot;пустой кортеж&quot;). Тип <code>()</code> имеет ровно одно
+значение — <code>()</code>. (Да, это тип и значение этого типа, которые выглядят
+одинаково!)</p>
+<p>Тип <code>Result</code> — это способ выразить один из двух возможных исходов вычисления.
+По соглашению, один исход означает ожидаемый результат или &quot;<code>Ok</code>&quot;, в то время
+как другой исход означает исключительную ситуацию или &quot;<code>Err</code>&quot;.</p>
+<p>Подобно <code>Option</code>, тип <code>Result</code> имеет метод <code>unwrap</code>,
+<a href="http://doc.rust-lang.org/std/result/enum.Result.html#method.unwrap">определенный в стандартной библиотеке</a>. Давайте объявим его самостоятельно:</p>
+<pre><code class="language-rust"># enum Result&lt;T, E&gt; { Ok(T), Err(E) }
+impl&lt;T, E: ::std::fmt::Debug&gt; Result&lt;T, E&gt; {
+    fn unwrap(self) -&gt; T {
+        match self {
+            Result::Ok(val) =&gt; val,
+            Result::Err(err) =&gt;
+              panic!(&quot;called `Result::unwrap()` on an `Err` value: {:?}&quot;, err),
+        }
+    }
+}
+</code></pre>
+<p>Это фактически то же самое, что и
+[определение <code>Option::unwrap</code>](#code-option-def-unwrap), за исключением
+того, что мы добавили значение ошибки в сообщение <code>panic!</code>. Это упрощает
+отладку, но это также вынуждает нас требовать от типа-параметра <code>E</code>
+(который представляет наш тип ошибки) реализации [<code>Debug</code>]<a href="http://doc.rust-lang.org/std/fmt/trait.Debug.html">8</a>. Поскольку
+подавляющее большинство типов должны реализовывать <code>Debug</code>, обычно на практике
+такое ограничение не мешает. (Реализация <code>Debug</code> для некоторого типа
+просто означает, что существует разумный способ печати удобочитаемого описания
+значения этого типа.)</p>
+<p>Окей, давайте перейдем к примеру.</p>
+<p><a name="parsing-integers"></a></p>
+<h3>Преобразование строки в число</h3>
+<p>Стандартная библиотека Rust позволяет элементарно преобразовывать строки
+в целые числа. На самом деле это настолько просто, что возникает соблазн написать
+что-то вроде:</p>
+<pre><code class="language-rust">fn double_number(number_str: &amp;str) -&gt; i32 {
+    2 * number_str.parse::&lt;i32&gt;().unwrap()
+}
+
+fn main() {
+    let n: i32 = double_number(&quot;10&quot;);
+    assert_eq!(n, 20);
+}
+</code></pre>
+<p>Здесь вы должны быть скептически настроены по-поводу вызова <code>unwrap</code>.
+Если строку нельзя преобразовать в число, вы получите панику:</p>
+<pre><code class="language-text">thread '&lt;main&gt;' panicked at 'called `Result::unwrap()` on an `Err` value: ParseIntError { kind: InvalidDigit }', /home/rustbuild/src/rust-buildbot/slave/beta-dist-rustc-linux/build/src/libcore/result.rs:729
+</code></pre>
+<p>Это довольно неприятно, и если бы подобное произошло в используемой вами
+библиотеке, вы могли бы небезосновательно разгневаться. Так что нам стоит
+попытаться обработать ошибку в нашей функции, и пусть вызывающий сам решит что
+с этим делать. Это означает необходимость изменения типа, который возвращается
+<code>double_number</code>. Но на какой? Чтобы понять это, необходимо посмотреть на
+сигнатуру [<code>метода parse</code>]<a href="http://doc.rust-lang.org/std/primitive.str.html#method.parse">9</a> из стандартной библиотеки:</p>
+<pre><code class="language-rust,ignore">impl str {
+    fn parse&lt;F: FromStr&gt;(&amp;self) -&gt; Result&lt;F, F::Err&gt;;
+}
+</code></pre>
+<p>Хмм. По крайней мере мы знаем, что должны использовать <code>Result</code>. Вполне
+возможно, что метод мог возвращать <code>Option</code>. В конце концов, строка
+либо парсится как число, либо нет, не так ли? Это, конечно, разумный путь, но
+внутренняя реализация знает <em>почему</em> строка не может быть преобразована в целое число.
+(Это может быть пустая строка, или неправильные цифры, слишком большая или
+слишком маленькая длина и т.д.) Таким образом, использование <code>Result</code> имеет
+смысл, ведь мы хотим предоставить больше информации, чем просто &quot;отсутствие&quot;.
+Мы хотим сказать, <em>почему</em> преобразование не удалось. Вам стоит рассуждать похожим
+образом, когда вы сталкиваетесь с выбором между <code>Option</code> и <code>Result</code>.
+Если вы можете предоставить подробную информацию об ошибке, то вам, вероятно,
+следует это сделать. (Позже мы поговорим об этом подробнее.)</p>
+<p>Хорошо, но как мы запишем наш тип возвращаемого значения? Метод <code>parse</code>
+является обобщенным (generic) для всех различных типов чисел из
+стандартной библиотеки. Мы могли бы (и, вероятно, должны) также сделать
+нашу функцию обобщенной, но давайте пока остановимся на конкретной
+реализации. Нас интересует только тип <code>i32</code>, так что нам стоит [найти его
+реализацию <code>FromStr</code>](http://doc.rust-lang.org/std/primitive.i32.html) (выполните поиск в вашем
+браузере по строке &quot;FromStr&quot;) и посмотреть на его <a href="associated-types.html">ассоциированный тип</a>
+<code>Err</code>. Мы делаем это, чтобы определить конкретный тип ошибки. В данном
+случае, это [<code>std::num::ParseIntError</code>](http://doc.rust-lang.org/std/num/struct.ParseIntError.html).
+Наконец, мы можем переписать нашу функцию:</p>
+<pre><code class="language-rust">use std::num::ParseIntError;
+
+fn double_number(number_str: &amp;str) -&gt; Result&lt;i32, ParseIntError&gt; {
+    match number_str.parse::&lt;i32&gt;() {
+        Ok(n) =&gt; Ok(2 * n),
+        Err(err) =&gt; Err(err),
     }
 }
 
 fn main() {
-    std::io::println(descriptive_probability(NewRelease));
-}
-</span><pre id='rust-example-rendered' class='rust '>
-<span class='kw'>enum</span> <span class='ident'>Event</span> {
-    <span class='ident'>NewRelease</span>,
-}
-
-<span class='kw'>fn</span> <span class='ident'>probability</span>(_: <span class='kw-2'>&amp;</span><span class='ident'>Event</span>) <span class='op'>-&gt;</span> <span class='ident'>f64</span> {
-    <span class='comment'>// real implementation would be more complex, of course</span>
-    <span class='number'>0.95</span>
-}
-
-<span class='kw'>fn</span> <span class='ident'>descriptive_probability</span>(<span class='ident'>event</span>: <span class='ident'>Event</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span> {
-    <span class='kw'>match</span> <span class='ident'>probability</span>(<span class='kw-2'>&amp;</span><span class='ident'>event</span>) {
-        <span class='number'>1.00</span> <span class='op'>=&gt;</span> <span class='string'>&quot;certain&quot;</span>,
-        <span class='number'>0.00</span> <span class='op'>=&gt;</span> <span class='string'>&quot;impossible&quot;</span>,
-        <span class='number'>0.00</span> ... <span class='number'>0.25</span> <span class='op'>=&gt;</span> <span class='string'>&quot;very unlikely&quot;</span>,
-        <span class='number'>0.25</span> ... <span class='number'>0.50</span> <span class='op'>=&gt;</span> <span class='string'>&quot;unlikely&quot;</span>,
-        <span class='number'>0.50</span> ... <span class='number'>0.75</span> <span class='op'>=&gt;</span> <span class='string'>&quot;likely&quot;</span>,
-        <span class='number'>0.75</span> ... <span class='number'>1.00</span> <span class='op'>=&gt;</span> <span class='string'>&quot;very likely&quot;</span>,
+    match double_number(&quot;10&quot;) {
+        Ok(n) =&gt; assert_eq!(n, 20),
+        Err(err) =&gt; println!(&quot;Error: {:?}&quot;, err),
     }
 }
-
-<span class='kw'>fn</span> <span class='ident'>main</span>() {
-    <span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>println</span>(<span class='ident'>descriptive_probability</span>(<span class='ident'>NewRelease</span>));
-}
-</pre>
-
-<p>Этот пример выведет следующую ошибку:</p>
-
-<pre><code class="language-text">error: non-exhaustive patterns: `_` not covered [E0004]
 </code></pre>
+<p>Неплохо, но нам пришлось написать гораздо больше кода! И нас опять раздражает
+вариативный анализ.</p>
+<p>Комбинаторы спешат на помощь! Подобно <code>Option</code>, <code>Result</code> имеет много
+комбинаторов, определенных в качестве методов. Существует большой
+список комбинаторов, общих между <code>Result</code> и <code>Option</code>. И <code>map</code> входит в этот
+список:</p>
+<pre><code class="language-rust">use std::num::ParseIntError;
 
-<p>Хотя мы и знаем, что рассмотрели все возможные случаи, но Rust этого не знает.
-Он не знает, что вероятность находится между 0,0 и 1,0. Поэтому мы добавляем еще
-один случай:</p>
-<span class='rusttest'>use Event::NewRelease;
-
-enum Event {
-    NewRelease,
-}
-
-fn probability(_: &amp;Event) -&gt; f64 {
-    // real implementation would be more complex, of course
-    0.95
-}
-
-fn descriptive_probability(event: Event) -&gt; &amp;&#39;static str {
-    match probability(&amp;event) {
-        1.00 =&gt; &quot;certain&quot;,
-        0.00 =&gt; &quot;impossible&quot;,
-        0.00 ... 0.25 =&gt; &quot;very unlikely&quot;,
-        0.25 ... 0.50 =&gt; &quot;unlikely&quot;,
-        0.50 ... 0.75 =&gt; &quot;likely&quot;,
-        0.75 ... 1.00 =&gt; &quot;very likely&quot;,
-        _ =&gt; unreachable!()
-    }
+fn double_number(number_str: &amp;str) -&gt; Result&lt;i32, ParseIntError&gt; {
+    number_str.parse::&lt;i32&gt;().map(|n| 2 * n)
 }
 
 fn main() {
-    println!(&quot;{}&quot;, descriptive_probability(NewRelease));
-}
-</span><pre id='rust-example-rendered' class='rust '>
-<span class='kw'>use</span> <span class='ident'>Event</span>::<span class='ident'>NewRelease</span>;
-
-<span class='kw'>enum</span> <span class='ident'>Event</span> {
-    <span class='ident'>NewRelease</span>,
-}
-
-<span class='kw'>fn</span> <span class='ident'>probability</span>(_: <span class='kw-2'>&amp;</span><span class='ident'>Event</span>) <span class='op'>-&gt;</span> <span class='ident'>f64</span> {
-    <span class='comment'>// real implementation would be more complex, of course</span>
-    <span class='number'>0.95</span>
-}
-
-<span class='kw'>fn</span> <span class='ident'>descriptive_probability</span>(<span class='ident'>event</span>: <span class='ident'>Event</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span> {
-    <span class='kw'>match</span> <span class='ident'>probability</span>(<span class='kw-2'>&amp;</span><span class='ident'>event</span>) {
-        <span class='number'>1.00</span> <span class='op'>=&gt;</span> <span class='string'>&quot;certain&quot;</span>,
-        <span class='number'>0.00</span> <span class='op'>=&gt;</span> <span class='string'>&quot;impossible&quot;</span>,
-        <span class='number'>0.00</span> ... <span class='number'>0.25</span> <span class='op'>=&gt;</span> <span class='string'>&quot;very unlikely&quot;</span>,
-        <span class='number'>0.25</span> ... <span class='number'>0.50</span> <span class='op'>=&gt;</span> <span class='string'>&quot;unlikely&quot;</span>,
-        <span class='number'>0.50</span> ... <span class='number'>0.75</span> <span class='op'>=&gt;</span> <span class='string'>&quot;likely&quot;</span>,
-        <span class='number'>0.75</span> ... <span class='number'>1.00</span> <span class='op'>=&gt;</span> <span class='string'>&quot;very likely&quot;</span>,
-        _ <span class='op'>=&gt;</span> <span class='macro'>unreachable</span><span class='macro'>!</span>()
+    match double_number(&quot;10&quot;) {
+        Ok(n) =&gt; assert_eq!(n, 20),
+        Err(err) =&gt; println!(&quot;Error: {:?}&quot;, err),
     }
 }
-
-<span class='kw'>fn</span> <span class='ident'>main</span>() {
-    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>descriptive_probability</span>(<span class='ident'>NewRelease</span>));
-}
-</pre>
-
-<p>Мы никогда не должны попадать в случай <code>_</code>, поэтому мы используем макрос
-<code>unreachable!()</code>, чтобы сообщить об этом. <code>unreachable!()</code> выдает другой тип
-ошибки, нежели <code>Result</code>. Rust называет такой тип ошибок <em>паника</em>.</p>
-
-<h1 id="Обработка-ошибок-с-помощью-option-и-result" class='section-header'><a
-                           href="#Обработка-ошибок-с-помощью-option-и-result">Обработка ошибок с помощью <code>Option</code> и <code>Result</code></a></h1>
-<p>Простейший способ указать, что функция может потерпеть неудачу, это использовать
-тип <code>Option&lt;T&gt;</code>. Например, метод <code>find</code> для строк пытается найти шаблон в строке
-и возвращает <code>Option</code>:</p>
-<span class='rusttest'>fn main() {
-    let s = &quot;foo&quot;;
-    
-    assert_eq!(s.find(&#39;f&#39;), Some(0));
-    assert_eq!(s.find(&#39;z&#39;), None);
-    
-}</span><pre id='rust-example-rendered' class='rust '>
-<span class='kw'>let</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='string'>&quot;foo&quot;</span>;
-
-<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>.<span class='ident'>find</span>(<span class='string'>&#39;f&#39;</span>), <span class='prelude-val'>Some</span>(<span class='number'>0</span>));
-<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>.<span class='ident'>find</span>(<span class='string'>&#39;z&#39;</span>), <span class='prelude-val'>None</span>);
-</pre>
-
-<p>Такой вариант подходит для простейших случаев, однако он не дает нам достаточно
-информации в случае неудачи. Что же делать, если мы хотим знать причину,
-<em>почему</em> выполнение функции закончилось неудачей? Для этого мы можем
-использовать <code>Result&lt;T, E&gt;</code>. Выглядит это следующим образом:</p>
-<span class='rusttest'>fn main() {
-    enum Result&lt;T, E&gt; {
-       Ok(T),
-       Err(E)
-    }
-    
-}</span><pre id='rust-example-rendered' class='rust '>
-<span class='kw'>enum</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>T</span>, <span class='ident'>E</span><span class='op'>&gt;</span> {
-   <span class='prelude-val'>Ok</span>(<span class='ident'>T</span>),
-   <span class='prelude-val'>Err</span>(<span class='ident'>E</span>)
-}
-</pre>
-
-<p>Это перечисление определено непосредственно в Rust, так что вам не нужно
-определять его самостоятельно, чтобы использовать в своем коде. <code>Ok(T)</code> вариант
-представляет собой успех, а <code>Err(E)</code> вариант представляет собой неудачу.
-Рекомендуется возвращать <code>Result</code> вместо <code>Option</code> во всех случаях, кроме самых
-тривиальных.</p>
-
-<p>Ниже приведен пример использования <code>Result</code>:</p>
-<span class='rusttest'>fn main() {
-    #[derive(Debug)]
-    enum Version { Version1, Version2 }
-    
-    #[derive(Debug)]
-    enum ParseError { InvalidHeaderLength, InvalidVersion }
-    
-    fn parse_version(header: &amp;[u8]) -&gt; Result&lt;Version, ParseError&gt; {
-        if header.len() &lt; 1 {
-            return Err(ParseError::InvalidHeaderLength);
-        }
-        match header[0] {
-            1 =&gt; Ok(Version::Version1),
-            2 =&gt; Ok(Version::Version2),
-            _ =&gt; Err(ParseError::InvalidVersion)
-        }
-    }
-    
-    let version = parse_version(&amp;[1, 2, 3, 4]);
-    match version {
-        Ok(v) =&gt; {
-            println!(&quot;working with version: {:?}&quot;, v);
-        }
-        Err(e) =&gt; {
-            println!(&quot;error parsing header: {:?}&quot;, e);
-        }
-    }
-    
-}</span><pre id='rust-example-rendered' class='rust '>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
-<span class='kw'>enum</span> <span class='ident'>Version</span> { <span class='ident'>Version1</span>, <span class='ident'>Version2</span> }
-
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
-<span class='kw'>enum</span> <span class='ident'>ParseError</span> { <span class='ident'>InvalidHeaderLength</span>, <span class='ident'>InvalidVersion</span> }
-
-<span class='kw'>fn</span> <span class='ident'>parse_version</span>(<span class='ident'>header</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Version</span>, <span class='ident'>ParseError</span><span class='op'>&gt;</span> {
-    <span class='kw'>if</span> <span class='ident'>header</span>.<span class='ident'>len</span>() <span class='op'>&lt;</span> <span class='number'>1</span> {
-        <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>ParseError</span>::<span class='ident'>InvalidHeaderLength</span>);
-    }
-    <span class='kw'>match</span> <span class='ident'>header</span>[<span class='number'>0</span>] {
-        <span class='number'>1</span> <span class='op'>=&gt;</span> <span class='prelude-val'>Ok</span>(<span class='ident'>Version</span>::<span class='ident'>Version1</span>),
-        <span class='number'>2</span> <span class='op'>=&gt;</span> <span class='prelude-val'>Ok</span>(<span class='ident'>Version</span>::<span class='ident'>Version2</span>),
-        _ <span class='op'>=&gt;</span> <span class='prelude-val'>Err</span>(<span class='ident'>ParseError</span>::<span class='ident'>InvalidVersion</span>)
-    }
-}
-
-<span class='kw'>let</span> <span class='ident'>version</span> <span class='op'>=</span> <span class='ident'>parse_version</span>(<span class='kw-2'>&amp;</span>[<span class='number'>1</span>, <span class='number'>2</span>, <span class='number'>3</span>, <span class='number'>4</span>]);
-<span class='kw'>match</span> <span class='ident'>version</span> {
-    <span class='prelude-val'>Ok</span>(<span class='ident'>v</span>) <span class='op'>=&gt;</span> {
-        <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;working with version: {:?}&quot;</span>, <span class='ident'>v</span>);
-    }
-    <span class='prelude-val'>Err</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> {
-        <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;error parsing header: {:?}&quot;</span>, <span class='ident'>e</span>);
-    }
-}
-</pre>
-
-<p>В примере показана функция, которая использует перечисление <code>ParseError</code>, чтобы
-определить ошибки, которые могут возникнуть.</p>
-
-<h1 id="Использование-panic!" class='section-header'><a
-                           href="#Использование-panic!">Использование <code>panic!</code></a></h1>
-<p>В случае ошибки, которая является неожиданной, и после которой не может быть
-восстановлена работоспособность программы, макрос <code>panic!</code> будет вызывать
-панику. Это приведет к аварийному завершению текущего потока, и выдаст сообщение
-об ошибке:</p>
-<span class='rusttest'>fn main() {
-    panic!(&quot;boom&quot;);
-    
-}</span><pre id='rust-example-rendered' class='rust '>
-<span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;boom&quot;</span>);
-</pre>
-
-<p>выводит</p>
-
-<pre><code class="language-text">thread &#39;&lt;main&gt;&#39; panicked at &#39;boom&#39;, hello.rs:2
 </code></pre>
+<p>Все ожидаемые методы реализованы для <code>Result</code>, включая
+[<code>unwrap_or</code>](http://doc.rust-lang.org/std/result/enum.Result.html#method.unwrap_or) и
+[<code>and_then</code>](http://doc.rust-lang.org/std/result/enum.Result.html#method.and_then). Кроме того,
+поскольку <code>Result</code> имеет второй параметр типа, существуют комбинаторы,
+которые влияют только на значение ошибки, такие как
+[<code>map_err</code>](http://doc.rust-lang.org/std/result/enum.Result.html#method.map_err) (аналог <code>map</code>) и
+[<code>or_else</code>](http://doc.rust-lang.org/std/result/enum.Result.html#method.or_else) (аналог <code>and_then</code>).</p>
+<p><a name="the-result-type-alias-idiom"></a></p>
+<h3>Создание псевдонима типа <code>Result</code></h3>
+<p>В стандартной библиотеке можно часто увидеть типы вроде <code>Result&lt;i32&gt;</code>.
+Но постойте, ведь [мы определили <code>Result</code>](#code-result-def) с двумя
+параметрами типа. Как мы можем обойти это, указывая только один из них? Ответ
+заключается в определении псевдонима типа <code>Result</code>, который <em>фиксирует</em> один из
+параметров конкретным типом. Обычно фиксируется тип ошибки. Например, наш
+предыдущий пример с преобразованием строк в числа можно переписать так:</p>
+<pre><code class="language-rust">use std::num::ParseIntError;
+use std::result;
 
-<p>когда вы запускаете пример.</p>
+type Result&lt;T&gt; = result::Result&lt;T, ParseIntError&gt;;
 
-<p>Подобные ситуации встречаются довольно редко, поэтому используйте паники
-осмотрительно.</p>
+fn double_number(number_str: &amp;str) -&gt; Result&lt;i32&gt; {
+    unimplemented!();
+}
+</code></pre>
+<p>Зачем мы это делаем? Что ж, если у нас есть много функций, которые могут вернуть
+<code>ParseIntError</code>, то гораздо удобнее определить псевдоним, который всегда
+использует <code>ParseIntError</code>, так что мы не будем повторяться все время.</p>
+<p>Самый заметный случай использования такого подхода в стандартной библиотеке —
+псевдоним [<code>io::Result</code>](http://doc.rust-lang.org/std/io/type.Result.html). Как правило, достаточно
+писать <code>io::Result&lt;T&gt;</code>, чтобы было понятно, что вы используете псевдоним типа
+из модуля <code>io</code>, а не обычное определение из <code>std::result</code>. (Этот подход также
+используется для [<code>fmt::Result</code>](http://doc.rust-lang.org/std/fmt/type.Result.html))</p>
+<p><a name="a-brief-interlude-unwrapping-isnt-evil"></a></p>
+<h2>Короткое отступление: <code>unwrap</code> — не обязательно зло</h2>
+<p>Если вы были внимательны, то возможно заметили, что я занял довольно жесткую
+позицию по отношению к методам вроде <code>unwrap</code>, которые могут вызвать <code>panic</code> и
+прервать исполнение вашей программы. <em>В основном</em>, это хороший совет.</p>
+<p>Тем не менее, <code>unwrap</code> все-таки можно использовать разумно. Факторы, которые
+оправдывают использование <code>unwrap</code>, являются несколько туманными, и разумные люди
+могут со мной не согласиться. Я кратко изложу свое <em>мнение</em> по этому вопросу:</p>
+<ul>
+<li><strong>Примеры и &quot;грязный&quot; код.</strong> Когда вы пишете просто пример или быстрый
+скрипт, обработка ошибок просто не требуется. Для подобных случаев трудно
+найти что-либо удобнее чем <code>unwrap</code>, так что здесь его использование очень
+привлекательно.</li>
+<li><strong>Паника указывает на ошибку в программе.</strong> Если логика вашего кода
+должна предотвращать определенное поведение (скажем, получение элемента из
+пустого стека), то использование <code>panic</code> также допустимо. Дело в том, что в
+этом случае паника будет сообщать о баге в вашей программе. Это может
+происходить явно, например от неудачного вызова <code>assert!</code>, или происходить
+потому, что индекс по массиву находится за пределами выделенной памяти.</li>
+</ul>
+<p>Вероятно, это не исчерпывающий список. Кроме того, при использовании
+<code>Option</code> зачастую лучше использовать метод
+[<code>expect</code>](http://doc.rust-lang.org/std/option/enum.Option.html#method.expect). Этот метод делает
+ровно то же, что и <code>unwrap</code>, за исключением того, что в случае паники
+напечатает ваше сообщение. Это позволит лучше понять причину ошибки, ведь
+будет показано конкретное сообщение, а не просто &quot;called unwrap on a <code>None</code>
+value&quot;.</p>
+<p>Мой совет сводится к следующему: используйте здравый смысл. Есть причины, по
+которым слова вроде &quot;никогда не делать X&quot; или &quot;Y считается вредным&quot; не появятся
+в этой статье. У любых решений существуют компромиссы, и это ваша задача,
+как разработчика, определить, что именно является приемлемым для вашего случая.
+Моя цель состоит только в том, чтобы помочь вам оценить компромиссы как можно
+точнее.</p>
+<p>Теперь, когда мы рассмотрели основы обработки ошибок в Rust и разобрались с
+<code>unwrap</code>, давайте подробнее изучим стандартную библиотеку.</p>
+<p><a name="working-with-multiple-error-types"></a></p>
+<h1>Работа с несколькими типами ошибок</h1>
+<p>До этого момента мы расматривали обработку ошибок только для случаев, когда все
+сводилось либо только к <code>Option&lt;T&gt;</code>, либо только к <code>Result&lt;T, SomeError&gt;</code>.
+Но что делать, когда у вас есть и <code>Option</code>, и <code>Result</code>? Или если у вас есть
+<code>Result&lt;T, Error1&gt;</code> и <code>Result&lt;T, Error2&gt;</code>? Наша следующуя задача — обработка
+<em>композиции различных типов ошибок</em>, и это будет главной темой на протяжении
+всей этой главы.</p>
+<p><a name="composing-option-and-result"></a></p>
+<h2>Совмещение <code>Option</code> и <code>Result</code></h2>
+<p>Пока что мы говорили о комбинаторах, определенных для <code>Option</code>, и комбинаторах,
+определенных для <code>Result</code>. Эти комбинаторы можно использовать для того, чтобы
+сочетать результаты различных вычислений, не делая подробного вариативного
+анализа.</p>
+<p>Конечно, в реальном коде все происходит не так гладко. Иногда у вас
+есть сочетания типов <code>Option</code> и <code>Result</code>. Должны ли мы прибегать к явному
+вариативному анализу, или можно продолжить использовать комбинаторы?</p>
+<p>Давайте на время вернемся к одному из первых примеров в этой главе:</p>
+<pre><code class="language-rust,should_panic">use std::env;
 
-<h1 id="Преобразование-неудачи-в-панику" class='section-header'><a
-                           href="#Преобразование-неудачи-в-панику">Преобразование неудачи в панику</a></h1>
-<p>В некоторых случаях, когда функция может потерпеть неудачу, нам может
-понадобиться рассматривать эту неудачу как панику. Например,
-<code>io::stdin().read_line(&amp;mut buffer)</code> возвращает <code>Result&lt;usize&gt;</code>, если произошла
-ошибка при чтении строки. Это позволяет нам обработать такого рода ошибку и,
-возможно, восстановить работоспособность программы.</p>
+fn main() {
+    let mut argv = env::args();
+    let arg: String = argv.nth(1).unwrap(); // ошибка 1
+    let n: i32 = arg.parse().unwrap(); // ошибка 2
+    println!(&quot;{}&quot;, 2 * n);
+}
+</code></pre>
+<p>Учитывая наши знания о типах <code>Option</code> и <code>Result</code>, а также их различных
+комбинаторах, мы можем попытаться переписать этот код так, чтобы ошибки
+обрабатывались должным образом, и программа не паниковала в случае ошибки.</p>
+<p>Ньюанс заключается в том, что <code>argv.nth(1)</code> возвращает <code>Option</code>, в
+то время как <code>arg.parse()</code> возвращает <code>Result</code>. Они не могут быть скомпонованы
+непосредственно. Когда вы сталкиваетесь одновременно с <code>Option</code> и<code>Result</code>,
+<em>обычно</em> наилучшее решение — преобразовать <code>Option</code> в <code>Result</code>. В нашем случае,
+отсутствие параметра командной строки (из <code>env::args()</code>) означает, что
+пользователь не правильно вызвал программу. Мы могли бы просто использовать
+<code>String</code> для описания ошибки. Давайте попробуем:</p>
+<p><a name="code-error-double-string"></a></p>
+<pre><code class="language-rust">use std::env;
 
-<p>Если же нам не нужно обрабатывать ошибку, а нужно просто прервать программу, то
-мы можем использовать метод <code>unwrap()</code>:</p>
-<span class='rusttest'>fn main() {
-    io::stdin().read_line(&amp;mut buffer).unwrap();
-    
-}</span><pre id='rust-example-rendered' class='rust '>
-<span class='ident'>io</span>::<span class='ident'>stdin</span>().<span class='ident'>read_line</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>buffer</span>).<span class='ident'>unwrap</span>();
-</pre>
+fn double_arg(mut argv: env::Args) -&gt; Result&lt;i32, String&gt; {
+    argv.nth(1)
+        .ok_or(&quot;Please give at least one argument&quot;.to_owned())
+        .and_then(|arg| arg.parse::&lt;i32&gt;().map_err(|err| err.to_string()))
+}
 
-<p><code>unwrap()</code> вызывает <code>panic!</code>, если <code>Option</code> будет <code>None</code>. Такой подход просто
-говорит: &quot;Дай мне значение, но если что-то пойдет не так, то просто аварийно
-заверши программу&quot;. Такой подход менее надежен, чем распаковка ошибки с
-последующей пыткой восстановления работоспособности программы, но он значительно
-короче. Хотя в некоторых ситуациях аварийное завершение программы более
-целесообразно.</p>
-
-<p>Вот еще один способ распаковки ошибок, который немного лучше, чем <code>unwrap()</code>:</p>
-<span class='rusttest'>fn main() {
-    let mut buffer = String::new();
-    let input = io::stdin().read_line(&amp;mut buffer)
-                           .ok()
-                           .expect(&quot;Failed to read line&quot;);
-    
-}</span><pre id='rust-example-rendered' class='rust '>
-<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>buffer</span> <span class='op'>=</span> <span class='ident'>String</span>::<span class='ident'>new</span>();
-<span class='kw'>let</span> <span class='ident'>input</span> <span class='op'>=</span> <span class='ident'>io</span>::<span class='ident'>stdin</span>().<span class='ident'>read_line</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>buffer</span>)
-                       .<span class='ident'>ok</span>()
-                       .<span class='ident'>expect</span>(<span class='string'>&quot;Failed to read line&quot;</span>);
-</pre>
-
-<p><code>ok()</code> преобразует <code>Result</code> в <code>Option</code>, а <code>expect()</code> делает то же самое, что и
-<code>unwrap()</code>, но принимает сообщение. Это сообщение передается в нижележащий вызов
-<code>panic!</code>, обеспечивая лучшее сообщение об ошибке, если ошибок в коде.</p>
-
-<h1 id="Использование-try!" class='section-header'><a
-                           href="#Использование-try!">Использование <code>try!</code></a></h1>
-<p>При написании кода, который вызывает множество функций, возвращающих тип
-<code>Result</code>, обработка ошибок может быть утомительной. Макрос <code>try!</code> скрывает
-некоторые шаблонные действия, передавая ошибки выше по стеку вызовов.</p>
-
-<p>Он заменяет этот код:</p>
-<span class='rusttest'>fn main() {
-    use std::fs::File;
-    use std::io;
-    use std::io::prelude::*;
-    
-    struct Info {
-        name: String,
-        age: i32,
-        rating: i32,
+fn main() {
+    match double_arg(env::args()) {
+        Ok(n) =&gt; println!(&quot;{}&quot;, n),
+        Err(err) =&gt; println!(&quot;Error: {}&quot;, err),
     }
-    
-    fn write_info(info: &amp;Info) -&gt; io::Result&lt;()&gt; {
-        let mut file = File::create(&quot;my_best_friends.txt&quot;).unwrap();
-    
-        if let Err(e) = writeln!(&amp;mut file, &quot;name: {}&quot;, info.name) {
-            return Err(e)
+}
+</code></pre>
+<p>Раcсмотрим пару новых моментов на этом примере. Во-первых, использование
+комбинатора [<code>Option::ok_or</code>](http://doc.rust-lang.org/std/option/enum.Option.html#method.ok_or).
+Это один из способов преобразования <code>Option</code> в <code>Result</code>. Такое преобразование
+требует явного определения ошибки, которую необходимо вернуть в случае, когда
+значение <code>Option</code> равно <code>None</code>. Как и для всех комбинаторов, которые мы
+рассматривали, его объявление очень простое:</p>
+<pre><code class="language-rust">fn ok_or&lt;T, E&gt;(option: Option&lt;T&gt;, err: E) -&gt; Result&lt;T, E&gt; {
+    match option {
+        Some(val) =&gt; Ok(val),
+        None =&gt; Err(err),
+    }
+}
+</code></pre>
+<p>Второй новый комбинатор, который мы использовали —
+[<code>Result::map_err</code>](http://doc.rust-lang.org/std/result/enum.Result.html#method.map_err). Это то же
+самое, что и <code>Result::map</code>, за исключением того, функция применяется к
+<em>ошибке</em> внутри <code>Result</code>. Если значение <code>Result</code> равно <code>Оk(...)</code>, то оно
+возвращается без изменений.</p>
+<p>Мы используем <code>map_err</code>, потому что нам необходимо привести все ошибки к
+одинаковому типу (из-за нашего использования <code>and_then</code>). Поскольку мы решили
+преобразовывать <code>Option&lt;String&gt;</code> (из <code>argv.nth(1)</code>) в <code>Result&lt;String, String&gt;</code>,
+мы также обязаны преобразовывать <code>ParseIntError</code> из <code>arg.parse()</code> в <code>String</code>.</p>
+<p><a name="the-limits-of-combinators"></a></p>
+<h2>Ограничения комбинаторов</h2>
+<p>Работа с IO и анализ входных данных — очень типичные задачи, и это то, чем
+лично я много занимаюсь с Rust. Так что мы будем использовать IO и различные
+процедуры анализа как примеры обработки ошибок.</p>
+<p>Давайте начнем с простого. Поставим задачу открыть файл, прочесть все его
+содержимое и преобразовать это содержимое в число. После этого нужно будет
+умножить значение на <code>2</code> и распечатать результат.</p>
+<p>Хоть я и пытался убедить вас не использовать <code>unwrap</code>, иногда бывает
+полезным для начала написать код с <code>unwrap</code>. Это позволяет сосредоточиться
+на проблеме, а не на обработке ошибок, и это выявляет места, где надлежащая
+обработка ошибок необходима. Давайте начнем с того, что напишем просто
+работающий код, а затем отрефакторим его для лучшей обработки ошибок.</p>
+<pre><code class="language-rust,should_panic">use std::fs::File;
+use std::io::Read;
+use std::path::Path;
+
+fn file_double&lt;P: AsRef&lt;Path&gt;&gt;(file_path: P) -&gt; i32 {
+    let mut file = File::open(file_path).unwrap(); // ошибка 1
+    let mut contents = String::new();
+    file.read_to_string(&amp;mut contents).unwrap();   // ошибка 2
+    let n: i32 = contents.trim().parse().unwrap(); // ошибка 3
+    2 * n
+}
+
+fn main() {
+    let doubled = file_double(&quot;foobar&quot;);
+    println!(&quot;{}&quot;, doubled);
+}
+</code></pre>
+<p>(Замечание: Мы используем <code>AsRef</code> по [тем же причинам, почему он используется в
+<code>std::fs::File::open</code>](http://doc.rust-lang.org/std/fs/struct.File.html#method.open). Это позволяет
+удобно использовать любой тип строки в качестве пути к файлу.)</p>
+<p>У нас есть три потенциальные ошибки, которые могут возникнуть:</p>
+<ol>
+<li>Проблема при открытии файла.</li>
+<li>Проблема при чтении данных из файла.</li>
+<li>Проблема при преобразовании данных в число.</li>
+</ol>
+<p>Первые две проблемы определяются типом
+[<code>std::io::Error</code>](http://doc.rust-lang.org/std/io/struct.Error.html). Мы знаем это из типа
+возвращаемого значения методов
+[<code>std::fs::File::open</code>](http://doc.rust-lang.org/std/fs/struct.File.html#method.open) и
+[<code>std::io::Read::read_to_string</code>](http://doc.rust-lang.org/std/io/trait.Read.html#method.read_to_string).
+(Обратите внимание, что они оба используют
+[концепцию с псевдонимом типа <code>Result</code>](#the-result-type-alias-idiom),
+описанную ранее. Если вы кликните на тип <code>Result</code>, вы
+<a href="http://doc.rust-lang.org/std/io/type.Result.html">увидите псевдоним типа</a>, и следовательно, лежащий
+в основе тип <code>io::Error</code>.) Третья проблема определяется типом
+[<code>std::num::ParseIntError</code>](http://doc.rust-lang.org/std/num/struct.ParseIntError.html). Кстати, тип
+<code>io::Error</code> <em>часто</em> используется по всей стандартной библиотеке. Вы будете
+видеть его снова и снова.</p>
+<p>Давайте начнем рефакторинг функции <code>file_double</code>. Для того, чтобы эту функцию
+можно было сочетать с остальным кодом, она <em>не должна</em> паниковать, если какие-либо
+из перечисленных выше ошибок действительно произойдут. Фактически, это
+означает, что функция должна <em>возвращать ошибку</em>, если любая из возможных
+операций завершилась неудачей. Проблема состоит в том, что тип возвращаемого
+значения сейчас <code>i32</code>, который не дает нам никакого разумного способа сообщить
+об ошибке. Таким образом, мы должны начать с изменения типа возвращаемого
+значения с <code>i32</code> на что-то другое.</p>
+<p>Первое, что мы должны решить: какой из типов использовать: <code>Option</code> или
+<code>Result</code>? Мы, конечно, могли бы с легкостью использовать <code>Option</code>. Если
+какая-либо из трех ошибок происходит, мы могли бы просто вернуть <code>None</code>. Это
+будет работать, и <em>это лучше, чем просто паниковать</em>, но мы можем сделать
+гораздо лучше. Вместо этого, мы будем сообщать некоторые детали о возникшей
+проблеме. Поскольку мы хотим выразить <em>возможность ошибки</em>, мы должны
+использовать <code>Result&lt;i32, E&gt;</code>. Но каким должен быть тип <code>E</code>? Поскольку может
+возникнуть два <em>разных</em> типа ошибок, мы должны преобразовать их к общему типу.
+Одним из таких типов является <code>String</code>. Давайте посмотрим, как это отразится на
+нашем коде:</p>
+<pre><code class="language-rust">use std::fs::File;
+use std::io::Read;
+use std::path::Path;
+
+fn file_double&lt;P: AsRef&lt;Path&gt;&gt;(file_path: P) -&gt; Result&lt;i32, String&gt; {
+    File::open(file_path)
+         .map_err(|err| err.to_string())
+         .and_then(|mut file| {
+              let mut contents = String::new();
+              file.read_to_string(&amp;mut contents)
+                  .map_err(|err| err.to_string())
+                  .map(|_| contents)
+         })
+         .and_then(|contents| {
+              contents.trim().parse::&lt;i32&gt;()
+                      .map_err(|err| err.to_string())
+         })
+         .map(|n| 2 * n)
+}
+
+fn main() {
+    match file_double(&quot;foobar&quot;) {
+        Ok(n) =&gt; println!(&quot;{}&quot;, n),
+        Err(err) =&gt; println!(&quot;Ошибка: {}&quot;, err),
+    }
+}
+</code></pre>
+<p>Выглядит немного запутанно. Может потребоваться довольно много практики,
+прежде вы сможете писать такое. Написание кода в таком стиле называется
+<em>следованием за типом</em>. Когда мы изменили тип возвращаемого значения
+<code>file_double</code> на <code>Result&lt;i32, String&gt;</code>, нам пришлось начать подбирать
+правильные комбинатороы. В данном случае мы использовали только три различных
+комбинатора: <code>and_then</code>, <code>map</code> и <code>map_err</code>.</p>
+<p>Комбинатор <code>and_then</code> используется для объединения по цепочке нескольких
+вычислений, где каждое вычисление может вернуть ошибку. После открытия файла
+есть еще два вычисления, которые могут завершиться неудачей: чтение из файла и
+преобразование содержимого в число. Соответственно, имеем два вызова <code>and_then</code>.</p>
+<p>Комбинатор <code>map</code> используется, чтобы применить функцию к значению <code>Ok(...)</code>
+типа <code>Result</code>. Например, в самом последнем вызове, <code>map</code> умножает значение
+<code>Ok(...)</code> (типа <code>i32</code>) на <code>2</code>. Если ошибка произошла до этого
+момента, эта операция была бы пропущена. Это следует из определения <code>map</code>.</p>
+<p>Комбинатор <code>map_err</code> — это уловка, которая позволяют всему этому заработать.
+Этот комбинатор, такой же, как и <code>map</code>, за исключением того, что применяет
+функцию к <code>Err(...)</code> значению <code>Result</code>. В данном случае мы хотим привести
+все наши ошибки к одному типу — <code>String</code>. Поскольку как <code>io::Error</code>, так и
+<code>num::ParseIntError</code> реализуют <code>ToString</code>, мы можем вызвать метод <code>to_string</code>,
+чтобы выполнить преобразование.</p>
+<p>Не смотря на все сказанное, код по-прежнему выглядит запутанным. Мастерство
+использования комбинаторов является важным, но у них есть свои недостатки.
+Давайте попробуем другой подход: преждевременный возврат.</p>
+<p><a name="early-returns"></a></p>
+<h2>Преждевременный <code>return</code></h2>
+<p>Давайте возьмем код из предыдущего раздела и перепишем его с применением
+<em>раннего возврата</em>. Ранний <code>return</code> позволяет выйти из функции досрочно. Мы не
+можем выполнить <code>return</code> для <code>file_double</code> внутри замыкания, поэтому нам
+необходимо вернуться к явному вариативному анализу.</p>
+<pre><code class="language-rust">use std::fs::File;
+use std::io::Read;
+use std::path::Path;
+
+fn file_double&lt;P: AsRef&lt;Path&gt;&gt;(file_path: P) -&gt; Result&lt;i32, String&gt; {
+    let mut file = match File::open(file_path) {
+        Ok(file) =&gt; file,
+        Err(err) =&gt; return Err(err.to_string()),
+    };
+    let mut contents = String::new();
+    if let Err(err) = file.read_to_string(&amp;mut contents) {
+        return Err(err.to_string());
+    }
+    let n: i32 = match contents.trim().parse() {
+        Ok(n) =&gt; n,
+        Err(err) =&gt; return Err(err.to_string()),
+    };
+    Ok(2 * n)
+}
+
+fn main() {
+    match file_double(&quot;foobar&quot;) {
+        Ok(n) =&gt; println!(&quot;{}&quot;, n),
+        Err(err) =&gt; println!(&quot;Ошибка: {}&quot;, err),
+    }
+}
+</code></pre>
+<p>Кто-то может обосновано не согласиться с тем, что этот код лучше,
+чем тот, который использует комбинаторы, но если вы не знакомы с комбинаторами,
+на мой взгляд, этот код будет выглядеть проще. Он выполняет явный вариативный
+анализ с помощью <code>match</code> и <code>if let</code>. Если происходит ошибка, мы просто
+прекращаем выполнение функции и возвращаем ошибку (после преобразования
+в строку).</p>
+<p>Разве это не шаг назад? Ранее мы говорили, что ключ к удобной обработке ошибок
+— сокращение явного вариативного анализа, но здесь мы вернулись к тому, с чего
+начинали. Оказывается, существует <em>несколько</em> способов его уменьшения.
+И комбинаторы — не единственный путь.</p>
+<p><a name="the-try-macro"></a></p>
+<h2>Макрос <code>try!</code></h2>
+<p>Краеугольный камень обработки ошибок в Rust — это макрос <code>try!</code>. Этот макрос
+абстрагирует анализ вариантов так же, как и комбинаторы, но в отличие от них,
+он также абстрагирует <em>поток выполнения</em>. А именно, он умеет абстрагировать
+идею <em>досрочного возврата</em>, которую мы только что реализовали.</p>
+<p>Вот упрощенное определение макроса `try!:</p>
+<p><a name="code-try-def-simple"></a></p>
+<pre><code class="language-rust">macro_rules! try {
+    ($e:expr) =&gt; (match $e {
+        Ok(val) =&gt; val,
+        Err(err) =&gt; return Err(err),
+    });
+}
+</code></pre>
+<p>(<a href="http://doc.rust-lang.org/std/macro.try!.html">Реальное определение</a> выглядит немного сложнее. Мы
+обсудим это далее).</p>
+<p>Использование макроса <code>try!</code> может очень легко упростить наш последний
+пример. Поскольку он выполняет анализ вариантов и досрочной возврат из функции,
+мы получаем более плотный код, который легче читать:</p>
+<pre><code class="language-rust">use std::fs::File;
+use std::io::Read;
+use std::path::Path;
+
+fn file_double&lt;P: AsRef&lt;Path&gt;&gt;(file_path: P) -&gt; Result&lt;i32, String&gt; {
+    let mut file = try!(File::open(file_path).map_err(|e| e.to_string()));
+    let mut contents = String::new();
+    try!(file.read_to_string(&amp;mut contents).map_err(|e| e.to_string()));
+    let n = try!(contents.trim().parse::&lt;i32&gt;().map_err(|e| e.to_string()));
+    Ok(2 * n)
+}
+
+fn main() {
+    match file_double(&quot;foobar&quot;) {
+        Ok(n) =&gt; println!(&quot;{}&quot;, n),
+        Err(err) =&gt; println!(&quot;Ошибка: {}&quot;, err),
+    }
+}
+</code></pre>
+<p>Вызов <code>map_err</code> по-прежнему необходим, учитывая
+[наше определение <code>try!</code>](#code-try-def-simple), поскольку ошибки все еще
+должны быть преобразованы в <code>String</code>. Хорошей новостью является то, что в
+ближайшее время мы узнаем, как убрать все эти вызовы <code>map_err</code>! Плохая новость
+состоит в том, что для этого нам придется кое-что узнать о паре важных типажей
+из стандартной библиотеки.</p>
+<p><a name="defining-your-own-error-type"></a></p>
+<h2>Объявление собственного типа ошибки</h2>
+<p>Прежде чем мы погрузимся в аспекты некоторых типажей из стандартной библиотеки,
+связанных с ошибками, я бы хотел завершить этот раздел отказом от использования
+<code>String</code> как типа ошибки в наших примерах.</p>
+<p>Использование <code>String</code> в том стиле, в котором мы использовали его в предыдущих
+примерах удобно потому, что достаточно легко конвертировать любые ошибки в
+строки, или даже создавать свои собственные ошибки на ходу. Тем не менее,
+использование типа <code>String</code> для ошибок имеет некоторые недостатки.</p>
+<p>Первый недостаток в том, что сообщения об ошибках, как правило, загромождают
+код. Можно определять сообщения об ошибках в другом месте, но это поможет
+только если вы необыкновенно дисциплинированны, поскольку очень заманчиво
+вставлять сообщения об ошибках прямо в код. На самом деле, мы именно этим и
+занимались в <a href="#code-error-double-string">предыдущем примере</a>.</p>
+<p>Второй и более важный недостаток заключается в том, что использование <code>String</code>
+чревато <em>потерей информации</em>. Другими словами, если все ошибки будут
+преобразованы в строки, то когда мы будем возвращать их вызывающей стороне, они
+не будут иметь никакого смысла. Единственное разумное, что вызывающая сторона
+может сделать с ошибкой типа <code>String</code> — это показать ее пользователю.
+Безусловно, можно проверить строку по значению, чтобы определить тип ошибки, но
+такой подход не может похвастаться надежностью. (Правда, в гораздо большей
+степени это недостаток для библиотек, чем для конечных приложений).</p>
+<p>Например, тип <code>io::Error</code> включает в себя тип
+[<code>io::ErrorKind</code>](http://doc.rust-lang.org/std/io/enum.ErrorKind.html), который является
+<em>структурированными данными</em>, представляющими то, что пошло не так во время
+выполнения операции ввода-вывода. Это важно, поскольку может возникнуть
+необходимость по-разному реагировать на различные причины ошибки. (Например,
+ошибка <code>BrokenPipe</code> может изящно завершать программу, в то время как ошибка
+<code>NotFound</code> будет завершать программу с кодом ошибки и показывать соответствующее
+сообщение пользователю.) Благодаря <code>io::ErrorKind</code>, вызывающая сторона может
+исследовать тип ошибки с помощью вариативного анализа, и это значительно лучше
+попытки вычленить детали об ошибке из <code>String</code>.</p>
+<p>Вместо того, чтобы использовать <code>String</code> как тип ошибки в нашем предыдущем
+примере про чтение числа из файла, мы можем определить свой собственный тип,
+который представляет ошибку в виде <em>структурированных данных</em>. Мы постараемся
+не потерять никакую информацию от изначальных ошибок на тот случай, если
+вызывающая сторона захочет исследовать детали.</p>
+<p>Идеальным способом представления <em>одного варианта из многих</em> является
+определение нашего собственного типа-суммы с помощью <code>enum</code>. В нашем случае,
+ошибка представляет собой либо <code>io::Error</code>, либо <code>num::ParseIntError</code>, из чего
+естественным образом вытекает определение:</p>
+<pre><code class="language-rust">use std::io;
+use std::num;
+
+// Мы реализуем `Debug` поскольку, по всей видимости, все типы должны реализовывать `Debug`.
+// Это дает нам возможность получить адекватное и читаемое описание значения CliError
+#[derive(Debug)]
+enum CliError {
+    Io(io::Error),
+    Parse(num::ParseIntError),
+}
+</code></pre>
+<p>Осталось только немного подогнать наш код из примера. Вместо преобразования
+ошибок в строки, мы будем просто конвертировать их в наш тип <code>CliError</code>,
+используя соответствующий конструктор значения:</p>
+<pre><code class="language-rust"># #[derive(Debug)]
+# enum CliError { Io(::std::io::Error), Parse(::std::num::ParseIntError) }
+use std::fs::File;
+use std::io::Read;
+use std::path::Path;
+
+fn file_double&lt;P: AsRef&lt;Path&gt;&gt;(file_path: P) -&gt; Result&lt;i32, CliError&gt; {
+    let mut file = try!(File::open(file_path).map_err(CliError::Io));
+    let mut contents = String::new();
+    try!(file.read_to_string(&amp;mut contents).map_err(CliError::Io));
+    let n: i32 = try!(contents.trim().parse().map_err(CliError::Parse));
+    Ok(2 * n)
+}
+
+fn main() {
+    match file_double(&quot;foobar&quot;) {
+        Ok(n) =&gt; println!(&quot;{}&quot;, n),
+        Err(err) =&gt; println!(&quot;Ошибка: {:?}&quot;, err),
+    }
+}
+</code></pre>
+<p>Единственное изменение здесь — замена вызова <code>map_err(|e| e.to_string())</code>
+(который преобразовывал ошибки в строки) на <code>map_err(CliError::Io)</code> или
+<code>map_err(CliError::Parse)</code>. Теперь <em>вызывающая сторона</em> определяет уровень
+детализации сообщения об ошибке для конечного пользователя. В действительности,
+использование <code>String</code> как типа ошибки лишает вызывающего возможности
+выбора, в то время использование собственного типа <code>enum</code>, на подобие
+<code>CliError</code>, дает вызывающему тот же уровень удобства, который был ранее, и
+кроме этого <em>структурированные данные</em>, описывающие ошибку.</p>
+<p>Практическое правило заключается в том, что необходимо определять свой
+собственный тип ошибки, а тип <code>String</code> для ошибок использовать в крайнем случае,
+в основном когда вы пишете конечное приложение. Если вы пишете библиотеку,
+определение своего собственного типа ошибки наиболее предпочтительно. Таким
+образом, вы не лишите пользователя вашей библиотеки возможности выбирать
+наиболее предпочтительное для его конкретного случая поведение.</p>
+<p><a name="standard-library-traits-used-for-error-handling"></a></p>
+<h1>Типажи из стандартной библиотеки, используемые для обработки ошибок</h1>
+<p>Стандартная библиотека определяет два встроенных типажа, полезных для
+обработки ошибок [<code>std::error::Error</code>](http://doc.rust-lang.org/std/error/trait.Error.html) и
+[<code>std::convert::From</code>](http://doc.rust-lang.org/std/convert/trait.From.html). И если <code>Error</code>
+разработан специально для создания общего описания ошибки, то типаж <code>From</code>
+играет широкую роль в преобразовании значений между различными типами.</p>
+<p><a name="the-error-trait"></a></p>
+<h2>Типаж <code>Error</code></h2>
+<p>Типаж <code>Error</code>
+<a href="http://doc.rust-lang.org/std/error/trait.Error.html">объявлен в стандартной библиотеке</a>:</p>
+<pre><code class="language-rust">use std::fmt::{Debug, Display};
+
+trait Error: Debug + Display {
+  /// A short description of the error.
+  fn description(&amp;self) -&gt; &amp;str;
+
+  /// The lower level cause of this error, if any.
+  fn cause(&amp;self) -&gt; Option&lt;&amp;Error&gt; { None }
+}
+</code></pre>
+<p>Этот типаж очень обобщенный, поскольку предполагается, что он должен быть
+реализован для <em>всех</em> типов, которые представляют собой ошибки. Как мы увидим
+дальше, он нам очень пригодится для написания сочетаемого кода. Этот типаж,
+как минимум, позволяет выполнять следующие вещи:</p>
+<ul>
+<li>Получать строковое представление ошибки для разработчика (<code>Debug</code>).</li>
+<li>Получать понятное для пользователя представление ошибки (<code>Display</code>).</li>
+<li>Получать краткое описание ошибки (метод <code>description</code>).</li>
+<li>Изучать по цепочке первопричину ошибки, если она существует (метод <code>cause</code>).</li>
+</ul>
+<p>Первые две возможности возникают в результате того, что типаж <code>Error</code> требует
+в свою очередь реализации типажей <code>Debug</code> и <code>Display</code>. Последние два факта
+исходят из двух методов, определенных в самом <code>Error</code>. Мощь <code>Еrror</code> заключается
+в том, что все существующие типы ошибок его реализуют, что в свою очередь
+означает что любые ошибки могут быть сохранены как
+<a href="trait-objects.html">типажи-объекты</a> (trait
+object). Обычно это выглядит как <code>Box&lt;Error&gt;</code>, либо <code>&amp;Error</code>. Например, метод
+<code>cause</code> возвращает <code>&amp;Error</code>, который как раз является типажом-объектом. Позже мы
+вернемся к применению <code>Error</code> как типажа-объекта.</p>
+<p>В настоящее время достаточно показать пример, реализующий типаж <code>Error</code>.
+Давайте воспользуемся для этого типом ошибки, который мы определили в
+<a href="#defining-your-own-error-type">предыдущем разделе</a>:</p>
+<pre><code class="language-rust">use std::io;
+use std::num;
+
+// Мы реализуем `Debug` поскольку, по всей видимости, все типы должны реализовывать `Debug`.
+// Это дает нам возможность получить адекватное и читаемое описание значения CliError
+#[derive(Debug)]
+enum CliError {
+    Io(io::Error),
+    Parse(num::ParseIntError),
+}
+</code></pre>
+<p>Данный тип ошибки отражает возможность возникновения двух других типов ошибок:
+ошибка работы с IО или ошибка преобразования строки в число. Определение ошибки может
+отражать столько других видов ошибок, сколько необходимо, за счет добавления
+новых вариантов в объявлении <code>enum</code>.</p>
+<p>Реализация <code>Error</code> довольно прямолинейна и главным образом состоит из явного
+анализа вариантов:</p>
+<pre><code class="language-rust,ignore">use std::error;
+use std::fmt;
+
+impl fmt::Display for CliError {
+    fn fmt(&amp;self, f: &amp;mut fmt::Formatter) -&gt; fmt::Result {
+        match *self {
+            // Оба изначальных типа ошибок уже реализуют `Display`,
+            // так что мы можем использовать их реализации
+            CliError::Io(ref err) =&gt; write!(f, &quot;IO error: {}&quot;, err),
+            CliError::Parse(ref err) =&gt; write!(f, &quot;Parse error: {}&quot;, err),
         }
-        if let Err(e) = writeln!(&amp;mut file, &quot;age: {}&quot;, info.age) {
-            return Err(e)
+    }
+}
+
+impl error::Error for CliError {
+    fn description(&amp;self) -&gt; &amp;str {
+        // Оба изначальных типа ошибок уже реализуют `Error`,
+        // так что мы можем использовать их реализацией
+        match *self {
+            CliError::Io(ref err) =&gt; err.description(),
+            CliError::Parse(ref err) =&gt; err.description(),
         }
-        if let Err(e) = writeln!(&amp;mut file, &quot;rating: {}&quot;, info.rating) {
-            return Err(e)
+    }
+
+    fn cause(&amp;self) -&gt; Option&lt;&amp;error::Error&gt; {
+        match *self {
+            // В обоих случаях просходит неявное преобразование значения `err`
+            // из конкретного типа (`&amp;io::Error` или `&amp;num::ParseIntError`)
+            // в типаж-обьект `&amp;Error`. Это работает потому что оба типа реализуют `Error`.
+            CliError::Io(ref err) =&gt; Some(err),
+            CliError::Parse(ref err) =&gt; Some(err),
         }
-    
-        return Ok(());
     }
-    
-}</span><pre id='rust-example-rendered' class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fs</span>::<span class='ident'>File</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>prelude</span>::<span class='op'>*</span>;
+}
+</code></pre>
+<p>Хочется отметить, что это очень типичная реализация <code>Error</code>: реализация
+методов <code>description</code> и <code>cause</code> в соответствии с каждым возможным видом ошибки.</p>
+<p><a name="the-from-trait"></a></p>
+<h2>Типаж <code>From</code></h2>
+<p>Типаж <code>std::convert::From</code> объявлен в
+<a href="http://doc.rust-lang.org/std/convert/trait.From.html">стандартной библиотеке</a>:</p>
+<p><a name="code-from-def"></a></p>
+<pre><code class="language-rust">trait From&lt;T&gt; {
+    fn from(T) -&gt; Self;
+}
+</code></pre>
+<p>Очень просто, не правда ли? Типаж <code>From</code> чрезвычайно полезен, поскольку
+создает общий подход для преобразования <em>из</em> определенного типа <code>Т</code> в какой-то
+другой тип (в данном случае, &quot;другим типом&quot; является тип, реализующий данный
+типаж, или <code>Self</code>). Самое важное в типаже <code>From</code> — <a href="http://doc.rust-lang.org/std/convert/trait.From.html">множество его реализаций,
+предоставляемых стандартной библиотекой</a>.</p>
+<p>Вот несколько простых примеров, демонстрирующих работу <code>From</code>:</p>
+<pre><code class="language-rust">let string: String = From::from(&quot;foo&quot;);
+let bytes: Vec&lt;u8&gt; = From::from(&quot;foo&quot;);
+let cow: ::std::borrow::Cow&lt;str&gt; = From::from(&quot;foo&quot;);
+</code></pre>
+<p>Итак, <code>From</code> полезен для выполнения преобразований между строками. Но как
+насчет ошибок? Оказывается, существует одна важная реализация:</p>
+<pre><code class="language-rust,ignore">impl&lt;'a, E: Error + 'a&gt; From&lt;E&gt; for Box&lt;Error + 'a&gt;
+</code></pre>
+<p>Эта реализация говорит, что <em>любой</em> тип, который реализует <code>Error</code>, можно
+конвертировать в типаж-объект <code>Box&lt;Error&gt;</code>. Выглядит не слишком впечатляюще, но
+это очень полезно в общем контексте.</p>
+<p>Помните те две ошибки, с которыми мы имели дело ранее, а именно, <code>io::Error</code>
+and <code>num::ParseIntError</code>? Поскольку обе они реализуют <code>Error</code>, они также
+работают с <code>From</code>:</p>
+<pre><code class="language-rust">use std::error::Error;
+use std::fs;
+use std::io;
+use std::num;
 
-<span class='kw'>struct</span> <span class='ident'>Info</span> {
-    <span class='ident'>name</span>: <span class='ident'>String</span>,
-    <span class='ident'>age</span>: <span class='ident'>i32</span>,
-    <span class='ident'>rating</span>: <span class='ident'>i32</span>,
+// Получаем значения ошибок
+let io_err: io::Error = io::Error::last_os_error();
+let parse_err: num::ParseIntError = &quot;not a number&quot;.parse::&lt;i32&gt;().unwrap_err();
+
+// Собственно, конвертация
+let err1: Box&lt;Error&gt; = From::from(io_err);
+let err2: Box&lt;Error&gt; = From::from(parse_err);
+</code></pre>
+<p>Здесь нужно разобрать очень важный паттерн. Переменные <code>err1</code> и <code>err2</code> имеют
+<em>одинаковый тип</em> — типаж-объект. Это означает, что их реальные типы
+скрыты от компилятора, так что по факту он рассматривает <code>err1</code> и <code>err2</code> как
+одинаковые сущности. Кроме того, мы создали <code>err1</code> и <code>err2</code>, используя один и
+тот же вызов функции — <code>From::from</code>. Мы можем так делать, поскольку функция
+<code>From::from</code> перегружена по ее аргументу и возвращаемому типу.</p>
+<p>Эта возможность очень важна для нас, поскольку она решает нашу предыдущую
+проблему, позволяя эффективно конвертировать разные ошибки в один и тот же тип,
+пользуясь только одной функцией.</p>
+<p>Настало время вернуться к нашему старому другу — макросу <code>try!</code>.</p>
+<p><a name="the-real-try-macro"></a></p>
+<h2>Настоящий макрос <code>try!</code></h2>
+<p>До этого мы привели такое определение <code>try!</code>:</p>
+<pre><code class="language-rust">macro_rules! try {
+    ($e:expr) =&gt; (match $e {
+        Ok(val) =&gt; val,
+        Err(err) =&gt; return Err(err),
+    });
+}
+</code></pre>
+<p>Но это не настоящее определение. Реальное определение можно найти
+в <a href="http://doc.rust-lang.org/std/macro.try!.html">стандартной библиотеке</a>:</p>
+<p><a name="code-try-def"></a></p>
+<pre><code class="language-rust">macro_rules! try {
+    ($e:expr) =&gt; (match $e {
+        Ok(val) =&gt; val,
+        Err(err) =&gt; return Err(::std::convert::From::from(err)),
+    });
+}
+</code></pre>
+<p>Здесь есть одно маленькое, но очень важное изменение: значение ошибки
+пропускается через вызов <code>From::from</code>. Это делает макрос <code>try!</code> очень мощным
+инструментом, поскольку он дает нам возможность бесплатно выполнять
+автоматическое преобразование типов.</p>
+<p>Вооружившись более мощным макросом <code>try!</code>, давайте взглянем на код, написанный
+нами ранее, который читает файл и конвертирует его содержимое в число:</p>
+<pre><code class="language-rust">use std::fs::File;
+use std::io::Read;
+use std::path::Path;
+
+fn file_double&lt;P: AsRef&lt;Path&gt;&gt;(file_path: P) -&gt; Result&lt;i32, String&gt; {
+    let mut file = try!(File::open(file_path).map_err(|e| e.to_string()));
+    let mut contents = String::new();
+    try!(file.read_to_string(&amp;mut contents).map_err(|e| e.to_string()));
+    let n = try!(contents.trim().parse::&lt;i32&gt;().map_err(|e| e.to_string()));
+    Ok(2 * n)
+}
+</code></pre>
+<p>Ранее мы говорили, что мы можем избавиться от вызовов <code>map_err</code>. На самом деле,
+все что мы должны для этого сделать — это найти тип, который работает с
+<code>From</code>. Как мы увидели в предыдущем разделе, <code>From</code> имеет реализацию, которая
+позволяет преобразовать любой тип ошибки в <code>Box&lt;Error&gt;</code>:</p>
+<pre><code class="language-rust">use std::error::Error;
+use std::fs::File;
+use std::io::Read;
+use std::path::Path;
+
+fn file_double&lt;P: AsRef&lt;Path&gt;&gt;(file_path: P) -&gt; Result&lt;i32, Box&lt;Error&gt;&gt; {
+    let mut file = try!(File::open(file_path));
+    let mut contents = String::new();
+    try!(file.read_to_string(&amp;mut contents));
+    let n = try!(contents.trim().parse::&lt;i32&gt;());
+    Ok(2 * n)
+}
+</code></pre>
+<p>Мы уже очень близки к идеальной обработке ошибок. Наш код имеет очень мало
+накладных расходов из-за обработки ошибок, ведь макрос <code>try!</code> инкапсулирует
+сразу три вещи:</p>
+<ol>
+<li>Вариативный анализ.</li>
+<li>Поток выполнения.</li>
+<li>Преобразование типов ошибок.</li>
+</ol>
+<p>Когда все эти три вещи объединены вместе, мы получаем код, который не
+обременен комбинаторами, вызовами <code>unwrap</code> или постоянным анализом вариантов.</p>
+<p>Но осталась одна маленькая деталь: тип <code>Box&lt;Error&gt;</code> <em>не несет никакой
+информации</em>. Если мы возвращаем <code>Box&lt;Error&gt;</code> вызывающей стороне, нет никакой
+возможности (легко) узнать базовый тип ошибки. Ситуация, конечно, лучше, чем
+со <code>String</code>, посольку появилась возможность вызывать методы, вроде
+[<code>description</code>](http://doc.rust-lang.org/std/error/trait.Error.html#tymethod.description) или
+[<code>cause</code>](http://doc.rust-lang.org/std/error/trait.Error.html#method.cause), но ограничение
+остается: <code>Box&lt;Error&gt;</code> не предоставляет никакой информации о сути ошибки. (Замечание:
+Это не совсем верно, поскольку в Rust есть инструменты рефлексии во время
+выполнения, которые полезны при некоторых сценариях, но их рассмотрение
+<a href="https://crates.io/crates/error">выходит за рамки этой главы</a>).</p>
+<p>Настало время вернуться к нашему собственному типу <code>CliError</code> и связать все
+в одно целое.</p>
+<p><a name="composing-custom-error-types"></a></p>
+<h2>Совмещение собственных типов ошибок</h2>
+<p>В последнем разделе мы рассмотрели реальный макрос <code>try!</code> и то, как он
+выполняет автоматическое преобразование значений ошибок с помощью вызова
+<code>From::from</code>. В нашем случае мы конвертировали ошибки в <code>Box&lt;Error&gt;</code>, который
+работает, но его значение скрыто для вызывающей стороны.</p>
+<p>Чтобы исправить это, мы используем средство, с которым мы уже знакомы:
+создание собственного типа ошибки. Давайте вспомним код, который считывает
+содержимое файла и преобразует его в целое число:</p>
+<pre><code class="language-rust">use std::fs::File;
+use std::io::{self, Read};
+use std::num;
+use std::path::Path;
+
+// Мы реализуем `Debug` поскольку, по всей видимости, все типы должны реализовывать `Debug`.
+// Это дает нам возможность получить адекватное и читаемое описание значения CliError
+#[derive(Debug)]
+enum CliError {
+    Io(io::Error),
+    Parse(num::ParseIntError),
 }
 
-<span class='kw'>fn</span> <span class='ident'>write_info</span>(<span class='ident'>info</span>: <span class='kw-2'>&amp;</span><span class='ident'>Info</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>file</span> <span class='op'>=</span> <span class='ident'>File</span>::<span class='ident'>create</span>(<span class='string'>&quot;my_best_friends.txt&quot;</span>).<span class='ident'>unwrap</span>();
-
-    <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Err</span>(<span class='ident'>e</span>) <span class='op'>=</span> <span class='macro'>writeln</span><span class='macro'>!</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>file</span>, <span class='string'>&quot;name: {}&quot;</span>, <span class='ident'>info</span>.<span class='ident'>name</span>) {
-        <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>e</span>)
-    }
-    <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Err</span>(<span class='ident'>e</span>) <span class='op'>=</span> <span class='macro'>writeln</span><span class='macro'>!</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>file</span>, <span class='string'>&quot;age: {}&quot;</span>, <span class='ident'>info</span>.<span class='ident'>age</span>) {
-        <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>e</span>)
-    }
-    <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Err</span>(<span class='ident'>e</span>) <span class='op'>=</span> <span class='macro'>writeln</span><span class='macro'>!</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>file</span>, <span class='string'>&quot;rating: {}&quot;</span>, <span class='ident'>info</span>.<span class='ident'>rating</span>) {
-        <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>e</span>)
-    }
-
-    <span class='kw'>return</span> <span class='prelude-val'>Ok</span>(());
+fn file_double_verbose&lt;P: AsRef&lt;Path&gt;&gt;(file_path: P) -&gt; Result&lt;i32, CliError&gt; {
+    let mut file = try!(File::open(file_path).map_err(CliError::Io));
+    let mut contents = String::new();
+    try!(file.read_to_string(&amp;mut contents).map_err(CliError::Io));
+    let n: i32 = try!(contents.trim().parse().map_err(CliError::Parse));
+    Ok(2 * n)
 }
-</pre>
+</code></pre>
+<p>Обратите внимание, что здесь у нас еще остались вызовы <code>map_err</code>. Почему?
+Вспомните определения [<code>try!</code>](#code-try-def) и [<code>From</code>](#code-from-def).
+Проблема в том, что не существует такой реализации <code>From</code>, которая позволяет
+конвертировать типы ошибок <code>io::Error</code> и <code>num::ParseIntError</code> в наш собственный
+тип <code>CliError</code>. Но мы можем легко это исправить! Поскольку мы определили тип
+<code>CliError</code>, мы можем также реализовать для него типаж <code>From</code>:</p>
+<pre><code class="language-rust"># #[derive(Debug)]
+# enum CliError { Io(io::Error), Parse(num::ParseIntError) }
+use std::io;
+use std::num;
 
-<p>на этот код:</p>
-<span class='rusttest'>fn main() {
-    use std::fs::File;
-    use std::io;
-    use std::io::prelude::*;
-    
-    struct Info {
-        name: String,
-        age: i32,
-        rating: i32,
+impl From&lt;io::Error&gt; for CliError {
+    fn from(err: io::Error) -&gt; CliError {
+        CliError::Io(err)
     }
-    
-    fn write_info(info: &amp;Info) -&gt; io::Result&lt;()&gt; {
-        let mut file = try!(File::create(&quot;my_best_friends.txt&quot;));
-    
-        try!(writeln!(&amp;mut file, &quot;name: {}&quot;, info.name));
-        try!(writeln!(&amp;mut file, &quot;age: {}&quot;, info.age));
-        try!(writeln!(&amp;mut file, &quot;rating: {}&quot;, info.rating));
-    
-        return Ok(());
-    }
-    
-}</span><pre id='rust-example-rendered' class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fs</span>::<span class='ident'>File</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::<span class='ident'>prelude</span>::<span class='op'>*</span>;
-
-<span class='kw'>struct</span> <span class='ident'>Info</span> {
-    <span class='ident'>name</span>: <span class='ident'>String</span>,
-    <span class='ident'>age</span>: <span class='ident'>i32</span>,
-    <span class='ident'>rating</span>: <span class='ident'>i32</span>,
 }
 
-<span class='kw'>fn</span> <span class='ident'>write_info</span>(<span class='ident'>info</span>: <span class='kw-2'>&amp;</span><span class='ident'>Info</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>file</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>File</span>::<span class='ident'>create</span>(<span class='string'>&quot;my_best_friends.txt&quot;</span>));
-
-    <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>writeln</span><span class='macro'>!</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>file</span>, <span class='string'>&quot;name: {}&quot;</span>, <span class='ident'>info</span>.<span class='ident'>name</span>));
-    <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>writeln</span><span class='macro'>!</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>file</span>, <span class='string'>&quot;age: {}&quot;</span>, <span class='ident'>info</span>.<span class='ident'>age</span>));
-    <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>writeln</span><span class='macro'>!</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>file</span>, <span class='string'>&quot;rating: {}&quot;</span>, <span class='ident'>info</span>.<span class='ident'>rating</span>));
-
-    <span class='kw'>return</span> <span class='prelude-val'>Ok</span>(());
-}
-</pre>
-
-<p>Упаковка выражения в <code>try!</code> приведет к распакованному успешному (<code>Ok</code>) значению,
-если результат не <code>Err</code>, и в этом случае <code>Err</code> возвращается раньше от функции
-включения.</p>
-
-<p>Стоит отметить, что вы можете использовать <code>try!</code> только из функции, которая
-возвращает <code>Result</code>, что означает, что вы не можете использовать <code>try!</code> внутри
-функции <code>main()</code>, потому что <code>main()</code> ничего не возвращают.</p>
-
-<p><code>try!</code> использует <a href="../std/convert/trait.From.html"><code>From&lt;Error&gt;</code></a>, чтобы
-определять, что следует вернуть в случае ошибки.</p>
-
-    <script type="text/javascript">
-        window.playgroundUrl = "http://play.rust-lang.org";
-    </script>
-    
-<script type="text/javascript">
-document.addEventListener("DOMContentLoaded", function(event) {
-  document.getElementById("toggle-nav").onclick = toggleNav;
-  function toggleNav() {
-    var toc = document.getElementById("toc");
-    var pagewrapper = document.getElementById("page-wrapper");
-    toggleClass(toc, "mobile-hidden");
-    toggleClass(pagewrapper, "mobile-hidden");
-  };
-
-  function toggleClass(el, className) {
-     // from http://youmightnotneedjquery.com/
-     if (el.classList) {
-       el.classList.toggle(className);
-     } else {
-       var classes = el.className.split(' ');
-       var existingIndex = classes.indexOf(className);
-
-       if (existingIndex >= 0) {
-         classes.splice(existingIndex, 1);
-       } else {
-         classes.push(className);
-       }
-
-       el.className = classes.join(' ');
-     }
-  }
-
-  // The below code is used to add prev and next navigation links to the bottom
-  // of each of the sections.
-  // It works by extracting the current page based on the url and iterates over
-  // the menu links until it finds the menu item for the current page. We then
-  // create a copy of the preceding and following menu links and add the
-  // correct css class and insert them into the bottom of the page.
-  var toc = document.getElementById('toc').getElementsByTagName('a');
-  var href = document.location.pathname.split('/').pop();
-  if (href === 'index.html' || href === '') {
-    href = 'README.html';
-  }
-
-  for (var i = 0; i < toc.length; i++) {
-    if (toc[i].attributes['href'].value.split('/').pop() === href) {
-      var nav = document.createElement('p');
-      if (i > 0) {
-        var prevNode = toc[i-1].cloneNode(true);
-        prevNode.className = 'left';
-        nav.appendChild(prevNode);
-      }
-      if (i < toc.length - 1) {
-        var nextNode = toc[i+1].cloneNode(true);
-        nextNode.className = 'right';
-        nav.appendChild(nextNode);
-      }
-      document.getElementById('page').appendChild(nav);
-      break;
+impl From&lt;num::ParseIntError&gt; for CliError {
+    fn from(err: num::ParseIntError) -&gt; CliError {
+        CliError::Parse(err)
     }
-  }
+}
+</code></pre>
+<p>Все эти реализации позволяют <code>From</code> создавать значения <code>CliError</code> из других
+типов ошибок. В нашем случае такое создание состоит из простого вызова
+конструктора значения. <em>Как правило</em>, это все что нужно.</p>
+<p>Наконец, мы можем переписать <code>file_double</code>:</p>
+<pre><code class="language-rust"># use std::io;
+# use std::num;
+# enum CliError { Io(::std::io::Error), Parse(::std::num::ParseIntError) }
+# impl From&lt;io::Error&gt; for CliError {
+#     fn from(err: io::Error) -&gt; CliError { CliError::Io(err) }
+# }
+# impl From&lt;num::ParseIntError&gt; for CliError {
+#     fn from(err: num::ParseIntError) -&gt; CliError { CliError::Parse(err) }
+# }
 
-});
-</script>
-<script type="text/javascript" src="jquery.js"></script>
-<script type="text/javascript" src="playpen.js"></script>
-</div></div>
+use std::fs::File;
+use std::io::Read;
+use std::path::Path;
+
+fn file_double&lt;P: AsRef&lt;Path&gt;&gt;(file_path: P) -&gt; Result&lt;i32, CliError&gt; {
+    let mut file = try!(File::open(file_path));
+    let mut contents = String::new();
+    try!(file.read_to_string(&amp;mut contents));
+    let n: i32 = try!(contents.trim().parse());
+    Ok(2 * n)
+}
+</code></pre>
+<p>Единственное, что мы сделали — это удалили вызовы <code>map_err</code>. Они нам больше не
+нужны, поскольку макрос <code>try!</code> выполняет <code>From::from</code> над значениями ошибок. И
+это работает, поскольку мы предоставили реализации <code>From</code> для всех типов
+ошибок, которые могут возникнуть.</p>
+<p>Если бы мы изменили нашу функцию <code>file_double</code> таким образом, чтобы она начала
+выполнять какие-то другие операции, например, преобразовать строку в число
+с плавающей точкой, то мы должны были бы добавить новый вариант к нашему типу
+ошибок:</p>
+<pre><code class="language-rust">use std::io;
+use std::num;
+
+enum CliError {
+    Io(io::Error),
+    ParseInt(num::ParseIntError),
+    ParseFloat(num::ParseFloatError),
+}
+</code></pre>
+<p>И добавить новую реализацию для <code>From</code>:</p>
+<pre><code class="language-rust"># enum CliError {
+#     Io(::std::io::Error),
+#     ParseInt(num::ParseIntError),
+#     ParseFloat(num::ParseFloatError),
+# }
+
+use std::num;
+
+impl From&lt;num::ParseFloatError&gt; for CliError {
+    fn from(err: num::ParseFloatError) -&gt; CliError {
+        CliError::ParseFloat(err)
+    }
+}
+</code></pre>
+<p>Вот и все!</p>
+<p><a name="advice-for-library-writers"></a></p>
+<h2>Рекомендации для авторов библиотек</h2>
+<p>Если в вашей библиотеке могут возникать специфические ошибки, то вы наверняка
+должны определить для них свой собственный тип. На ваше усмотрение вы можете
+сделать его внутреннее представление публичным (как
+[<code>ErrorKind</code>](http://doc.rust-lang.org/std/io/enum.ErrorKind.html)), или оставить его скрытым
+(подобно [<code>ParseIntError</code>](http://doc.rust-lang.org/std/num/struct.ParseIntError.html)). Независимо
+от того, что вы предпримете, считается хорошим тоном обеспечить по крайней
+мере некоторую информацию об ошибке помимо ее строкового представления. Но,
+конечно, все зависит от конкретных случаев использования.</p>
+<p>Как минимум, вы скорее всего должны реализовать типаж
+[<code>Error</code>](http://doc.rust-lang.org/std/error/trait.Error.html). Это даст пользователям вашей
+библиотеки некоторую минимальную гибкость при
+<a href="#the-real-try-macro">совмещении ошибок</a>. Реализация типажа <code>Error</code> также
+означает, что пользователям гарантируется возможность получения строкового
+представления ошибки (это следует из необходимости реализации <code>fmt::Debug</code> и
+<code>fmt::Display</code>).</p>
+<p>Кроме того, может быть полезным реализовать <code>From</code> для ваших типов ошибок. Это
+позволит вам (как автору библиотеки) и вашим пользователям
+<a href="#composing-custom-error-types">совмещать более детальные ошибки</a>. Например,
+[<code>csv::Error</code>](http://burntsushi.net/rustdoc/csv/enum.Error.html) реализует
+<code>From</code> для <code>io::Error</code> и <code>byteorder::Error</code>.</p>
+<p>Наконец, на свое усмотрение, вы также можете определить
+[псевдоним типа <code>Result</code>](#the-result-type-alias-idiom), особенно, если в вашей
+библиотеке определен только один тип ошибки. Такой подход используется в
+стандартной библиотеке для [<code>io::Result</code>](http://doc.rust-lang.org/std/io/type.Result.html) и
+[<code>fmt::Result</code>](http://doc.rust-lang.org/std/fmt/type.Result.html).</p>
+<p><a name="the-short-story"></a></p>
+<h1>Заключение</h1>
+<p>Поскольку это довольно длинная глава, не будет лишним составить короткий
+конспект по обработке ошибок в Rust. Ниже будут приведены некоторые практические
+рекомендации. Это совсем <em>не</em> заповеди. Наверняка существуют веские
+причины для того, чтобы нарушить любое из этих правил.</p>
+<ul>
+<li>Если вы пишете короткий пример кода, который может быть перегружен обработкой
+ошибок, это, вероятно, отличная возможность использовать <code>unwrap</code> (будь-то
+[<code>Result::unwrap</code>](http://doc.rust-lang.org/std/result/enum.Result.html#method.unwrap),
+[<code>Option::unwrap</code>](http://doc.rust-lang.org/std/option/enum.Option.html#method.unwrap) или
+[<code>Option::expect</code>](http://doc.rust-lang.org/std/option/enum.Option.html#method.expect)).
+Те, для кого предназначен пример, должны осознавать, что необходимо
+реализовать надлежащую обработку ошибок. (Если нет, отправляйте их сюда!)</li>
+<li>Если вы пишете одноразовую программу, также не зазорно использовать <code>unwrap</code>.
+Но будьте внимательны: если ваш код попадет в чужие руки, не удивляйтесь, если
+кто-то будет расстроен из-за скудных сообщений об ошибках!</li>
+<li>Если вы пишете одноразовый код, но вам все-равно стыдно из-за использования
+<code>unwrap</code>, воспользуйтесь либо <code>String</code> в качестве типа ошибки, либо
+<code>Box&lt;Error + Send + Sync&gt;</code> (из-за
+[доступных реализаций <code>From</code>](http://doc.rust-lang.org/std/convert/trait.From.html).)</li>
+<li>В остальных случаях, определяйте свои собственные типы ошибок с
+соответствующими реализациями [<code>From</code>](http://doc.rust-lang.org/std/convert/trait.From.html) и
+[<code>Error</code>](http://doc.rust-lang.org/std/error/trait.Error.html), делая использование
+[<code>try!</code>](http://doc.rust-lang.org/std/macro.try!.html) более удобным.</li>
+<li>Если вы пишете библиотеку и ваш код может выдавать ошибки, определите ваш
+собственный тип ошибки и реализуйте типаж
+[<code>std::error::Error</code>](http://doc.rust-lang.org/std/error/trait.Error.html). Там, где это уместно,
+реализуйте [<code>From</code>](http://doc.rust-lang.org/std/convert/trait.From.html), чтобы вам и вашим
+пользователям было легче с ними работать. (Из-за правил когерентности в Rust,
+пользователи вашей библиотеки не смогут реализовать <code>From</code> для ваших ошибок,
+поэтому это должна сделать ваша библиотека.)</li>
+<li>Изучите комбинаторы, определенные для
+[<code>Option</code>](http://doc.rust-lang.org/std/option/enum.Option.html) и
+[<code>Result</code>](http://doc.rust-lang.org/std/result/enum.Result.html). Писать код, пользуясь только ними
+может быть немного утомительно, но я лично нашел для себя хороший баланс
+между использованием <code>try!</code> и комбинаторами (<code>and_then</code>, <code>map</code> и <code>unwrap_or</code>
+— мои любимые).</li>
+</ul>
+
+                </div>
+
+                <!-- Mobile navigation buttons -->
+                
+                    <a href="concurrency.html" class="mobile-nav-chapters previous">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="choosing-your-guarantees.html" class="mobile-nav-chapters next">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+
+            </div>
+
+            
+                <a href="concurrency.html" class="nav-chapters previous">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            
+
+            
+                <a href="choosing-your-guarantees.html" class="nav-chapters next">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            
+
+        </div>
 
 
-</body>
+        <!-- Local fallback for Font Awesome -->
+        <script>
+            if ($(".fa").css("font-family") !== "FontAwesome") {
+                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
+            }
+        </script>
+
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+    </body>
 </html>

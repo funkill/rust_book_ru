@@ -1,223 +1,94 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="rustdoc">
-    <title>Нестабильные фичи Rust</title>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="{% block description %}{% endblock %}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" type="text/css" href="rust-book.css">
+        <base href="">
 
-    
-</head>
-<body class="rustdoc">
-    <!--[if lte IE 8]>
-    <div class="warning">
-        This old browser is unsupported and will most likely display funky
-        things.
-    </div>
-    <![endif]-->
+        <link rel="stylesheet" href="book.css">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 
-    <div id="nav">
-                <button id="toggle-nav">
-                  <span class="sr-only">Toggle navigation</span>
-                  <span class="bar"></span>
-                  <span class="bar"></span>
-                  <span class="bar"></span>
-                </button>
-              </div>
-<div id='toc' class='mobile-hidden'>
-<ul class='chapter'>
-<li><a href='README.html'><b>1.</b> Introduction</a>
-</li>
-<li><a href='INTRODUCTION.html'><b>2.</b> Введение</a>
-</li>
-<li><a href='getting-started.html'><b>3.</b> C чего начать</a>
-<ul class='section'>
-<li><a href='installing-rust.html'><b>3.1.</b> Установка Rust</a>
-</li>
-<li><a href='hello-world.html'><b>3.2.</b> Hello, world!</a>
-</li>
-<li><a href='hello-cargo.html'><b>3.3.</b> Hello, Cargo!</a>
-</li>
-</ul>
-</li>
-<li><a href='learn-rust.html'><b>4.</b> Изучение Rust</a>
-<ul class='section'>
-<li><a href='guessing-game.html'><b>4.1.</b> Угадайка</a>
-</li>
-</ul>
-</li>
-<li><a href='effective-rust.html'><b>5.</b> Эффективное использование Rust</a>
-<ul class='section'>
-<li><a href='the-stack-and-the-heap.html'><b>5.1.</b> Стек и Куча</a>
-</li>
-<li><a href='testing.html'><b>5.2.</b> Тестирование</a>
-</li>
-<li><a href='conditional-compilation.html'><b>5.3.</b> Условная компиляция</a>
-</li>
-<li><a href='documentation.html'><b>5.4.</b> Документация</a>
-</li>
-<li><a href='iterators.html'><b>5.5.</b> Итераторы</a>
-</li>
-<li><a href='concurrency.html'><b>5.6.</b> Многозадачность</a>
-</li>
-<li><a href='error-handling.html'><b>5.7.</b> Обработка ошибок</a>
-</li>
-<li><a href='ffi.html'><b>5.8.</b> Интерфейс внешних функций (FFI)</a>
-</li>
-<li><a href='release-channels.html'><b>5.9.</b> Каналы сборок</a>
-</li>
-</ul>
-</li>
-<li><a href='syntax-and-semantics.html'><b>6.</b> Синтаксис и семантика</a>
-<ul class='section'>
-<li><a href='variable-bindings.html'><b>6.1.</b> Связывание переменных</a>
-</li>
-<li><a href='functions.html'><b>6.2.</b> Функции</a>
-</li>
-<li><a href='primitive-types.html'><b>6.3.</b> Простые типы</a>
-</li>
-<li><a href='comments.html'><b>6.4.</b> Комментарии</a>
-</li>
-<li><a href='if.html'><b>6.5.</b> Конструкция `if`</a>
-</li>
-<li><a href='for-loops.html'><b>6.6.</b> Циклы `for`</a>
-</li>
-<li><a href='while-loops.html'><b>6.7.</b> Циклы `while`</a>
-</li>
-<li><a href='ownership.html'><b>6.8.</b> Владение</a>
-</li>
-<li><a href='references-and-borrowing.html'><b>6.9.</b> Ссылки и Заимствование</a>
-</li>
-<li><a href='lifetimes.html'><b>6.10.</b> Время жизни</a>
-</li>
-<li><a href='mutability.html'><b>6.11.</b> Изменяемость (Мутабельность)</a>
-</li>
-<li><a href='enums.html'><b>6.12.</b> Перечисления</a>
-</li>
-<li><a href='match.html'><b>6.13.</b> Конструкция `match`</a>
-</li>
-<li><a href='structs.html'><b>6.14.</b> Структуры</a>
-</li>
-<li><a href='patterns.html'><b>6.15.</b> Шаблоны `match`</a>
-</li>
-<li><a href='method-syntax.html'><b>6.16.</b> Синтаксис методов</a>
-</li>
-<li><a href='vectors.html'><b>6.17.</b> Вектора</a>
-</li>
-<li><a href='strings.html'><b>6.18.</b> Строки</a>
-</li>
-<li><a href='generics.html'><b>6.19.</b> Дженерики</a>
-</li>
-<li><a href='traits.html'><b>6.20.</b> Трейты</a>
-</li>
-<li><a href='drop.html'><b>6.21.</b> Трейт `Drop`</a>
-</li>
-<li><a href='if-let.html'><b>6.22.</b> Конструкция `if let`</a>
-</li>
-<li><a href='trait-objects.html'><b>6.23.</b> Трейт объекты</a>
-</li>
-<li><a href='closures.html'><b>6.24.</b> Замыкания</a>
-</li>
-<li><a href='ufcs.html'><b>6.25.</b> Универсальный синтаксис вызова функций (UFCS)</a>
-</li>
-<li><a href='crates-and-modules.html'><b>6.26.</b> Контейнеры и Модули</a>
-</li>
-<li><a href='const-and-static.html'><b>6.27.</b> `const` и `static`</a>
-</li>
-<li><a href='tuple-structs.html'><b>6.28.</b> Кортежные структуры</a>
-</li>
-<li><a href='attributes.html'><b>6.29.</b> Атрибуты</a>
-</li>
-<li><a href='type-aliases.html'><b>6.30.</b> Псевдонимы типов</a>
-</li>
-<li><a href='casting-between-types.html'><b>6.31.</b> Преобразование типов</a>
-</li>
-<li><a href='associated-types.html'><b>6.32.</b> Ассоциированные типы</a>
-</li>
-<li><a href='unsized-types.html'><b>6.33.</b> Безразмерные типы</a>
-</li>
-<li><a href='operators-and-overloading.html'><b>6.34.</b> Operators and Overloading</a>
-</li>
-<li><a href='deref-coercions.html'><b>6.35.</b> Трейт `Deref`</a>
-</li>
-<li><a href='macros.html'><b>6.36.</b> Макросы</a>
-</li>
-<li><a href='raw-pointers.html'><b>6.37.</b> Сырые указатели</a>
-</li>
-<li><a href='unsafe.html'><b>6.38.</b> `unsafe` код</a>
-</li>
-</ul>
-</li>
-<li><a href='nightly-rust.html'><b>7.</b> Нестабильные фичи Rust</a>
-<ul class='section'>
-<li><a href='compiler-plugins.html'><b>7.1.</b> Плагины компилятора</a>
-</li>
-<li><a href='inline-assembly.html'><b>7.2.</b> Встроенный ассемблерный код</a>
-</li>
-<li><a href='no-stdlib.html'><b>7.3.</b> Без stdlib</a>
-</li>
-<li><a href='intrinsics.html'><b>7.4.</b> Внутренние средства</a>
-</li>
-<li><a href='lang-items.html'><b>7.5.</b> Lang items</a>
-</li>
-<li><a href='link-args.html'><b>7.6.</b> Аргументы линковки</a>
-</li>
-<li><a href='benchmark-tests.html'><b>7.7.</b> Тесты производительности</a>
-</li>
-<li><a href='box-syntax-and-patterns.html'><b>7.8.</b> Синтаксис упаковки и шаблоны `match`</a>
-</li>
-<li><a href='slice-patterns.html'><b>7.9.</b> Шаблоны `match` для срезов</a>
-</li>
-<li><a href='associated-constants.html'><b>7.10.</b> Ассоциированные константы</a>
-</li>
-</ul>
-</li>
-<li><a href='glossary.html'><b>8.</b> Глоссарий</a>
-</li>
-<li><a href='academic-research.html'><b>9.</b> Академические исследования</a>
-</li>
-</ul>
-</div>
-<div id='page-wrapper'>
-<div id='page'>
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
 
-    <h1 class="title">Нестабильные фичи Rust</h1>
-    <p>Rust обеспечивает три канала распространения для Rust: nightly, beta и stable.
+        <!-- MathJax -->
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- Fetch JQuery from CDN but have a local fallback -->
+        <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script>
+            if (typeof jQuery == 'undefined') {
+                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
+            }
+        </script>
+    </head>
+    <body>
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme = localStorage.getItem('theme');
+            if (theme == null) { theme = 'light'; }
+            $('body').removeClass().addClass(theme);
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var sidebar = localStorage.getItem('sidebar');
+            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
+            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
+        </script>
+
+        <div id="sidebar" class="sidebar">
+            <ul class="chapter"><li><a href="INTRODUCTION.html"><strong>1.</strong> Введение</a></li><li><a href="getting-started.html"><strong>2.</strong> C чего начать</a></li><li><ul class="section"><li><a href="installing-rust.html"><strong>2.1.</strong> Установка Rust</a></li><li><a href="hello-world.html"><strong>2.2.</strong> Привет, мир!</a></li><li><a href="hello-cargo.html"><strong>2.3.</strong> Hello, Cargo!</a></li></ul></li><li><a href="learn-rust.html"><strong>3.</strong> Изучение Rust</a></li><li><ul class="section"><li><a href="guessing-game.html"><strong>3.1.</strong> Угадайка</a></li><li><a href="dining-philosophers.html"><strong>3.2.</strong> Обедающие философы</a></li><li><a href="rust-inside-other-languages.html"><strong>3.3.</strong> Вызов кода на Rust из других языков</a></li></ul></li><li><a href="effective-rust.html"><strong>4.</strong> Эффективное использование Rust</a></li><li><ul class="section"><li><a href="the-stack-and-the-heap.html"><strong>4.1.</strong> Стек и куча</a></li><li><a href="testing.html"><strong>4.2.</strong> Тестирование</a></li><li><a href="conditional-compilation.html"><strong>4.3.</strong> Условная компиляция</a></li><li><a href="documentation.html"><strong>4.4.</strong> Документация</a></li><li><a href="iterators.html"><strong>4.5.</strong> Итераторы</a></li><li><a href="concurrency.html"><strong>4.6.</strong> Многозадачность</a></li><li><a href="error-handling.html"><strong>4.7.</strong> Обработка ошибок</a></li><li><a href="choosing-your-guarantees.html"><strong>4.8.</strong> Выбор гарантий</a></li><li><a href="ffi.html"><strong>4.9.</strong> Интерфейс внешних функций (FFI)</a></li><li><a href="borrow-and-asref.html"><strong>4.10.</strong> Типажи `Borrow` и `AsRef`</a></li><li><a href="release-channels.html"><strong>4.11.</strong> Каналы сборок</a></li></ul></li><li><a href="syntax-and-semantics.html"><strong>5.</strong> Синтаксис и семантика</a></li><li><ul class="section"><li><a href="variable-bindings.html"><strong>5.1.</strong> Связывание имён</a></li><li><a href="functions.html"><strong>5.2.</strong> Функции</a></li><li><a href="primitive-types.html"><strong>5.3.</strong> Простые типы</a></li><li><a href="comments.html"><strong>5.4.</strong> Комментарии</a></li><li><a href="if.html"><strong>5.5.</strong> Конструкция `if`</a></li><li><a href="loops.html"><strong>5.6.</strong> Циклы</a></li><li><a href="ownership.html"><strong>5.7.</strong> Владение</a></li><li><a href="references-and-borrowing.html"><strong>5.8.</strong> Ссылки и заимствование</a></li><li><a href="lifetimes.html"><strong>5.9.</strong> Время жизни</a></li><li><a href="mutability.html"><strong>5.10.</strong> Изменяемость (mutability)</a></li><li><a href="structs.html"><strong>5.11.</strong> Структуры</a></li><li><a href="enums.html"><strong>5.12.</strong> Перечисления</a></li><li><a href="match.html"><strong>5.13.</strong> Конструкция `match`</a></li><li><a href="patterns.html"><strong>5.14.</strong> Шаблоны сопоставления `match`</a></li><li><a href="method-syntax.html"><strong>5.15.</strong> Синтаксис методов</a></li><li><a href="vectors.html"><strong>5.16.</strong> Вектора</a></li><li><a href="strings.html"><strong>5.17.</strong> Строки</a></li><li><a href="generics.html"><strong>5.18.</strong> Обобщённое программирование</a></li><li><a href="traits.html"><strong>5.19.</strong> Типажи</a></li><li><a href="drop.html"><strong>5.20.</strong> Типаж `Drop` (сброс)</a></li><li><a href="if-let.html"><strong>5.21.</strong> Конструкция `if let`</a></li><li><a href="trait-objects.html"><strong>5.22.</strong> Типажи-объекты</a></li><li><a href="closures.html"><strong>5.23.</strong> Замыкания</a></li><li><a href="ufcs.html"><strong>5.24.</strong> Универсальный синтаксис вызова функций (UFCS)</a></li><li><a href="crates-and-modules.html"><strong>5.25.</strong> Контейнеры (crates) и модули (modules)</a></li><li><a href="const-and-static.html"><strong>5.26.</strong> `const` и `static`</a></li><li><a href="attributes.html"><strong>5.27.</strong> Атрибуты</a></li><li><a href="type-aliases.html"><strong>5.28.</strong> Псевдонимы типов</a></li><li><a href="casting-between-types.html"><strong>5.29.</strong> Приведение типов</a></li><li><a href="associated-types.html"><strong>5.30.</strong> Ассоциированные типы</a></li><li><a href="unsized-types.html"><strong>5.31.</strong> Безразмерные типы</a></li><li><a href="operators-and-overloading.html"><strong>5.32.</strong> Перегрузка операций</a></li><li><a href="deref-coercions.html"><strong>5.33.</strong> Преобразования при разыменовании (deref coercions)</a></li><li><a href="macros.html"><strong>5.34.</strong> Макросы</a></li><li><a href="raw-pointers.html"><strong>5.35.</strong> Сырые указатели</a></li><li><a href="unsafe.html"><strong>5.36.</strong> Небезопасный код</a></li></ul></li><li><a href="nightly-rust.html" class="active"><strong>6.</strong> Нестабильные возможности Rust</a></li><li><ul class="section"><li><a href="compiler-plugins.html"><strong>6.1.</strong> Плагины к компилятору</a></li><li><a href="inline-assembly.html"><strong>6.2.</strong> Встроенный ассемблерный код</a></li><li><a href="no-stdlib.html"><strong>6.3.</strong> Без stdlib</a></li><li><a href="intrinsics.html"><strong>6.4.</strong> Внутренние средства (intrinsics)</a></li><li><a href="lang-items.html"><strong>6.5.</strong> Элементы языка (lang items)</a></li><li><a href="advanced-linking.html"><strong>6.6.</strong> Продвинутое руководство по компоновке (advanced linking)</a></li><li><a href="benchmark-tests.html"><strong>6.7.</strong> Тесты производительности</a></li><li><a href="box-syntax-and-patterns.html"><strong>6.8.</strong> Синтаксис упаковки и шаблоны `match`</a></li><li><a href="slice-patterns.html"><strong>6.9.</strong> Шаблоны `match` для срезов</a></li><li><a href="associated-constants.html"><strong>6.10.</strong> Ассоциированные константы</a></li><li><a href="custom-allocators.html"><strong>6.11.</strong> Пользовательские менеджеры памяти</a></li></ul></li><li><a href="glossary.html"><strong>7.</strong> Глоссарий</a></li><li><a href="academic-research.html"><strong>8.</strong> Академические исследования</a></li></ul>
+        </div>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar" class="menu-bar">
+                    <div class="left-buttons">
+                        <i id="sidebar-toggle" class="fa fa-bars"></i>
+                        <i id="theme-toggle" class="fa fa-paint-brush"></i>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <i id="print-button" class="fa fa-print" title="Print this book"></i>
+                    </div>
+                </div>
+
+                <div id="content" class="content">
+                    <p>% Нестабильные возможности Rust</p>
+<p>Rust обеспечивает три канала распространения для Rust: nightly, beta и stable.
 Нестабильные функции доступны только в nightly Rust. Для более подробной
-информации об этом процессе смотрите ‘<a href="http://blog.rust-lang.org/2014/10/30/Stability.html">Стабильность как результат</a>’.</p>
-
+информации об этом процессе смотрите «<a href="http://blog.rust-lang.org/2014/10/30/Stability.html">Стабильность как результат</a>».</p>
 <p>Чтобы установить nightly Rust, вы можете использовать <code>rustup.sh</code>:</p>
-
 <pre><code class="language-bash">$ curl -s https://static.rust-lang.org/rustup.sh | sh -s -- --channel=nightly
 </code></pre>
-
 <p>Если вы беспокоитесь о <a href="http://curlpipesh.tumblr.com">потенциальной безопасности</a> использования
 данной команды <code>curl | sh</code>, то продолжайте читать далее. Вы также можете
 использовать двухступенчатый вариант установки и изучить наш установочный
 скрипт:</p>
-
 <pre><code class="language-bash">$ curl -f -L https://static.rust-lang.org/rustup.sh -O
 $ sh rustup.sh --channel=nightly
 </code></pre>
-
 <p>Если же вы используете Windows, то, пожалуйста, скачайте один из установочных
 пакетов: <a href="https://static.rust-lang.org/dist/rust-1.0.0-beta-i686-pc-windows-gnu.msi">32-битный</a> или <a href="https://static.rust-lang.org/dist/rust-1.0.0-beta-x86_64-pc-windows-gnu.msi">64-битный</a> и запустите его.</p>
-
-<h2 id="Удаление" class='section-header'><a
-                           href="#Удаление">Удаление</a></h2>
+<h2>Удаление</h2>
 <p>Если вы решили, что Rust вам больше не нужен, то мы будем чуть-чуть огорчены, но
 это нормально. Не каждый язык программирования отлично подходит для всех. Просто
 запустите скрипт деинсталляции:</p>
-
 <pre><code class="language-bash">$ sudo /usr/local/lib/rustlib/uninstall.sh
 </code></pre>
-
-<p>Если вы использовали установщик Windows, то просто повторно запустите <code>.msi</code>, 
+<p>Если вы использовали установщик Windows, то просто повторно запустите <code>.msi</code>,
 который предложит вам возможность удаления.</p>
-
 <p>Некоторые люди, причём не безосновательно, насторожились, когда мы сказали
 использовать <code>curl | sh</code>. Когда вы делаете так, вы должны доверять тем хорошим
 людям, которые поддерживают Rust, и не бояться, что они попытаются взломать ваш
@@ -225,44 +96,33 @@ $ sh rustup.sh --channel=nightly
 это очень хорошо. Если вы один из таких людей, пожалуйста посмотрите в
 документации как <a href="https://github.com/rust-lang/rust#building-from-source">собрать Rust из исходных кодов</a> или скачайте уже
 <a href="http://www.rust-lang.org/install.html">скомпилированный Rust</a>. Мы обещаем, что данный способ не будет
-использоваться для установки Rust&#39;a всегда: скрипт был сделан для быстрого
+использоваться для установки Rust всегда: скрипт был сделан для быстрого
 обновления пока Rust находится в стадии alpha.</p>
-
 <p>Мы так же должны упомянуть официально поддерживаемые платформы:</p>
-
 <ul>
 <li>Windows (7, 8, Server 2008 R2)</li>
 <li>Linux (2.6.18 и более новые, разные дистрибутивы), x86 и x86-64</li>
 <li>OSX 10.7 (Lion) и более новые, x86 и x86-64</li>
 </ul>
-
 <p>Rust активно тестируется на всех этих платформах, а также на некоторых других,
-например на Android. Но мы указали те, на которых Rust точно должен работать, 
+например на Android. Но мы указали те, на которых Rust точно должен работать,
 ибо для этих платформ он тестируется больше всего.</p>
-
-<p>Напоследок, замечание о Windows. Rust считает, что Windows - это первоклассная 
-платформа для релиза, но если быть честными, то опыт разработки для Windows не 
-на столько хорош, как для Linux/OS X. Мы работаем над этим! Если что-то не 
-работает, то это ошибка. Пожалуйста, дайте нам знать, если такое произойдёт. 
+<p>Напоследок, замечание о Windows. Rust считает, что Windows — это первоклассная
+платформа для релиза, но если быть честными, то опыт разработки для Windows не
+на столько хорош, как для Linux/OS X. Мы работаем над этим! Если что-то не
+работает, то это ошибка. Пожалуйста, дайте нам знать, если такое произойдёт.
 Каждый коммит тестируется на Windows, впрочем так же, как и на любой другой
 платформе.</p>
-
 <p>Если вы уже установили Rust, то откройте терминал и введите это:</p>
-
 <pre><code class="language-bash">$ rustc --version
 </code></pre>
-
 <p>Вы должны увидеть версию, хэш коммита, дату коммита и дату сборки:</p>
-
 <pre><code class="language-bash">rustc 1.0.0-nightly (f11f3e7ba 2015-01-04) (built 2015-01-06)
 </code></pre>
-
 <p>Итак, теперь у вас есть установленный Rust! Поздравляем!</p>
-
 <p>Установщик также устанавливает документацию, которая доступна без подключения к
 сети. На UNIX системах она располагается в каталоге <code>/usr/local/share/doc/rust</code>.
-В Windows - в директории <code>share/doc</code>, относительно того куда вы установили Rust.</p>
-
+В Windows — в директории <code>share/doc</code>, относительно того куда вы установили Rust.</p>
 <p>Также есть ещё ряд мест, где можно получить помощь. <a href="irc://irc.mozilla.org/#rust">Канал #rust на
 irc.mozilla.org</a>, к которому вы можете подключиться через <a href="http://chat.mibbit.com/?server=irc.mozilla.org&amp;channel=%23rust">Mibbit</a>.
 Нажмите на эту ссылку, и вы будете общаться в чате с другими Rustaceans (это
@@ -271,74 +131,46 @@ irc.mozilla.org</a>, к которому вы можете подключить�
 subreddit</a>, <a href="http://stackoverflow.com/questions/tagged/rust">stack overflow</a>. Русскоязычные ресурсы:
 <a href="irc://irc.mozilla.org/#rust-ru">канал #rust-ru на irc.mozilla.org</a>, <a href="https://groups.google.com/forum/#!forum/rust-russian">google groups</a>.</p>
 
-    <script type="text/javascript">
-        window.playgroundUrl = "http://play.rust-lang.org";
-    </script>
-    
-<script type="text/javascript">
-document.addEventListener("DOMContentLoaded", function(event) {
-  document.getElementById("toggle-nav").onclick = toggleNav;
-  function toggleNav() {
-    var toc = document.getElementById("toc");
-    var pagewrapper = document.getElementById("page-wrapper");
-    toggleClass(toc, "mobile-hidden");
-    toggleClass(pagewrapper, "mobile-hidden");
-  };
+                </div>
 
-  function toggleClass(el, className) {
-     // from http://youmightnotneedjquery.com/
-     if (el.classList) {
-       el.classList.toggle(className);
-     } else {
-       var classes = el.className.split(' ');
-       var existingIndex = classes.indexOf(className);
+                <!-- Mobile navigation buttons -->
+                
+                    <a href="unsafe.html" class="mobile-nav-chapters previous">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
 
-       if (existingIndex >= 0) {
-         classes.splice(existingIndex, 1);
-       } else {
-         classes.push(className);
-       }
+                
+                    <a href="compiler-plugins.html" class="mobile-nav-chapters next">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
 
-       el.className = classes.join(' ');
-     }
-  }
+            </div>
 
-  // The below code is used to add prev and next navigation links to the bottom
-  // of each of the sections.
-  // It works by extracting the current page based on the url and iterates over
-  // the menu links until it finds the menu item for the current page. We then
-  // create a copy of the preceding and following menu links and add the
-  // correct css class and insert them into the bottom of the page.
-  var toc = document.getElementById('toc').getElementsByTagName('a');
-  var href = document.location.pathname.split('/').pop();
-  if (href === 'index.html' || href === '') {
-    href = 'README.html';
-  }
+            
+                <a href="unsafe.html" class="nav-chapters previous">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            
 
-  for (var i = 0; i < toc.length; i++) {
-    if (toc[i].attributes['href'].value.split('/').pop() === href) {
-      var nav = document.createElement('p');
-      if (i > 0) {
-        var prevNode = toc[i-1].cloneNode(true);
-        prevNode.className = 'left';
-        nav.appendChild(prevNode);
-      }
-      if (i < toc.length - 1) {
-        var nextNode = toc[i+1].cloneNode(true);
-        nextNode.className = 'right';
-        nav.appendChild(nextNode);
-      }
-      document.getElementById('page').appendChild(nav);
-      break;
-    }
-  }
+            
+                <a href="compiler-plugins.html" class="nav-chapters next">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            
 
-});
-</script>
-<script type="text/javascript" src="jquery.js"></script>
-<script type="text/javascript" src="playpen.js"></script>
-</div></div>
+        </div>
 
 
-</body>
+        <!-- Local fallback for Font Awesome -->
+        <script>
+            if ($(".fa").css("font-family") !== "FontAwesome") {
+                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
+            }
+        </script>
+
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+    </body>
 </html>

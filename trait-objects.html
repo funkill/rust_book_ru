@@ -1,241 +1,101 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="rustdoc">
-    <title>Трейт объекты</title>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="{% block description %}{% endblock %}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" type="text/css" href="rust-book.css">
+        <base href="">
 
-    
-</head>
-<body class="rustdoc">
-    <!--[if lte IE 8]>
-    <div class="warning">
-        This old browser is unsupported and will most likely display funky
-        things.
-    </div>
-    <![endif]-->
+        <link rel="stylesheet" href="book.css">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 
-    <div id="nav">
-                <button id="toggle-nav">
-                  <span class="sr-only">Toggle navigation</span>
-                  <span class="bar"></span>
-                  <span class="bar"></span>
-                  <span class="bar"></span>
-                </button>
-              </div>
-<div id='toc' class='mobile-hidden'>
-<ul class='chapter'>
-<li><a href='README.html'><b>1.</b> Introduction</a>
-</li>
-<li><a href='INTRODUCTION.html'><b>2.</b> Введение</a>
-</li>
-<li><a href='getting-started.html'><b>3.</b> C чего начать</a>
-<ul class='section'>
-<li><a href='installing-rust.html'><b>3.1.</b> Установка Rust</a>
-</li>
-<li><a href='hello-world.html'><b>3.2.</b> Hello, world!</a>
-</li>
-<li><a href='hello-cargo.html'><b>3.3.</b> Hello, Cargo!</a>
-</li>
-</ul>
-</li>
-<li><a href='learn-rust.html'><b>4.</b> Изучение Rust</a>
-<ul class='section'>
-<li><a href='guessing-game.html'><b>4.1.</b> Угадайка</a>
-</li>
-</ul>
-</li>
-<li><a href='effective-rust.html'><b>5.</b> Эффективное использование Rust</a>
-<ul class='section'>
-<li><a href='the-stack-and-the-heap.html'><b>5.1.</b> Стек и Куча</a>
-</li>
-<li><a href='testing.html'><b>5.2.</b> Тестирование</a>
-</li>
-<li><a href='conditional-compilation.html'><b>5.3.</b> Условная компиляция</a>
-</li>
-<li><a href='documentation.html'><b>5.4.</b> Документация</a>
-</li>
-<li><a href='iterators.html'><b>5.5.</b> Итераторы</a>
-</li>
-<li><a href='concurrency.html'><b>5.6.</b> Многозадачность</a>
-</li>
-<li><a href='error-handling.html'><b>5.7.</b> Обработка ошибок</a>
-</li>
-<li><a href='ffi.html'><b>5.8.</b> Интерфейс внешних функций (FFI)</a>
-</li>
-<li><a href='release-channels.html'><b>5.9.</b> Каналы сборок</a>
-</li>
-</ul>
-</li>
-<li><a href='syntax-and-semantics.html'><b>6.</b> Синтаксис и семантика</a>
-<ul class='section'>
-<li><a href='variable-bindings.html'><b>6.1.</b> Связывание переменных</a>
-</li>
-<li><a href='functions.html'><b>6.2.</b> Функции</a>
-</li>
-<li><a href='primitive-types.html'><b>6.3.</b> Простые типы</a>
-</li>
-<li><a href='comments.html'><b>6.4.</b> Комментарии</a>
-</li>
-<li><a href='if.html'><b>6.5.</b> Конструкция `if`</a>
-</li>
-<li><a href='for-loops.html'><b>6.6.</b> Циклы `for`</a>
-</li>
-<li><a href='while-loops.html'><b>6.7.</b> Циклы `while`</a>
-</li>
-<li><a href='ownership.html'><b>6.8.</b> Владение</a>
-</li>
-<li><a href='references-and-borrowing.html'><b>6.9.</b> Ссылки и Заимствование</a>
-</li>
-<li><a href='lifetimes.html'><b>6.10.</b> Время жизни</a>
-</li>
-<li><a href='mutability.html'><b>6.11.</b> Изменяемость (Мутабельность)</a>
-</li>
-<li><a href='enums.html'><b>6.12.</b> Перечисления</a>
-</li>
-<li><a href='match.html'><b>6.13.</b> Конструкция `match`</a>
-</li>
-<li><a href='structs.html'><b>6.14.</b> Структуры</a>
-</li>
-<li><a href='patterns.html'><b>6.15.</b> Шаблоны `match`</a>
-</li>
-<li><a href='method-syntax.html'><b>6.16.</b> Синтаксис методов</a>
-</li>
-<li><a href='vectors.html'><b>6.17.</b> Вектора</a>
-</li>
-<li><a href='strings.html'><b>6.18.</b> Строки</a>
-</li>
-<li><a href='generics.html'><b>6.19.</b> Дженерики</a>
-</li>
-<li><a href='traits.html'><b>6.20.</b> Трейты</a>
-</li>
-<li><a href='drop.html'><b>6.21.</b> Трейт `Drop`</a>
-</li>
-<li><a href='if-let.html'><b>6.22.</b> Конструкция `if let`</a>
-</li>
-<li><a href='trait-objects.html'><b>6.23.</b> Трейт объекты</a>
-</li>
-<li><a href='closures.html'><b>6.24.</b> Замыкания</a>
-</li>
-<li><a href='ufcs.html'><b>6.25.</b> Универсальный синтаксис вызова функций (UFCS)</a>
-</li>
-<li><a href='crates-and-modules.html'><b>6.26.</b> Контейнеры и Модули</a>
-</li>
-<li><a href='const-and-static.html'><b>6.27.</b> `const` и `static`</a>
-</li>
-<li><a href='tuple-structs.html'><b>6.28.</b> Кортежные структуры</a>
-</li>
-<li><a href='attributes.html'><b>6.29.</b> Атрибуты</a>
-</li>
-<li><a href='type-aliases.html'><b>6.30.</b> Псевдонимы типов</a>
-</li>
-<li><a href='casting-between-types.html'><b>6.31.</b> Преобразование типов</a>
-</li>
-<li><a href='associated-types.html'><b>6.32.</b> Ассоциированные типы</a>
-</li>
-<li><a href='unsized-types.html'><b>6.33.</b> Безразмерные типы</a>
-</li>
-<li><a href='operators-and-overloading.html'><b>6.34.</b> Operators and Overloading</a>
-</li>
-<li><a href='deref-coercions.html'><b>6.35.</b> Трейт `Deref`</a>
-</li>
-<li><a href='macros.html'><b>6.36.</b> Макросы</a>
-</li>
-<li><a href='raw-pointers.html'><b>6.37.</b> Сырые указатели</a>
-</li>
-<li><a href='unsafe.html'><b>6.38.</b> `unsafe` код</a>
-</li>
-</ul>
-</li>
-<li><a href='nightly-rust.html'><b>7.</b> Нестабильные фичи Rust</a>
-<ul class='section'>
-<li><a href='compiler-plugins.html'><b>7.1.</b> Плагины компилятора</a>
-</li>
-<li><a href='inline-assembly.html'><b>7.2.</b> Встроенный ассемблерный код</a>
-</li>
-<li><a href='no-stdlib.html'><b>7.3.</b> Без stdlib</a>
-</li>
-<li><a href='intrinsics.html'><b>7.4.</b> Внутренние средства</a>
-</li>
-<li><a href='lang-items.html'><b>7.5.</b> Lang items</a>
-</li>
-<li><a href='link-args.html'><b>7.6.</b> Аргументы линковки</a>
-</li>
-<li><a href='benchmark-tests.html'><b>7.7.</b> Тесты производительности</a>
-</li>
-<li><a href='box-syntax-and-patterns.html'><b>7.8.</b> Синтаксис упаковки и шаблоны `match`</a>
-</li>
-<li><a href='slice-patterns.html'><b>7.9.</b> Шаблоны `match` для срезов</a>
-</li>
-<li><a href='associated-constants.html'><b>7.10.</b> Ассоциированные константы</a>
-</li>
-</ul>
-</li>
-<li><a href='glossary.html'><b>8.</b> Глоссарий</a>
-</li>
-<li><a href='academic-research.html'><b>9.</b> Академические исследования</a>
-</li>
-</ul>
-</div>
-<div id='page-wrapper'>
-<div id='page'>
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
 
-    <h1 class="title">Трейт объекты</h1>
-    <p>Когда код включает в себя полиморфизм, то должен быть механизм, чтобы
+        <!-- MathJax -->
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+        <!-- Fetch JQuery from CDN but have a local fallback -->
+        <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script>
+            if (typeof jQuery == 'undefined') {
+                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
+            }
+        </script>
+    </head>
+    <body>
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme = localStorage.getItem('theme');
+            if (theme == null) { theme = 'light'; }
+            $('body').removeClass().addClass(theme);
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var sidebar = localStorage.getItem('sidebar');
+            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
+            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
+        </script>
+
+        <div id="sidebar" class="sidebar">
+            <ul class="chapter"><li><a href="INTRODUCTION.html"><strong>1.</strong> Введение</a></li><li><a href="getting-started.html"><strong>2.</strong> C чего начать</a></li><li><ul class="section"><li><a href="installing-rust.html"><strong>2.1.</strong> Установка Rust</a></li><li><a href="hello-world.html"><strong>2.2.</strong> Привет, мир!</a></li><li><a href="hello-cargo.html"><strong>2.3.</strong> Hello, Cargo!</a></li></ul></li><li><a href="learn-rust.html"><strong>3.</strong> Изучение Rust</a></li><li><ul class="section"><li><a href="guessing-game.html"><strong>3.1.</strong> Угадайка</a></li><li><a href="dining-philosophers.html"><strong>3.2.</strong> Обедающие философы</a></li><li><a href="rust-inside-other-languages.html"><strong>3.3.</strong> Вызов кода на Rust из других языков</a></li></ul></li><li><a href="effective-rust.html"><strong>4.</strong> Эффективное использование Rust</a></li><li><ul class="section"><li><a href="the-stack-and-the-heap.html"><strong>4.1.</strong> Стек и куча</a></li><li><a href="testing.html"><strong>4.2.</strong> Тестирование</a></li><li><a href="conditional-compilation.html"><strong>4.3.</strong> Условная компиляция</a></li><li><a href="documentation.html"><strong>4.4.</strong> Документация</a></li><li><a href="iterators.html"><strong>4.5.</strong> Итераторы</a></li><li><a href="concurrency.html"><strong>4.6.</strong> Многозадачность</a></li><li><a href="error-handling.html"><strong>4.7.</strong> Обработка ошибок</a></li><li><a href="choosing-your-guarantees.html"><strong>4.8.</strong> Выбор гарантий</a></li><li><a href="ffi.html"><strong>4.9.</strong> Интерфейс внешних функций (FFI)</a></li><li><a href="borrow-and-asref.html"><strong>4.10.</strong> Типажи `Borrow` и `AsRef`</a></li><li><a href="release-channels.html"><strong>4.11.</strong> Каналы сборок</a></li></ul></li><li><a href="syntax-and-semantics.html"><strong>5.</strong> Синтаксис и семантика</a></li><li><ul class="section"><li><a href="variable-bindings.html"><strong>5.1.</strong> Связывание имён</a></li><li><a href="functions.html"><strong>5.2.</strong> Функции</a></li><li><a href="primitive-types.html"><strong>5.3.</strong> Простые типы</a></li><li><a href="comments.html"><strong>5.4.</strong> Комментарии</a></li><li><a href="if.html"><strong>5.5.</strong> Конструкция `if`</a></li><li><a href="loops.html"><strong>5.6.</strong> Циклы</a></li><li><a href="ownership.html"><strong>5.7.</strong> Владение</a></li><li><a href="references-and-borrowing.html"><strong>5.8.</strong> Ссылки и заимствование</a></li><li><a href="lifetimes.html"><strong>5.9.</strong> Время жизни</a></li><li><a href="mutability.html"><strong>5.10.</strong> Изменяемость (mutability)</a></li><li><a href="structs.html"><strong>5.11.</strong> Структуры</a></li><li><a href="enums.html"><strong>5.12.</strong> Перечисления</a></li><li><a href="match.html"><strong>5.13.</strong> Конструкция `match`</a></li><li><a href="patterns.html"><strong>5.14.</strong> Шаблоны сопоставления `match`</a></li><li><a href="method-syntax.html"><strong>5.15.</strong> Синтаксис методов</a></li><li><a href="vectors.html"><strong>5.16.</strong> Вектора</a></li><li><a href="strings.html"><strong>5.17.</strong> Строки</a></li><li><a href="generics.html"><strong>5.18.</strong> Обобщённое программирование</a></li><li><a href="traits.html"><strong>5.19.</strong> Типажи</a></li><li><a href="drop.html"><strong>5.20.</strong> Типаж `Drop` (сброс)</a></li><li><a href="if-let.html"><strong>5.21.</strong> Конструкция `if let`</a></li><li><a href="trait-objects.html" class="active"><strong>5.22.</strong> Типажи-объекты</a></li><li><a href="closures.html"><strong>5.23.</strong> Замыкания</a></li><li><a href="ufcs.html"><strong>5.24.</strong> Универсальный синтаксис вызова функций (UFCS)</a></li><li><a href="crates-and-modules.html"><strong>5.25.</strong> Контейнеры (crates) и модули (modules)</a></li><li><a href="const-and-static.html"><strong>5.26.</strong> `const` и `static`</a></li><li><a href="attributes.html"><strong>5.27.</strong> Атрибуты</a></li><li><a href="type-aliases.html"><strong>5.28.</strong> Псевдонимы типов</a></li><li><a href="casting-between-types.html"><strong>5.29.</strong> Приведение типов</a></li><li><a href="associated-types.html"><strong>5.30.</strong> Ассоциированные типы</a></li><li><a href="unsized-types.html"><strong>5.31.</strong> Безразмерные типы</a></li><li><a href="operators-and-overloading.html"><strong>5.32.</strong> Перегрузка операций</a></li><li><a href="deref-coercions.html"><strong>5.33.</strong> Преобразования при разыменовании (deref coercions)</a></li><li><a href="macros.html"><strong>5.34.</strong> Макросы</a></li><li><a href="raw-pointers.html"><strong>5.35.</strong> Сырые указатели</a></li><li><a href="unsafe.html"><strong>5.36.</strong> Небезопасный код</a></li></ul></li><li><a href="nightly-rust.html"><strong>6.</strong> Нестабильные возможности Rust</a></li><li><ul class="section"><li><a href="compiler-plugins.html"><strong>6.1.</strong> Плагины к компилятору</a></li><li><a href="inline-assembly.html"><strong>6.2.</strong> Встроенный ассемблерный код</a></li><li><a href="no-stdlib.html"><strong>6.3.</strong> Без stdlib</a></li><li><a href="intrinsics.html"><strong>6.4.</strong> Внутренние средства (intrinsics)</a></li><li><a href="lang-items.html"><strong>6.5.</strong> Элементы языка (lang items)</a></li><li><a href="advanced-linking.html"><strong>6.6.</strong> Продвинутое руководство по компоновке (advanced linking)</a></li><li><a href="benchmark-tests.html"><strong>6.7.</strong> Тесты производительности</a></li><li><a href="box-syntax-and-patterns.html"><strong>6.8.</strong> Синтаксис упаковки и шаблоны `match`</a></li><li><a href="slice-patterns.html"><strong>6.9.</strong> Шаблоны `match` для срезов</a></li><li><a href="associated-constants.html"><strong>6.10.</strong> Ассоциированные константы</a></li><li><a href="custom-allocators.html"><strong>6.11.</strong> Пользовательские менеджеры памяти</a></li></ul></li><li><a href="glossary.html"><strong>7.</strong> Глоссарий</a></li><li><a href="academic-research.html"><strong>8.</strong> Академические исследования</a></li></ul>
+        </div>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar" class="menu-bar">
+                    <div class="left-buttons">
+                        <i id="sidebar-toggle" class="fa fa-bars"></i>
+                        <i id="theme-toggle" class="fa fa-paint-brush"></i>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <i id="print-button" class="fa fa-print" title="Print this book"></i>
+                    </div>
+                </div>
+
+                <div id="content" class="content">
+                    <p>% Типажи-объекты</p>
+<p>Когда код включает в себя полиморфизм, то должен быть механизм, чтобы
 определить, какая конкретная версия будет фактически вызвана. Это называется
-&#39;диспетчерезация.&#39; Есть две основные формы диспетчерезации: статическая и
-динамическая. Хотя Rust и отдает предпочтение статической диспетчерезации, он
-также поддерживает динамическую диспетчерезацию через механизм, называемый
-&#39;трейт объекты.&#39;</p>
-
-<h2 id="Подготовка" class='section-header'><a
-                           href="#Подготовка">Подготовка</a></h2>
-<p>Для остальной части этой главы нам потребуется трейт и несколько его реализаций.
-Давайте создадим простой трейт <code>Foo</code>. Он содержит один метод, который возвращает
+'диспетчеризация.' Есть две основные формы диспетчеризации: статическая и
+динамическая. Хотя Rust и отдает предпочтение статической диспетчеризации, он
+также поддерживает динамическую диспетчеризацию через механизм, называемый
+'типажи-объекты.'</p>
+<h2>Подготовка</h2>
+<p>Для остальной части этой главы нам потребуется типаж и несколько его реализаций.
+Давайте создадим простой типаж <code>Foo</code>. Он содержит один метод, который возвращает
 <code>String</code>.</p>
-<span class='rusttest'>fn main() {
-    trait Foo {
-        fn method(&amp;self) -&gt; String;
-    }
-    
-}</span><pre id='rust-example-rendered' class='rust '>
-<span class='kw'>trait</span> <span class='ident'>Foo</span> {
-    <span class='kw'>fn</span> <span class='ident'>method</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span>;
+<pre><code class="language-rust">trait Foo {
+    fn method(&amp;self) -&gt; String;
 }
-</pre>
-
-<p>Также мы реализуем этот трейт для <code>u8</code> и <code>String</code>:</p>
-<span class='rusttest'>fn main() {
-    trait Foo { fn method(&amp;self) -&gt; String; }
-    impl Foo for u8 {
-        fn method(&amp;self) -&gt; String { format!(&quot;u8: {}&quot;, *self) }
-    }
-    
-    impl Foo for String {
-        fn method(&amp;self) -&gt; String { format!(&quot;string: {}&quot;, *self) }
-    }
-    
-}</span><pre id='rust-example-rendered' class='rust '>
-<span class='kw'>impl</span> <span class='ident'>Foo</span> <span class='kw'>for</span> <span class='ident'>u8</span> {
-    <span class='kw'>fn</span> <span class='ident'>method</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span> { <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;u8: {}&quot;</span>, <span class='op'>*</span><span class='self'>self</span>) }
+</code></pre>
+<p>Также мы реализуем этот типаж для <code>u8</code> и <code>String</code>:</p>
+<pre><code class="language-rust"># trait Foo { fn method(&amp;self) -&gt; String; }
+impl Foo for u8 {
+    fn method(&amp;self) -&gt; String { format!(&quot;u8: {}&quot;, *self) }
 }
 
-<span class='kw'>impl</span> <span class='ident'>Foo</span> <span class='kw'>for</span> <span class='ident'>String</span> {
-    <span class='kw'>fn</span> <span class='ident'>method</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span> { <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;string: {}&quot;</span>, <span class='op'>*</span><span class='self'>self</span>) }
+impl Foo for String {
+    fn method(&amp;self) -&gt; String { format!(&quot;string: {}&quot;, *self) }
 }
-</pre>
-
-<h2 id="Статическая-диспетчерезация" class='section-header'><a
-                           href="#Статическая-диспетчерезация">Статическая диспетчерезация</a></h2>
-<p>Мы можем использовать этот трейт для выполнения статической диспетчерезации с
-помощью ограничения трейтом:</p>
-<span class='rusttest'>trait Foo { fn method(&amp;self) -&gt; String; }
-impl Foo for u8 { fn method(&amp;self) -&gt; String { format!(&quot;u8: {}&quot;, *self) } }
-impl Foo for String { fn method(&amp;self) -&gt; String { format!(&quot;string: {}&quot;, *self) } }
+</code></pre>
+<h2>Статическая диспетчеризация</h2>
+<p>Мы можем использовать этот типаж для выполнения статической диспетчеризации с
+помощью ограничения типажом:</p>
+<pre><code class="language-rust"># trait Foo { fn method(&amp;self) -&gt; String; }
+# impl Foo for u8 { fn method(&amp;self) -&gt; String { format!(&quot;u8: {}&quot;, *self) } }
+# impl Foo for String { fn method(&amp;self) -&gt; String { format!(&quot;string: {}&quot;, *self) } }
 fn do_something&lt;T: Foo&gt;(x: T) {
     x.method();
 }
@@ -247,27 +107,14 @@ fn main() {
     do_something(x);
     do_something(y);
 }
-</span><pre id='rust-example-rendered' class='rust '>
-<span class='kw'>fn</span> <span class='ident'>do_something</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Foo</span><span class='op'>&gt;</span>(<span class='ident'>x</span>: <span class='ident'>T</span>) {
-    <span class='ident'>x</span>.<span class='ident'>method</span>();
-}
-
-<span class='kw'>fn</span> <span class='ident'>main</span>() {
-    <span class='kw'>let</span> <span class='ident'>x</span> <span class='op'>=</span> <span class='number'>5u8</span>;
-    <span class='kw'>let</span> <span class='ident'>y</span> <span class='op'>=</span> <span class='string'>&quot;Hello&quot;</span>.<span class='ident'>to_string</span>();
-
-    <span class='ident'>do_something</span>(<span class='ident'>x</span>);
-    <span class='ident'>do_something</span>(<span class='ident'>y</span>);
-}
-</pre>
-
-<p>Здесь Rust использует &#39;мономорфизацию&#39; для статической диспетчерезации. Это
+</code></pre>
+<p>Здесь Rust использует 'мономорфизацию' для статической диспетчеризации. Это
 означает, что Rust создаст специальную версию <code>do_something()</code> для каждого из
 типов: <code>u8</code> и <code>String</code>, а затем заменит все места вызовов на вызовы этих
 специализированных функций. Другими словами, Rust сгенерирует нечто вроде этого:</p>
-<span class='rusttest'>trait Foo { fn method(&amp;self) -&gt; String; }
-impl Foo for u8 { fn method(&amp;self) -&gt; String { format!(&quot;u8: {}&quot;, *self) } }
-impl Foo for String { fn method(&amp;self) -&gt; String { format!(&quot;string: {}&quot;, *self) } }
+<pre><code class="language-rust"># trait Foo { fn method(&amp;self) -&gt; String; }
+# impl Foo for u8 { fn method(&amp;self) -&gt; String { format!(&quot;u8: {}&quot;, *self) } }
+# impl Foo for String { fn method(&amp;self) -&gt; String { format!(&quot;string: {}&quot;, *self) } }
 fn do_something_u8(x: u8) {
     x.method();
 }
@@ -283,70 +130,45 @@ fn main() {
     do_something_u8(x);
     do_something_string(y);
 }
-</span><pre id='rust-example-rendered' class='rust '>
-<span class='kw'>fn</span> <span class='ident'>do_something_u8</span>(<span class='ident'>x</span>: <span class='ident'>u8</span>) {
-    <span class='ident'>x</span>.<span class='ident'>method</span>();
-}
-
-<span class='kw'>fn</span> <span class='ident'>do_something_string</span>(<span class='ident'>x</span>: <span class='ident'>String</span>) {
-    <span class='ident'>x</span>.<span class='ident'>method</span>();
-}
-
-<span class='kw'>fn</span> <span class='ident'>main</span>() {
-    <span class='kw'>let</span> <span class='ident'>x</span> <span class='op'>=</span> <span class='number'>5u8</span>;
-    <span class='kw'>let</span> <span class='ident'>y</span> <span class='op'>=</span> <span class='string'>&quot;Hello&quot;</span>.<span class='ident'>to_string</span>();
-
-    <span class='ident'>do_something_u8</span>(<span class='ident'>x</span>);
-    <span class='ident'>do_something_string</span>(<span class='ident'>y</span>);
-}
-</pre>
-
-<p>Статическая диспетчерезация имеет большой потенциал: она позволяет вызывать
+</code></pre>
+<p>Статическая диспетчеризация имеет большой потенциал: она позволяет вызывать
 функцию, которая будет встроена, потому что вызываемая версия этой функции
-известна на этапе компиляции, а встраивание - это ключ к хорошей оптимизации.
-Статическая диспетчерезация быстра, но это достигается путем компромисса:
-происходит &#39;раздувание кода&#39; в связи с большим количеством копий одной и той же
+известна на этапе компиляции, а встраивание — это ключ к хорошей оптимизации.
+Статическая диспетчеризация быстра, но это достигается путем компромисса:
+происходит 'раздувание кода' в связи с большим количеством копий одной и той же
 функции, по одной для каждого типа, расположенных в бинарном файле.</p>
-
-<p>Кроме того, компиляторы не совершенны и могут &quot;оптимизировать&quot; код так, что он
+<p>Кроме того, компиляторы не совершенны и могут «оптимизировать» код так, что он
 станет медленнее. Например, встроенные функции будут слишком охотно раздувать
 кэш команд (правила кэширования все вокруг нас). Это одна из причин, по которой
 <code>#[inline]</code> и <code>#[inline(always)]</code> следует использовать осторожно, и почему
 использование динамической диспетчеризации иногда более эффективно.</p>
-
 <p>Тем не менее, в общем случае более эффективно использовать статическую
-диспетчерезацию. Кроме того, всегда можно иметь тонкую статически-
-диспетчерезуемую обертку для функции, которая выполняет динамическую
+диспетчеризацию. Кроме того, всегда можно иметь тонкую статически-
+диспетчеризуемую обертку для функции, которая выполняет динамическую
 диспетчеризацию, но не наоборот. То есть статические вызовы являются более
 гибкими. По этой причине стандартная библиотека старается быть статически
-диспетчерезуемой везде, где это возможно.</p>
-
-<h2 id="Динамическая-диспетчерезация" class='section-header'><a
-                           href="#Динамическая-диспетчерезация">Динамическая диспетчерезация</a></h2>
+диспетчеризуемой везде, где это возможно.</p>
+<h2>Динамическая диспетчеризация</h2>
 <p>Rust обеспечивает динамическую диспетчеризацию через механизм под названием
-&#39;трейт объекты.&#39; Трейт объекты, такие как <code>&amp;Foo</code> или <code>Box&lt;Foo&gt;</code>, это обычные
-переменные, хранящие значения <em>любого</em> типа, реализующего данный трейт.
-Конкретный тип трейт объекта может быть определен только на этапе выполнения.</p>
-
-<p>Трейт объект может быть получен из указателя на конкретный тип, который
-реализует этот трейт, путем его <code>явного приведения</code> (например, <code>&amp;x as &amp;Foo</code>) или
+'типажи-объекты'. Типажи-объекты, такие как <code>&amp;Foo</code> или <code>Box&lt;Foo&gt;</code>, это обычные
+переменные, хранящие значения <em>любого</em> типа, реализующего данный типаж.
+Конкретный тип типажа-объекта может быть определен только на этапе выполнения.</p>
+<p>Типаж-объект может быть получен из указателя на конкретный тип, который
+реализует этот типаж, путем его <code>явного приведения</code> (например, <code>&amp;x as &amp;Foo</code>) или
 <code>неявного приведения</code> (например, используя <code>&amp;x</code> в качестве аргумента функции,
 которая принимает <code>&amp;Foo</code>).</p>
-
-<p>Явное и неявное приведение трейт объекта также работает для таких указателей,
+<p>Явное и неявное приведение типажа-объекта также работает для таких указателей,
 как <code>&amp;mut T</code> в <code>&amp;mut Foo</code> и <code>Box&lt;T&gt;</code> в <code>Box&lt;Foo&gt;</code>, но это все на данный момент.
 Явное и неявное приведение идентичны.</p>
-
-<p>Эта операция может рассматриваться как &quot;затирание&quot; знания компилятора о
-конкретном типе указателя, поэтому трейт объекты иногда называют как &quot;затирание
-типов&quot;.</p>
-
-<p>Возвращаясь к примеру выше, мы можем использовать тот же самый трейт для
-выполнения динамической диспетчеризации с трейт объектами путем явного
+<p>Эта операция может рассматриваться как «затирание» знания компилятора о
+конкретном типе указателя, поэтому типажи-объекты иногда называют «затиранием
+типов».</p>
+<p>Возвращаясь к примеру выше, мы можем использовать тот же самый типаж для
+выполнения динамической диспетчеризации с типажами-объектами путем явного
 приведения типа:</p>
-<span class='rusttest'>trait Foo { fn method(&amp;self) -&gt; String; }
-impl Foo for u8 { fn method(&amp;self) -&gt; String { format!(&quot;u8: {}&quot;, *self) } }
-impl Foo for String { fn method(&amp;self) -&gt; String { format!(&quot;string: {}&quot;, *self) } }
+<pre><code class="language-rust"># trait Foo { fn method(&amp;self) -&gt; String; }
+# impl Foo for u8 { fn method(&amp;self) -&gt; String { format!(&quot;u8: {}&quot;, *self) } }
+# impl Foo for String { fn method(&amp;self) -&gt; String { format!(&quot;string: {}&quot;, *self) } }
 
 fn do_something(x: &amp;Foo) {
     x.method();
@@ -356,22 +178,11 @@ fn main() {
     let x = 5u8;
     do_something(&amp;x as &amp;Foo);
 }
-</span><pre id='rust-example-rendered' class='rust '>
-
-<span class='kw'>fn</span> <span class='ident'>do_something</span>(<span class='ident'>x</span>: <span class='kw-2'>&amp;</span><span class='ident'>Foo</span>) {
-    <span class='ident'>x</span>.<span class='ident'>method</span>();
-}
-
-<span class='kw'>fn</span> <span class='ident'>main</span>() {
-    <span class='kw'>let</span> <span class='ident'>x</span> <span class='op'>=</span> <span class='number'>5u8</span>;
-    <span class='ident'>do_something</span>(<span class='kw-2'>&amp;</span><span class='ident'>x</span> <span class='kw'>as</span> <span class='kw-2'>&amp;</span><span class='ident'>Foo</span>);
-}
-</pre>
-
+</code></pre>
 <p>или неявного приведения типа:</p>
-<span class='rusttest'>trait Foo { fn method(&amp;self) -&gt; String; }
-impl Foo for u8 { fn method(&amp;self) -&gt; String { format!(&quot;u8: {}&quot;, *self) } }
-impl Foo for String { fn method(&amp;self) -&gt; String { format!(&quot;string: {}&quot;, *self) } }
+<pre><code class="language-rust"># trait Foo { fn method(&amp;self) -&gt; String; }
+# impl Foo for u8 { fn method(&amp;self) -&gt; String { format!(&quot;u8: {}&quot;, *self) } }
+# impl Foo for String { fn method(&amp;self) -&gt; String { format!(&quot;string: {}&quot;, *self) } }
 
 fn do_something(x: &amp;Foo) {
     x.method();
@@ -381,317 +192,180 @@ fn main() {
     let x = &quot;Hello&quot;.to_string();
     do_something(&amp;x);
 }
-</span><pre id='rust-example-rendered' class='rust '>
-
-<span class='kw'>fn</span> <span class='ident'>do_something</span>(<span class='ident'>x</span>: <span class='kw-2'>&amp;</span><span class='ident'>Foo</span>) {
-    <span class='ident'>x</span>.<span class='ident'>method</span>();
-}
-
-<span class='kw'>fn</span> <span class='ident'>main</span>() {
-    <span class='kw'>let</span> <span class='ident'>x</span> <span class='op'>=</span> <span class='string'>&quot;Hello&quot;</span>.<span class='ident'>to_string</span>();
-    <span class='ident'>do_something</span>(<span class='kw-2'>&amp;</span><span class='ident'>x</span>);
-}
-</pre>
-
-<p>Функция, которая принимает трейт объект, не обладает специализированнми копиями
-для каждого из типов, которые реализуют трейт <code>Foo</code>: генерируется только одна
+</code></pre>
+<p>Функция, которая принимает типаж-объект, не обладает специализированными копиями
+для каждого из типов, которые реализуют типаж <code>Foo</code>: генерируется только одна
 копия. Часто (но не всегда), в результате происходит уменьшение раздувания кода.
 Тем не менее, это происходит за счет более медленного вызова виртуальных
 функций, и, по существу, блокирования любой возможности встраивания и связанных
 с этим оптимизаций.</p>
-
-<h3 id="Почему-указатели?" class='section-header'><a
-                           href="#Почему-указатели?">Почему указатели?</a></h3>
+<h3>Почему указатели?</h3>
 <p>В отличие от многих управляемых языков, Rust по умолчанию не размещает значения
 по указателю, так как типы могут иметь различные размеры. Знать размер значения
 во время компиляции важно прежде всего для выполнения таких задач, как передача
 значения в качестве аргумента в функцию, что вызывает помещение переданного
 значения в стек, и выделение (и освобождение) места на куче для сохранения
 значения там.</p>
-
 <p>Для <code>Foo</code> допускается иметь значение, которое может быть либо <code>String</code> (24
 байт), либо <code>u8</code> (1 байт), либо любой другой тип, для которого в соответствующих
 крейтах может быть реализован <code>Foo</code> (возможно абсолютно любое число байт). Так
 как этот другой тип может быть сколь угодно большими, то нет никакого способа,
 гарантирующего, что последний вариант будет работать, если значения сохраняются
 без указателя.</p>
-
-<p>Размещение значения по указателю означает, что, когда мы имеем дело с трейт
+<p>Размещение значения по указателю означает, что, когда мы имеем дело с типажом-
 объектом, размер самого значения не важен, а важен лишь размер указателя.</p>
-
-<h3 id="representation-Представление" class='section-header'><a
-                           href="#representation-Представление">Representation Представление</a></h3>
-<p>Методы трейта можно вызвать для трейт объекта с помощью специальной записи
-указателей на функции, традиционно называемой &#39;виртуальная таблица&#39; (&#39;vtable&#39;)
+<h3>Представление</h3>
+<p>Методы типажа можно вызвать для типажа-объекта с помощью специальной записи
+указателей на функции, традиционно называемой 'виртуальная таблица' ('vtable')
 (создается и управляется компилятором).</p>
-
-<p>Трейт объекты являются одновременно и простыми и сложными: их основное
+<p>Типажи-объекты являются одновременно и простыми и сложными: их основное
 представление и устройство довольно прямолинейно, но есть некоторые тонкости
 относительно обнаружения сообщений об ошибках и странного поведения.</p>
-
-<p>Давайте начнем с простого, с рантайм представления трейт объекта. Модуль
+<p>Давайте начнем с простого, с рантайм представления типажа-объекта. Модуль
 <code>std::raw</code> содержит структуры с макетами, которые являются такими же, как и
-сложные встроенные типы, <a href="../std/raw/struct.TraitObject.html">в том числе трейт объекты</a>:</p>
-<span class='rusttest'>fn main() {
-    mod foo {
-    pub struct TraitObject {
-        pub data: *mut (),
-        pub vtable: *mut (),
-    }
-    }
-    
-}</span><pre id='rust-example-rendered' class='rust '>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>TraitObject</span> {
-    <span class='kw'>pub</span> <span class='ident'>data</span>: <span class='op'>*</span><span class='kw-2'>mut</span> (),
-    <span class='kw'>pub</span> <span class='ident'>vtable</span>: <span class='op'>*</span><span class='kw-2'>mut</span> (),
+сложные встроенные типы, <a href="http://doc.rust-lang.org/std/raw/struct.TraitObject.html">в том числе типажи-объекты</a>:</p>
+<pre><code class="language-rust"># mod foo {
+pub struct TraitObject {
+    pub data: *mut (),
+    pub vtable: *mut (),
 }
-</pre>
-
-<p>То есть трейт объект, такой как <code>&amp;Foo</code>, состоит из указателя на &quot;данные&quot; и
-указателя на &quot;виртуальную таблицу&quot;.</p>
-
-<p>Указатель <code>data</code> адрессует данные (какого-то неизвестного типа <code>T</code>), которые
-хранит трейт объект, а указатель <code>vtable</code> указывает на виртуальную таблицу
-(&quot;таблица виртуальных методов&quot;), которая соответствует реализации <code>Foo</code> для <code>T</code>.</p>
-
-<p>По существу, виртуальная таблица - это структура указателей на функции,
+# }
+</code></pre>
+<p>То есть типаж-объект, такой как <code>&amp;Foo</code>, состоит из указателя на «данные» и
+указателя на «виртуальную таблицу».</p>
+<p>Указатель <code>data</code> адресует данные (какого-то неизвестного типа <code>T</code>), которые
+хранит типаж-объект, а указатель <code>vtable</code> указывает на виртуальную таблицу
+(«таблица виртуальных методов»), которая соответствует реализации <code>Foo</code> для <code>T</code>.</p>
+<p>По существу, виртуальная таблица — это структура указателей на функции,
 указывающих на конкретный кусок машинного кода для каждого метода в реализации.
 Вызов метода наподобие <code>trait_object.method()</code> возвращает правильный указатель
 из виртуальной таблицы, а затем динамически вызывает метод по этому указателю.
 Например:</p>
-<span class='rusttest'>fn main() {
-    struct FooVtable {
-        destructor: fn(*mut ()),
-        size: usize,
-        align: usize,
-        method: fn(*const ()) -&gt; String,
-    }
-    
-    // u8:
-    
-    fn call_method_on_u8(x: *const ()) -&gt; String {
-        // the compiler guarantees that this function is only called
-        // with `x` pointing to a u8
-        let byte: &amp;u8 = unsafe { &amp;*(x as *const u8) };
-    
-        byte.method()
-    }
-    
-    static Foo_for_u8_vtable: FooVtable = FooVtable {
-        destructor: /* compiler magic */,
-        size: 1,
-        align: 1,
-    
-        // cast to a function pointer
-        method: call_method_on_u8 as fn(*const ()) -&gt; String,
-    };
-    
-    
-    // String:
-    
-    fn call_method_on_String(x: *const ()) -&gt; String {
-        // the compiler guarantees that this function is only called
-        // with `x` pointing to a String
-        let string: &amp;String = unsafe { &amp;*(x as *const String) };
-    
-        string.method()
-    }
-    
-    static Foo_for_String_vtable: FooVtable = FooVtable {
-        destructor: /* compiler magic */,
-        // values for a 64-bit computer, halve them for 32-bit ones
-        size: 24,
-        align: 8,
-    
-        method: call_method_on_String as fn(*const ()) -&gt; String,
-    };
-    
-}</span><pre id='rust-example-rendered' class='rust '>
-<span class='kw'>struct</span> <span class='ident'>FooVtable</span> {
-    <span class='ident'>destructor</span>: <span class='kw'>fn</span>(<span class='op'>*</span><span class='kw-2'>mut</span> ()),
-    <span class='ident'>size</span>: <span class='ident'>usize</span>,
-    <span class='ident'>align</span>: <span class='ident'>usize</span>,
-    <span class='ident'>method</span>: <span class='kw'>fn</span>(<span class='op'>*</span><span class='kw'>const</span> ()) <span class='op'>-&gt;</span> <span class='ident'>String</span>,
+<pre><code class="language-rust,ignore">struct FooVtable {
+    destructor: fn(*mut ()),
+    size: usize,
+    align: usize,
+    method: fn(*const ()) -&gt; String,
 }
 
-<span class='comment'>// u8:</span>
+// u8:
 
-<span class='kw'>fn</span> <span class='ident'>call_method_on_u8</span>(<span class='ident'>x</span>: <span class='op'>*</span><span class='kw'>const</span> ()) <span class='op'>-&gt;</span> <span class='ident'>String</span> {
-    <span class='comment'>// the compiler guarantees that this function is only called</span>
-    <span class='comment'>// with `x` pointing to a u8</span>
-    <span class='kw'>let</span> <span class='ident'>byte</span>: <span class='kw-2'>&amp;</span><span class='ident'>u8</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='kw-2'>&amp;</span><span class='op'>*</span>(<span class='ident'>x</span> <span class='kw'>as</span> <span class='op'>*</span><span class='kw'>const</span> <span class='ident'>u8</span>) };
+fn call_method_on_u8(x: *const ()) -&gt; String {
+    // компилятор гарантирует, что эта функция вызывается только
+    // с `x`, указывающим на u8
+    let byte: &amp;u8 = unsafe { &amp;*(x as *const u8) };
 
-    <span class='ident'>byte</span>.<span class='ident'>method</span>()
+    byte.method()
 }
 
-<span class='kw'>static</span> <span class='ident'>Foo_for_u8_vtable</span>: <span class='ident'>FooVtable</span> <span class='op'>=</span> <span class='ident'>FooVtable</span> {
-    <span class='ident'>destructor</span>: <span class='comment'>/* compiler magic */</span>,
-    <span class='ident'>size</span>: <span class='number'>1</span>,
-    <span class='ident'>align</span>: <span class='number'>1</span>,
+static Foo_for_u8_vtable: FooVtable = FooVtable {
+    destructor: /* магия компилятора */,
+    size: 1,
+    align: 1,
 
-    <span class='comment'>// cast to a function pointer</span>
-    <span class='ident'>method</span>: <span class='ident'>call_method_on_u8</span> <span class='kw'>as</span> <span class='kw'>fn</span>(<span class='op'>*</span><span class='kw'>const</span> ()) <span class='op'>-&gt;</span> <span class='ident'>String</span>,
+    // преобразование в указатель на функцию
+    method: call_method_on_u8 as fn(*const ()) -&gt; String,
 };
 
 
-<span class='comment'>// String:</span>
+// String:
 
-<span class='kw'>fn</span> <span class='ident'>call_method_on_String</span>(<span class='ident'>x</span>: <span class='op'>*</span><span class='kw'>const</span> ()) <span class='op'>-&gt;</span> <span class='ident'>String</span> {
-    <span class='comment'>// the compiler guarantees that this function is only called</span>
-    <span class='comment'>// with `x` pointing to a String</span>
-    <span class='kw'>let</span> <span class='ident'>string</span>: <span class='kw-2'>&amp;</span><span class='ident'>String</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='kw-2'>&amp;</span><span class='op'>*</span>(<span class='ident'>x</span> <span class='kw'>as</span> <span class='op'>*</span><span class='kw'>const</span> <span class='ident'>String</span>) };
+fn call_method_on_String(x: *const ()) -&gt; String {
+    // компилятор гарантирует, что эта функция вызывается только
+    // с `x`, указывающим на String
+    let string: &amp;String = unsafe { &amp;*(x as *const String) };
 
-    <span class='ident'>string</span>.<span class='ident'>method</span>()
+    string.method()
 }
 
-<span class='kw'>static</span> <span class='ident'>Foo_for_String_vtable</span>: <span class='ident'>FooVtable</span> <span class='op'>=</span> <span class='ident'>FooVtable</span> {
-    <span class='ident'>destructor</span>: <span class='comment'>/* compiler magic */</span>,
-    <span class='comment'>// values for a 64-bit computer, halve them for 32-bit ones</span>
-    <span class='ident'>size</span>: <span class='number'>24</span>,
-    <span class='ident'>align</span>: <span class='number'>8</span>,
+static Foo_for_String_vtable: FooVtable = FooVtable {
+    destructor: /* магия компилятора */,
+    // значения для 64-битного компьютера, для 32-битного они в 2 раза меньше
+    size: 24,
+    align: 8,
 
-    <span class='ident'>method</span>: <span class='ident'>call_method_on_String</span> <span class='kw'>as</span> <span class='kw'>fn</span>(<span class='op'>*</span><span class='kw'>const</span> ()) <span class='op'>-&gt;</span> <span class='ident'>String</span>,
+    method: call_method_on_String as fn(*const ()) -&gt; String,
 };
-</pre>
-
+</code></pre>
 <p>Поле <code>destructor</code> в каждой виртуальной таблице указывает на функцию, которая
 будет очищать любые ресурсы типа этой виртуальной таблицы, для <code>u8</code> она
 тривиальна, но для <code>String</code> она будет освобождать память. Это необходимо для
-владельцев трейт объектов, таких как <code>Box&lt;Foo&gt;</code>, для которых необходимо очищать
-выделенную память как для <code>Box</code>, так и для внутреннего типа, когда они выходят
-из области видимости. Поля <code>size</code> и <code>align</code> хранят размер затёртого типа, и его
-требования к выравниванию; по существу, они не использовался в момент, так как
-информация встроенного в деструктор, но будет использоваться в будущем, так как
-объекты отличительным признакам постепенно становится более гибким.</p>
-
+владельцев типажей-объектов, таких как <code>Box&lt;Foo&gt;</code>, для которых необходимо
+очищать выделенную память как для <code>Box</code>, так и для внутреннего типа, когда они
+выходят из области видимости. Поля <code>size</code> и <code>align</code> хранят размер затёртого
+типа, и его требования к выравниванию; по существу, они не использовался в
+момент, так как информация встроенного в деструктор, но будет использоваться в
+будущем, так как объекты отличительным признакам постепенно становится более
+гибким.</p>
 <p>Предположим, у нас есть несколько значений, которые реализуют <code>Foo</code>, тогда явный
-вид создания и использования трейт объектов <code>Foo</code> может выглядеть примерно как
+вид создания и использования типажей-объектов <code>Foo</code> может выглядеть примерно как
 (игнорируются несоответствия типов: в любом случае, они всего лишь указатели):</p>
-<span class='rusttest'>fn main() {
-    let a: String = &quot;foo&quot;.to_string();
-    let x: u8 = 1;
-    
-    // let b: &amp;Foo = &amp;a;
-    let b = TraitObject {
-        // store the data
-        data: &amp;a,
-        // store the methods
-        vtable: &amp;Foo_for_String_vtable
-    };
-    
-    // let y: &amp;Foo = x;
-    let y = TraitObject {
-        // store the data
-        data: &amp;x,
-        // store the methods
-        vtable: &amp;Foo_for_u8_vtable
-    };
-    
-    // b.method();
-    (b.vtable.method)(b.data);
-    
-    // y.method();
-    (y.vtable.method)(y.data);
-    
-}</span><pre id='rust-example-rendered' class='rust '>
-<span class='kw'>let</span> <span class='ident'>a</span>: <span class='ident'>String</span> <span class='op'>=</span> <span class='string'>&quot;foo&quot;</span>.<span class='ident'>to_string</span>();
-<span class='kw'>let</span> <span class='ident'>x</span>: <span class='ident'>u8</span> <span class='op'>=</span> <span class='number'>1</span>;
+<pre><code class="language-rust,ignore">let a: String = &quot;foo&quot;.to_string();
+let x: u8 = 1;
 
-<span class='comment'>// let b: &amp;Foo = &amp;a;</span>
-<span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>TraitObject</span> {
-    <span class='comment'>// store the data</span>
-    <span class='ident'>data</span>: <span class='kw-2'>&amp;</span><span class='ident'>a</span>,
-    <span class='comment'>// store the methods</span>
-    <span class='ident'>vtable</span>: <span class='kw-2'>&amp;</span><span class='ident'>Foo_for_String_vtable</span>
+// let b: &amp;Foo = &amp;a;
+let b = TraitObject {
+    // store the data
+    data: &amp;a,
+    // store the methods
+    vtable: &amp;Foo_for_String_vtable
 };
 
-<span class='comment'>// let y: &amp;Foo = x;</span>
-<span class='kw'>let</span> <span class='ident'>y</span> <span class='op'>=</span> <span class='ident'>TraitObject</span> {
-    <span class='comment'>// store the data</span>
-    <span class='ident'>data</span>: <span class='kw-2'>&amp;</span><span class='ident'>x</span>,
-    <span class='comment'>// store the methods</span>
-    <span class='ident'>vtable</span>: <span class='kw-2'>&amp;</span><span class='ident'>Foo_for_u8_vtable</span>
+// let y: &amp;Foo = x;
+let y = TraitObject {
+    // store the data
+    data: &amp;x,
+    // store the methods
+    vtable: &amp;Foo_for_u8_vtable
 };
 
-<span class='comment'>// b.method();</span>
-(<span class='ident'>b</span>.<span class='ident'>vtable</span>.<span class='ident'>method</span>)(<span class='ident'>b</span>.<span class='ident'>data</span>);
+// b.method();
+(b.vtable.method)(b.data);
 
-<span class='comment'>// y.method();</span>
-(<span class='ident'>y</span>.<span class='ident'>vtable</span>.<span class='ident'>method</span>)(<span class='ident'>y</span>.<span class='ident'>data</span>);
-</pre>
+// y.method();
+(y.vtable.method)(y.data);
+</code></pre>
 
-<p>Если <code>b</code> или <code>y</code> были владельцами трейт объектов (<code>Box&lt;Foo&gt;</code>), то будут вызываны
-деструкторы <code>(b.vtable.destructor)(b.data)</code> или <code>(y.vtable.destructor)(y.data)</code>
-соответственно, как только они выйдут из своей области определения.</p>
+                </div>
 
-    <script type="text/javascript">
-        window.playgroundUrl = "http://play.rust-lang.org";
-    </script>
-    
-<script type="text/javascript">
-document.addEventListener("DOMContentLoaded", function(event) {
-  document.getElementById("toggle-nav").onclick = toggleNav;
-  function toggleNav() {
-    var toc = document.getElementById("toc");
-    var pagewrapper = document.getElementById("page-wrapper");
-    toggleClass(toc, "mobile-hidden");
-    toggleClass(pagewrapper, "mobile-hidden");
-  };
+                <!-- Mobile navigation buttons -->
+                
+                    <a href="if-let.html" class="mobile-nav-chapters previous">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
 
-  function toggleClass(el, className) {
-     // from http://youmightnotneedjquery.com/
-     if (el.classList) {
-       el.classList.toggle(className);
-     } else {
-       var classes = el.className.split(' ');
-       var existingIndex = classes.indexOf(className);
+                
+                    <a href="closures.html" class="mobile-nav-chapters next">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
 
-       if (existingIndex >= 0) {
-         classes.splice(existingIndex, 1);
-       } else {
-         classes.push(className);
-       }
+            </div>
 
-       el.className = classes.join(' ');
-     }
-  }
+            
+                <a href="if-let.html" class="nav-chapters previous">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            
 
-  // The below code is used to add prev and next navigation links to the bottom
-  // of each of the sections.
-  // It works by extracting the current page based on the url and iterates over
-  // the menu links until it finds the menu item for the current page. We then
-  // create a copy of the preceding and following menu links and add the
-  // correct css class and insert them into the bottom of the page.
-  var toc = document.getElementById('toc').getElementsByTagName('a');
-  var href = document.location.pathname.split('/').pop();
-  if (href === 'index.html' || href === '') {
-    href = 'README.html';
-  }
+            
+                <a href="closures.html" class="nav-chapters next">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            
 
-  for (var i = 0; i < toc.length; i++) {
-    if (toc[i].attributes['href'].value.split('/').pop() === href) {
-      var nav = document.createElement('p');
-      if (i > 0) {
-        var prevNode = toc[i-1].cloneNode(true);
-        prevNode.className = 'left';
-        nav.appendChild(prevNode);
-      }
-      if (i < toc.length - 1) {
-        var nextNode = toc[i+1].cloneNode(true);
-        nextNode.className = 'right';
-        nav.appendChild(nextNode);
-      }
-      document.getElementById('page').appendChild(nav);
-      break;
-    }
-  }
-
-});
-</script>
-<script type="text/javascript" src="jquery.js"></script>
-<script type="text/javascript" src="playpen.js"></script>
-</div></div>
+        </div>
 
 
-</body>
+        <!-- Local fallback for Font Awesome -->
+        <script>
+            if ($(".fa").css("font-family") !== "FontAwesome") {
+                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
+            }
+        </script>
+
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+    </body>
 </html>
